@@ -77,6 +77,9 @@ if __name__ == '__main__':
               (epoch, opt.niter + opt.niter_decay, time.time() - epoch_start_time))
         model.update_learning_rate()
 
+        if opt.model == 'ea_gan' and epoch <= 150:
+            model.update_sobel_lambda(epoch)
+
 
 
 

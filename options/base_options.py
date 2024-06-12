@@ -10,8 +10,8 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self, parser):
-        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/KhulaTrial/flirt_train', help='Train images path (paired)')
-        parser.add_argument('--data_path_2', type=str, default=None, help='Train images path (unpaired)')
+        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/Khula_GANs/paired/flirt_train', help='Train images path (paired)')
+        parser.add_argument('--data_path_2', type=str, default='/media/hdd/levibaljer/Khula_GANs/unpaired/train', help='Train images path (unpaired)')
         parser.add_argument('--val_path', type=str, default='/media/hdd/levibaljer/Hype/test_2', help='Validation images path')
         parser.add_argument('--batch_size', type=int, default=1, help='input batch size')
         parser.add_argument('--patch_size', default=[128, 128, 64], help='Size of the patches extracted from the image (default is 128, 128, 64)')
@@ -29,11 +29,11 @@ class BaseOptions():
         parser.add_argument('--netG', type=str, default='resnet_9blocks', help='selects model to use for netG. Look on Networks3D to see the all list')
 
         parser.add_argument('--gpu_ids', default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
-        parser.add_argument('--name', type=str, default='flirt_T2_Khula', help='name of the experiment. It decides where to store samples and models')
-        parser.add_argument('--model', type=str, default='pix2pix', help='chooses which model to use. cycle_gan, pix2pix, pup_gan, or atme')
+        parser.add_argument('--name', type=str, default='flirt_Khula', help='name of the experiment. It decides where to store samples and models')
+        parser.add_argument('--model', type=str, default='pup_gan', help='chooses which model to use: cycle_gan|pix2pix|pup_gan|ea_gan|atme')
 
         parser.add_argument('--which_direction', type=str, default='AtoB', help='AtoB or BtoA (keep it AtoB)')
-        parser.add_argument('--checkpoints_dir', type=str, default='/media/hdd/levibaljer/Pix2Pix/checkpoints', help='models are saved here')
+        parser.add_argument('--checkpoints_dir', type=str, default='/media/hdd/levibaljer/PUP_GAN/checkpoints', help='models are saved here')
         parser.add_argument('--workers', default=8, type=int, help='number of data loading workers')
         parser.add_argument('--norm', type=str, default='instance', help='instance normalization or batch normalization')
 
@@ -43,9 +43,6 @@ class BaseOptions():
         parser.add_argument('--verbose', action='store_true', help='if specified, print more debugging information')
         parser.add_argument('--suffix', default='', type=str, help='customized suffix: opt.name = opt.name + suffix: e.g., {model}_{netG}_size{loadSize}')
         self.initialized = True
-
-        parser.add_argument('--super_train', type=int, default=0, help='Start with supervised or unsupervised training')
-        parser.add_argument('--super_epoch', type=int, default=100, help='Number of epochs to train supervised')
 
         return parser
 
