@@ -22,7 +22,8 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--lr_decay_iters', type=int, default=50, help='multiply by a gamma every lr_decay_iters iterations')
 
         parser.add_argument('--super_train', type=int, default=1, help='start with supervised training (0 if we go straight to unsupervised)')
-        parser.add_argument('--super_epoch', type=int, default=1000, help='number of epochs for supervised training ')
+        parser.add_argument('--super_epoch', type=int, default=250, help='number of epochs for supervised training ')
+        parser.add_argument('--labelSmooth', type=int, default=0, help='indicate to use label smoothing (0 if no label smoothing)')
 
         self.isTrain = True
         return parser
