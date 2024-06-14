@@ -3,10 +3,11 @@ import torch
 from .base_model import BaseModel
 from . import networks3D
 import random
-from util.image_pool import DiscPool
+from utils.NiftiDataset import *
+# from util.image_pool import DiscPool
 import utils.utils as util
 from itertools import chain
-from data import create_dataset
+# from data import create_dataset
 from torch.utils.data import Dataset
 
 # Have to see if ImagePool can function when the output of W(D) is dependent on the input 
@@ -47,7 +48,7 @@ class DiscPool(Dataset):
     This buffer enables us to recall the outputs of the discriminator in the previous epoch
     """
 
-    def __init__(self, opt, device, isTrain=True, disc_out_size=[14, 14, 6]):
+    def __init__(self, opt, device, isTrain=True, disc_out_size=[6, 6, 6]):
         """Initialize the DiscPool class
 
         Parameters:
@@ -57,7 +58,7 @@ class DiscPool(Dataset):
             disc_out_size: the size of the ouput tensor of the discriminator
         """
         import utils.NiftiDataset as NiftiDataset
-        self.dataset_len = dataset_len = len(NiftiDataset(opt.data_path, which_direction='AtoB', shuffle_labels=False, train=True))
+        self.dataset_len = dataset_len = len(NiftiDataSet_atme(opt.data_path, which_direction='AtoB', shuffle_labels=False, train=True, outputIndices=True, repeats=4))
 
         if isTrain:
             # Initially the discriminator doesn't know real/fake because is not trained yet
@@ -94,6 +95,9 @@ class DiscPool(Dataset):
         self.disc_out[img_idx] = disc_out
 
 class AtmeModel(BaseModel):
+    def name(self):
+        return 'atmemodel'
+
     """ This class implements the ATME model, for learning a mapping from input images to output images given paired data.
 
     The model training requires '--dataset_mode aligned' dataset.
@@ -136,13 +140,13 @@ class AtmeModel(BaseModel):
 
         return parser
 
-    def __init__(self, opt):
-        """Initialize the pix2pix class.
+    def initialize(self, opt):
+        """Initialize the atme class.
 
         Parameters:
             opt (Option class)-- stores all the experiment flags; needs to be a subclass of BaseOptions
         """
-        BaseModel.__init__(self, opt)
+        BaseModel.initialize(self, opt)
         # specify the training losses you want to print out. The training/test scripts will call <BaseModel.get_current_losses>
         self.loss_names = ['G_GAN', 'G_L1', 'D_real', 'D_fake']
         # specify the images you want to save/display. The training/test scripts will call <BaseModel.get_current_visuals>
@@ -154,19 +158,26 @@ class AtmeModel(BaseModel):
             self.model_names = ['G', 'W'] 
         # define networks (both generator and discriminator)
 
-        self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm,
+        # self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm,
+        #                               not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids, 
+        #                               **{'dim': opt.dim, 
+        #                                  'dim_mults': opt.dim_mults, 
+        #                                  'init_dim': opt.init_dim, 
+        #                                  'resnet_groups': opt.groups})
+        self.netG = networks3D.define_G(1, 1, 64, 'unet_256_ddm', 'instance',
                                       not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids, 
-                                      **{'dim': opt.dim, 
-                                         'dim_mults': opt.dim_mults, 
-                                         'init_dim': opt.init_dim, 
-                                         'resnet_groups': opt.groups})
+                                      **{'dim': 64, 
+                                         'dim_mults': (1,2,4,8), 
+                                         'init_dim': 64, 
+                                         'resnet_groups': 8})
 
         self.netW = networks3D.define_W(opt.init_type, opt.init_gain, self.gpu_ids)
         self.disc_pool = DiscPool(opt, self.gpu_ids[0], isTrain=self.isTrain)
     
         if self.isTrain:  # define a discriminator; conditional GANs need to take both input and output images; Therefore, #channels for D is input_nc + output_nc
+            use_sigmoid = opt.no_lsgan
             self.netD = networks3D.define_D(opt.input_nc + opt.output_nc, opt.ndf, opt.netD,
-                                          opt.n_layers_D, opt.norm, opt.init_type, opt.init_gain, self.gpu_ids)
+                                          opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, opt.init_gain, self.gpu_ids)
         
         if self.isTrain:
             # define loss functions
@@ -175,6 +186,7 @@ class AtmeModel(BaseModel):
             # initialize optimizers; schedulers will be automatically created by function <BaseModel.setup>.
             self.optimizer_G = torch.optim.Adam(chain(self.netW.parameters(), self.netG.parameters()), lr=opt.lr, betas=(opt.beta1, 0.999))
             self.optimizer_D = torch.optim.Adam(self.netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
+            self.optimizers = []
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
         
@@ -182,7 +194,7 @@ class AtmeModel(BaseModel):
         # prepare to save D_t and W_t history
         self.save_noisy = True if opt.n_save_noisy > 0 else False
         if self.save_noisy:
-            self.save_DW_idx = torch.randint(len(create_dataset(opt)), (opt.n_save_noisy,))
+            self.save_DW_idx = torch.randint(len(NiftiDataSet(opt.data_path, which_direction='AtoB', shuffle_labels=False, train=True, outputIndices=True)), (opt.n_save_noisy,))
             self.img_DW_dir = os.path.join(opt.checkpoints_dir, opt.name, 'images_noisy')
             util.mkdir(self.img_DW_dir)
 
@@ -206,7 +218,7 @@ class AtmeModel(BaseModel):
         The option 'direction' can be used to swap images in domain A and domain B.
         """
         self.epoch = epoch
-        AtoB = self.opt.direction == 'AtoB'
+        AtoB = self.opt.which_direction == 'AtoB'
         self.real_A = input[0 if AtoB else 1].to(self.device)
         self.real_B = input[1 if AtoB else 0].to(self.device)
         # self.image_paths = input['A_paths' if AtoB else 'B_paths']

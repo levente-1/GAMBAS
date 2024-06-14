@@ -10462,3 +10462,3478 @@ saving the latest model (epoch 1000, total_steps 80000)
 saving the model at the end of epoch 1000, iters 80000
 End of epoch 1000 / 1000 	 Time Taken: 29 sec
 learning rate = -0.0000004
+----------------- Options ---------------
+               batch_size: 1                             
+                    beta1: 0.5                           
+          checkpoints_dir: /media/hdd/levibaljer/PUP_GAN/checkpoints
+           continue_train: False                         
+                data_path: /media/hdd/levibaljer/Khula_GANs/paired/flirt_train
+              data_path_2: /media/hdd/levibaljer/Khula_GANs/unpaired/train
+               drop_ratio: 0                             
+              epoch_count: 200                           
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 1                             
+                  isTrain: True                          	[default: None]
+              labelSmooth: 0                             
+                 lambda_1: 10.0                          
+                 lambda_2: 5.0                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: lambda                        
+                min_pixel: 0.1                           
+                    model: pup_gan                       
+               n_layers_D: 3                             
+                     name: flirt_Khula_2                 
+                      ndf: 64                            
+                     netD: n_layers                      
+                     netG: resnet_9blocks                
+           new_resolution: (0.45, 0.45, 0.45)            
+                      ngf: 64                            
+                    niter: 500                           
+              niter_decay: 500                           
+               no_dropout: True                          
+                  no_html: False                         
+                 no_lsgan: True                          
+                     norm: instance                      
+                output_nc: 1                             
+               patch_size: [128, 128, 64]                
+                    phase: train                         
+                pool_size: 50                            
+               print_freq: 100                           
+                 resample: False                         
+          save_epoch_freq: 200                           
+         save_latest_freq: 1000                          
+                   suffix:                               
+              super_epoch: 250                           
+              super_train: 1                             
+                 val_path: /media/hdd/levibaljer/Hype/test_2
+                  verbose: False                         
+          which_direction: AtoB                          
+              which_epoch: latest                        
+                  workers: 8                             
+----------------- End -------------------
+lenght train list: 77
+torch.Size([1, 128, 128, 64])
+lenght train list (unpaired): 36
+torch.Size([1, 128, 128, 64])
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+model [PUPGANModel] was created
+Setting up identity schedulers for D_C and D_D
+---------- Networks initialized -------------
+[Network G_A] Total number of parameters : 34.111 M
+[Network G_B] Total number of parameters : 34.111 M
+[Network D_A] Total number of parameters : 11.048 M
+[Network D_B] Total number of parameters : 11.048 M
+[Network D_C] Total number of parameters : 11.052 M
+[Network D_D] Total number of parameters : 11.052 M
+-----------------------------------------------
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_G_A.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_G_B.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_A.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_B.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_C.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_D.pth
+saving the model at the end of epoch 200, iters 77
+End of epoch 200 / 1000 	 Time Taken: 181 sec
+learning rate = 0.0002000
+/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/nn/modules/conv.py:605: UserWarning: Plan failed with a cudnnException: CUDNN_BACKEND_EXECUTION_PLAN_DESCRIPTOR: cudnnFinalize Descriptor Failed cudnn_status: CUDNN_STATUS_NOT_SUPPORTED (Triggered internally at ../aten/src/ATen/native/cudnn/Conv_v8.cpp:919.)
+  return F.conv3d(
+(epoch: 201, iters: 23, time: 2.341, data: 0.766) D_A: 0.696 D_B: 0.000 D_C: 0.000 D_D: 0.720 G_A: 1.009 G_B: 13.529 cycle_A: 3.303 cycle_B: 2.808 idt_A: 0.183 idt_B: 1.651 G_dual_A: 16.059 G_dual_B: 0.658 
+End of epoch 201 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 202, iters: 46, time: 2.354, data: 0.000) D_A: 0.459 D_B: 0.000 D_C: 0.000 D_D: 0.722 G_A: 0.568 G_B: 14.837 cycle_A: 3.301 cycle_B: 3.389 idt_A: 0.261 idt_B: 1.651 G_dual_A: 16.032 G_dual_B: 0.772 
+End of epoch 202 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 203, iters: 69, time: 2.352, data: 0.000) D_A: 0.808 D_B: 0.000 D_C: 0.000 D_D: 0.694 G_A: 0.340 G_B: 7.937 cycle_A: 3.885 cycle_B: 3.642 idt_A: 0.367 idt_B: 1.942 G_dual_A: 12.413 G_dual_B: 0.668 
+End of epoch 203 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 204 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 205, iters: 15, time: 2.356, data: 0.000) D_A: 0.745 D_B: 0.000 D_C: 0.000 D_D: 0.739 G_A: 0.815 G_B: 8.485 cycle_A: 0.709 cycle_B: 1.086 idt_A: 0.056 idt_B: 0.355 G_dual_A: 11.611 G_dual_B: 0.749 
+End of epoch 205 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 206, iters: 38, time: 2.352, data: 0.000) D_A: 0.678 D_B: 0.000 D_C: 0.000 D_D: 0.646 G_A: 0.732 G_B: 8.756 cycle_A: 2.979 cycle_B: 2.051 idt_A: 0.296 idt_B: 1.490 G_dual_A: 11.385 G_dual_B: 0.884 
+End of epoch 206 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 207, iters: 61, time: 2.354, data: 0.000) D_A: 0.731 D_B: 0.000 D_C: 0.000 D_D: 0.739 G_A: 0.507 G_B: 8.148 cycle_A: 1.222 cycle_B: 1.474 idt_A: 0.277 idt_B: 0.611 G_dual_A: 11.922 G_dual_B: 0.870 
+End of epoch 207 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 208 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+(epoch: 209, iters: 7, time: 2.350, data: 0.000) D_A: 0.832 D_B: 0.000 D_C: 0.000 D_D: 0.686 G_A: 0.465 G_B: 8.828 cycle_A: 2.904 cycle_B: 2.786 idt_A: 0.338 idt_B: 1.452 G_dual_A: 12.157 G_dual_B: 0.915 
+End of epoch 209 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 210, iters: 30, time: 2.358, data: 0.000) D_A: 0.561 D_B: 0.001 D_C: 1.942 D_D: 0.693 G_A: 0.530 G_B: 6.875 cycle_A: 0.045 cycle_B: 0.952 idt_A: 0.019 idt_B: 0.023 G_dual_A: 0.056 G_dual_B: 0.640 
+End of epoch 210 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 211, iters: 53, time: 2.354, data: 0.000) D_A: 0.683 D_B: 0.000 D_C: 0.000 D_D: 0.864 G_A: 2.139 G_B: 8.132 cycle_A: 2.955 cycle_B: 2.010 idt_A: 0.249 idt_B: 1.477 G_dual_A: 15.323 G_dual_B: 0.621 
+End of epoch 211 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 212, iters: 76, time: 2.355, data: 0.000) D_A: 0.807 D_B: 0.000 D_C: 0.000 D_D: 0.730 G_A: 1.656 G_B: 8.223 cycle_A: 1.267 cycle_B: 1.966 idt_A: 0.184 idt_B: 0.634 G_dual_A: 11.893 G_dual_B: 0.607 
+saving the latest model (epoch 212, total_steps 1000)
+End of epoch 212 / 1000 	 Time Taken: 179 sec
+learning rate = 0.0002000
+End of epoch 213 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 214, iters: 22, time: 2.353, data: 0.000) D_A: 0.565 D_B: 0.001 D_C: 0.000 D_D: 0.791 G_A: 1.011 G_B: 6.251 cycle_A: 1.379 cycle_B: 1.569 idt_A: 0.289 idt_B: 0.690 G_dual_A: 11.905 G_dual_B: 0.794 
+End of epoch 214 / 1000 	 Time Taken: 177 sec
+learning rate = 0.0002000
+(epoch: 215, iters: 45, time: 2.357, data: 0.000) D_A: 0.569 D_B: 0.000 D_C: 0.000 D_D: 0.626 G_A: 1.097 G_B: 7.459 cycle_A: 0.424 cycle_B: 0.994 idt_A: 0.063 idt_B: 0.212 G_dual_A: 13.411 G_dual_B: 0.934 
+End of epoch 215 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 216, iters: 68, time: 2.353, data: 0.000) D_A: 0.926 D_B: 0.000 D_C: 0.000 D_D: 0.689 G_A: 1.147 G_B: 8.008 cycle_A: 3.553 cycle_B: 3.579 idt_A: 0.628 idt_B: 1.777 G_dual_A: 13.396 G_dual_B: 0.565 
+End of epoch 216 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+End of epoch 217 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 218, iters: 14, time: 2.352, data: 0.000) D_A: 0.723 D_B: 0.000 D_C: 0.000 D_D: 0.665 G_A: 0.590 G_B: 8.347 cycle_A: 1.935 cycle_B: 2.106 idt_A: 0.206 idt_B: 0.968 G_dual_A: 12.804 G_dual_B: 0.728 
+End of epoch 218 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 219, iters: 37, time: 2.353, data: 0.000) D_A: 0.648 D_B: 0.000 D_C: 0.000 D_D: 0.625 G_A: 0.869 G_B: 7.691 cycle_A: 0.405 cycle_B: 1.104 idt_A: 0.162 idt_B: 0.202 G_dual_A: 11.675 G_dual_B: 0.786 
+End of epoch 219 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 220, iters: 60, time: 2.357, data: 0.000) D_A: 0.506 D_B: 0.000 D_C: 0.000 D_D: 0.697 G_A: 0.837 G_B: 8.236 cycle_A: 1.374 cycle_B: 1.429 idt_A: 0.111 idt_B: 0.687 G_dual_A: 12.861 G_dual_B: 0.774 
+End of epoch 220 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 221 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 222, iters: 6, time: 2.341, data: 0.000) D_A: 0.673 D_B: 0.000 D_C: 0.000 D_D: 0.757 G_A: 0.710 G_B: 8.360 cycle_A: 0.679 cycle_B: 0.980 idt_A: 0.191 idt_B: 0.339 G_dual_A: 10.260 G_dual_B: 0.859 
+End of epoch 222 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 223, iters: 29, time: 2.351, data: 0.000) D_A: 0.639 D_B: 0.000 D_C: 0.000 D_D: 0.617 G_A: 0.724 G_B: 7.717 cycle_A: 3.302 cycle_B: 3.277 idt_A: 0.286 idt_B: 1.651 G_dual_A: 15.158 G_dual_B: 0.755 
+End of epoch 223 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 224, iters: 52, time: 2.352, data: 0.000) D_A: 0.742 D_B: 0.000 D_C: 0.000 D_D: 0.693 G_A: 0.508 G_B: 8.215 cycle_A: 2.949 cycle_B: 3.026 idt_A: 0.214 idt_B: 1.475 G_dual_A: 15.873 G_dual_B: 0.787 
+End of epoch 224 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 225, iters: 75, time: 2.350, data: 0.000) D_A: 0.674 D_B: 0.001 D_C: 0.000 D_D: 0.722 G_A: 0.964 G_B: 6.534 cycle_A: 3.625 cycle_B: 3.526 idt_A: 0.265 idt_B: 1.813 G_dual_A: 14.526 G_dual_B: 0.600 
+saving the latest model (epoch 225, total_steps 2000)
+End of epoch 225 / 1000 	 Time Taken: 180 sec
+learning rate = 0.0002000
+End of epoch 226 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+Traceback (most recent call last):
+  File "/home/levibaljer/GAN_suite/train_pup.py", line 2, in <module>
+    from utils.NiftiDataset import *
+  File "/home/levibaljer/GAN_suite/utils/NiftiDataset.py", line 1, in <module>
+    import SimpleITK as sitk
+ModuleNotFoundError: No module named 'SimpleITK'
+----------------- Options ---------------
+               batch_size: 1                             
+                    beta1: 0.5                           
+          checkpoints_dir: /media/hdd/levibaljer/PUP_GAN/checkpoints
+           continue_train: False                         
+                data_path: /media/hdd/levibaljer/Khula_GANs/paired/flirt_train
+              data_path_2: /media/hdd/levibaljer/Khula_GANs/unpaired/train
+               drop_ratio: 0                             
+              epoch_count: 200                           
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 1                             
+                  isTrain: True                          	[default: None]
+              labelSmooth: 0                             
+                 lambda_1: 10.0                          
+                 lambda_2: 5.0                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: lambda                        
+                min_pixel: 0.1                           
+                    model: pup_gan                       
+               n_layers_D: 3                             
+                     name: flirt_Khula_2                 
+                      ndf: 64                            
+                     netD: n_layers                      
+                     netG: resnet_9blocks                
+           new_resolution: (0.45, 0.45, 0.45)            
+                      ngf: 64                            
+                    niter: 500                           
+              niter_decay: 500                           
+               no_dropout: True                          
+                  no_html: False                         
+                 no_lsgan: True                          
+                     norm: instance                      
+                output_nc: 1                             
+               patch_size: [128, 128, 64]                
+                    phase: train                         
+                pool_size: 50                            
+               print_freq: 100                           
+                 resample: False                         
+          save_epoch_freq: 50                            
+         save_latest_freq: 1000                          
+                   suffix:                               
+              super_epoch: 250                           
+              super_train: 1                             
+                 val_path: /media/hdd/levibaljer/Hype/test_2
+                  verbose: False                         
+          which_direction: AtoB                          
+              which_epoch: latest                        
+                  workers: 8                             
+----------------- End -------------------
+lenght train list: 77
+torch.Size([1, 128, 128, 64])
+lenght train list (unpaired): 36
+torch.Size([1, 128, 128, 64])
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+initialize network with normal
+model [PUPGANModel] was created
+Setting up identity schedulers for D_C and D_D
+---------- Networks initialized -------------
+[Network G_A] Total number of parameters : 34.111 M
+[Network G_B] Total number of parameters : 34.111 M
+[Network D_A] Total number of parameters : 11.048 M
+[Network D_B] Total number of parameters : 11.048 M
+[Network D_C] Total number of parameters : 11.052 M
+[Network D_D] Total number of parameters : 11.052 M
+-----------------------------------------------
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_G_A.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_G_B.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_A.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_B.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_C.pth
+loading the model from /media/hdd/levibaljer/PUP_GAN/checkpoints/flirt_Khula_2/200_net_D_D.pth
+saving the model at the end of epoch 200, iters 77
+End of epoch 200 / 1000 	 Time Taken: 181 sec
+learning rate = 0.0002000
+/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/nn/modules/conv.py:605: UserWarning: Plan failed with a cudnnException: CUDNN_BACKEND_EXECUTION_PLAN_DESCRIPTOR: cudnnFinalize Descriptor Failed cudnn_status: CUDNN_STATUS_NOT_SUPPORTED (Triggered internally at ../aten/src/ATen/native/cudnn/Conv_v8.cpp:919.)
+  return F.conv3d(
+(epoch: 201, iters: 23, time: 2.339, data: 0.690) D_A: 0.726 D_B: 0.000 D_C: 0.000 D_D: 0.673 G_A: 0.559 G_B: 8.844 cycle_A: 0.169 cycle_B: 1.012 idt_A: 0.043 idt_B: 0.085 G_dual_A: 11.013 G_dual_B: 0.683 
+End of epoch 201 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 202, iters: 46, time: 2.353, data: 0.000) D_A: 0.703 D_B: 0.000 D_C: 0.000 D_D: 0.633 G_A: 0.766 G_B: 7.767 cycle_A: 0.221 cycle_B: 1.133 idt_A: 0.184 idt_B: 0.110 G_dual_A: 11.700 G_dual_B: 1.000 
+End of epoch 202 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+(epoch: 203, iters: 69, time: 2.354, data: 0.000) D_A: 0.769 D_B: 0.000 D_C: 0.005 D_D: 0.736 G_A: 1.153 G_B: 8.305 cycle_A: 0.059 cycle_B: 0.989 idt_A: 0.012 idt_B: 0.030 G_dual_A: 4.623 G_dual_B: 0.520 
+End of epoch 203 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 204 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 205, iters: 15, time: 2.352, data: 0.000) D_A: 0.400 D_B: 0.000 D_C: 0.000 D_D: 0.606 G_A: 0.368 G_B: 7.983 cycle_A: 5.059 cycle_B: 4.298 idt_A: 0.692 idt_B: 2.530 G_dual_A: 12.933 G_dual_B: 1.247 
+End of epoch 205 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 206, iters: 38, time: 2.352, data: 0.000) D_A: 0.717 D_B: 0.000 D_C: 0.000 D_D: 0.690 G_A: 0.586 G_B: 8.617 cycle_A: 3.385 cycle_B: 2.163 idt_A: 0.356 idt_B: 1.692 G_dual_A: 14.374 G_dual_B: 0.766 
+End of epoch 206 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 207, iters: 61, time: 2.354, data: 0.000) D_A: 0.656 D_B: 0.000 D_C: 0.000 D_D: 0.699 G_A: 0.764 G_B: 11.801 cycle_A: 1.302 cycle_B: 1.498 idt_A: 0.198 idt_B: 0.651 G_dual_A: 10.007 G_dual_B: 0.963 
+End of epoch 207 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 208 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 209, iters: 7, time: 2.355, data: 0.000) D_A: 0.682 D_B: 0.000 D_C: 0.000 D_D: 0.728 G_A: 0.565 G_B: 12.182 cycle_A: 2.501 cycle_B: 1.504 idt_A: 0.186 idt_B: 1.251 G_dual_A: 13.551 G_dual_B: 0.881 
+End of epoch 209 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 210, iters: 30, time: 2.353, data: 0.000) D_A: 0.538 D_B: 0.000 D_C: 0.000 D_D: 0.720 G_A: 1.117 G_B: 10.904 cycle_A: 2.091 cycle_B: 1.750 idt_A: 0.102 idt_B: 1.045 G_dual_A: 13.272 G_dual_B: 0.843 
+End of epoch 210 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 211, iters: 53, time: 2.351, data: 0.000) D_A: 0.652 D_B: 0.000 D_C: 0.000 D_D: 0.652 G_A: 0.811 G_B: 10.075 cycle_A: 5.067 cycle_B: 3.799 idt_A: 0.302 idt_B: 2.534 G_dual_A: 12.392 G_dual_B: 0.804 
+End of epoch 211 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 212, iters: 76, time: 2.351, data: 0.000) D_A: 0.508 D_B: 0.004 D_C: 0.001 D_D: 0.815 G_A: 0.670 G_B: 9.268 cycle_A: 2.669 cycle_B: 2.674 idt_A: 0.330 idt_B: 1.334 G_dual_A: 9.052 G_dual_B: 0.858 
+saving the latest model (epoch 212, total_steps 1000)
+End of epoch 212 / 1000 	 Time Taken: 179 sec
+learning rate = 0.0002000
+End of epoch 213 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+(epoch: 214, iters: 22, time: 2.355, data: 0.000) D_A: 0.602 D_B: 0.000 D_C: 0.000 D_D: 0.654 G_A: 0.782 G_B: 7.706 cycle_A: 0.506 cycle_B: 1.442 idt_A: 0.132 idt_B: 0.253 G_dual_A: 16.236 G_dual_B: 0.716 
+End of epoch 214 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 215, iters: 45, time: 2.350, data: 0.000) D_A: 0.700 D_B: 0.000 D_C: 0.000 D_D: 0.703 G_A: 0.696 G_B: 8.324 cycle_A: 2.287 cycle_B: 1.868 idt_A: 0.291 idt_B: 1.143 G_dual_A: 10.373 G_dual_B: 0.589 
+End of epoch 215 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 216, iters: 68, time: 2.351, data: 0.000) D_A: 0.675 D_B: 0.000 D_C: 0.000 D_D: 0.678 G_A: 1.229 G_B: 8.681 cycle_A: 1.423 cycle_B: 1.448 idt_A: 0.081 idt_B: 0.711 G_dual_A: 13.189 G_dual_B: 0.798 
+End of epoch 216 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 217 / 1000 	 Time Taken: 177 sec
+learning rate = 0.0002000
+(epoch: 218, iters: 14, time: 2.350, data: 0.000) D_A: 0.715 D_B: 0.000 D_C: 0.000 D_D: 0.675 G_A: 0.651 G_B: 8.963 cycle_A: 4.284 cycle_B: 1.538 idt_A: 0.381 idt_B: 2.142 G_dual_A: 11.352 G_dual_B: 0.947 
+End of epoch 218 / 1000 	 Time Taken: 177 sec
+learning rate = 0.0002000
+(epoch: 219, iters: 37, time: 2.354, data: 0.000) D_A: 0.757 D_B: 0.000 D_C: 0.000 D_D: 0.748 G_A: 1.391 G_B: 7.845 cycle_A: 2.938 cycle_B: 2.641 idt_A: 0.185 idt_B: 1.469 G_dual_A: 14.224 G_dual_B: 0.972 
+End of epoch 219 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 220, iters: 60, time: 2.352, data: 0.000) D_A: 0.752 D_B: 0.001 D_C: 0.000 D_D: 0.690 G_A: 0.476 G_B: 7.530 cycle_A: 4.583 cycle_B: 3.205 idt_A: 0.368 idt_B: 2.292 G_dual_A: 13.181 G_dual_B: 0.624 
+End of epoch 220 / 1000 	 Time Taken: 177 sec
+learning rate = 0.0002000
+End of epoch 221 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 222, iters: 6, time: 2.351, data: 0.000) D_A: 0.713 D_B: 0.000 D_C: 0.000 D_D: 0.634 G_A: 0.973 G_B: 8.158 cycle_A: 0.219 cycle_B: 1.091 idt_A: 0.180 idt_B: 0.109 G_dual_A: 10.378 G_dual_B: 0.771 
+End of epoch 222 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 223, iters: 29, time: 2.357, data: 0.000) D_A: 0.734 D_B: 0.001 D_C: 0.019 D_D: 0.702 G_A: 1.017 G_B: 6.694 cycle_A: 0.070 cycle_B: 0.911 idt_A: 0.015 idt_B: 0.035 G_dual_A: 3.658 G_dual_B: 0.730 
+End of epoch 223 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 224, iters: 52, time: 2.352, data: 0.000) D_A: 0.419 D_B: 0.000 D_C: 0.000 D_D: 0.643 G_A: 0.689 G_B: 7.475 cycle_A: 5.244 cycle_B: 4.286 idt_A: 0.374 idt_B: 2.622 G_dual_A: 13.214 G_dual_B: 0.918 
+End of epoch 224 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 225, iters: 75, time: 2.357, data: 0.000) D_A: 0.455 D_B: 0.000 D_C: 0.000 D_D: 0.895 G_A: 0.518 G_B: 7.924 cycle_A: 0.445 cycle_B: 0.955 idt_A: 0.043 idt_B: 0.222 G_dual_A: 11.201 G_dual_B: 0.745 
+saving the latest model (epoch 225, total_steps 2000)
+End of epoch 225 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+End of epoch 226 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 227, iters: 21, time: 2.354, data: 0.000) D_A: 0.438 D_B: 0.000 D_C: 0.000 D_D: 0.689 G_A: 0.346 G_B: 8.136 cycle_A: 3.890 cycle_B: 4.047 idt_A: 0.302 idt_B: 1.945 G_dual_A: 14.329 G_dual_B: 0.870 
+End of epoch 227 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 228, iters: 44, time: 2.351, data: 0.000) D_A: 0.632 D_B: 0.000 D_C: 0.000 D_D: 0.559 G_A: 0.613 G_B: 7.609 cycle_A: 2.687 cycle_B: 3.510 idt_A: 0.889 idt_B: 1.344 G_dual_A: 12.649 G_dual_B: 0.508 
+End of epoch 228 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 229, iters: 67, time: 2.351, data: 0.000) D_A: 0.937 D_B: 0.000 D_C: 0.000 D_D: 0.683 G_A: 0.774 G_B: 8.134 cycle_A: 3.167 cycle_B: 3.362 idt_A: 0.351 idt_B: 1.584 G_dual_A: 13.096 G_dual_B: 0.912 
+End of epoch 229 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 230 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 231, iters: 13, time: 2.356, data: 0.000) D_A: 0.775 D_B: 0.001 D_C: 0.000 D_D: 0.672 G_A: 0.482 G_B: 7.634 cycle_A: 0.811 cycle_B: 1.051 idt_A: 0.064 idt_B: 0.405 G_dual_A: 14.181 G_dual_B: 0.770 
+End of epoch 231 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 232, iters: 36, time: 2.351, data: 0.000) D_A: 0.706 D_B: 0.000 D_C: 0.000 D_D: 0.654 G_A: 0.565 G_B: 8.315 cycle_A: 3.728 cycle_B: 3.689 idt_A: 0.264 idt_B: 1.864 G_dual_A: 13.846 G_dual_B: 0.974 
+End of epoch 232 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 233, iters: 59, time: 2.352, data: 0.000) D_A: 0.654 D_B: 0.000 D_C: 0.000 D_D: 0.708 G_A: 0.623 G_B: 8.397 cycle_A: 3.798 cycle_B: 3.226 idt_A: 0.583 idt_B: 1.899 G_dual_A: 12.896 G_dual_B: 0.717 
+End of epoch 233 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 234 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 235, iters: 5, time: 2.351, data: 0.000) D_A: 0.793 D_B: 0.000 D_C: 0.000 D_D: 0.692 G_A: 1.054 G_B: 8.696 cycle_A: 0.695 cycle_B: 1.175 idt_A: 0.101 idt_B: 0.348 G_dual_A: 13.774 G_dual_B: 0.734 
+End of epoch 235 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 236, iters: 28, time: 2.351, data: 0.000) D_A: 0.642 D_B: 0.000 D_C: 0.000 D_D: 0.762 G_A: 0.619 G_B: 8.889 cycle_A: 1.306 cycle_B: 1.232 idt_A: 0.275 idt_B: 0.653 G_dual_A: 8.774 G_dual_B: 0.389 
+End of epoch 236 / 1000 	 Time Taken: 178 sec
+learning rate = 0.0002000
+(epoch: 237, iters: 51, time: 2.357, data: 0.000) D_A: 0.705 D_B: 0.000 D_C: 0.004 D_D: 0.669 G_A: 0.798 G_B: 9.012 cycle_A: 0.026 cycle_B: 0.854 idt_A: 0.012 idt_B: 0.013 G_dual_A: 5.260 G_dual_B: 0.679 
+End of epoch 237 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 238, iters: 74, time: 2.355, data: 0.000) D_A: 0.475 D_B: 0.000 D_C: 0.000 D_D: 0.720 G_A: 0.350 G_B: 8.955 cycle_A: 1.973 cycle_B: 2.112 idt_A: 0.210 idt_B: 0.986 G_dual_A: 11.723 G_dual_B: 0.588 
+saving the latest model (epoch 238, total_steps 3000)
+End of epoch 238 / 1000 	 Time Taken: 179 sec
+learning rate = 0.0002000
+End of epoch 239 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 240, iters: 20, time: 2.351, data: 0.000) D_A: 0.574 D_B: 0.000 D_C: 0.000 D_D: 0.710 G_A: 1.250 G_B: 9.068 cycle_A: 0.314 cycle_B: 1.134 idt_A: 0.136 idt_B: 0.157 G_dual_A: 9.543 G_dual_B: 0.463 
+End of epoch 240 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 241, iters: 43, time: 2.353, data: 0.000) D_A: 0.753 D_B: 0.000 D_C: 0.000 D_D: 0.712 G_A: 0.445 G_B: 9.252 cycle_A: 3.460 cycle_B: 3.072 idt_A: 0.233 idt_B: 1.730 G_dual_A: 10.992 G_dual_B: 0.910 
+End of epoch 241 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 242, iters: 66, time: 2.349, data: 0.000) D_A: 0.528 D_B: 0.000 D_C: 0.000 D_D: 0.717 G_A: 0.698 G_B: 9.371 cycle_A: 3.976 cycle_B: 4.097 idt_A: 0.230 idt_B: 1.988 G_dual_A: 12.303 G_dual_B: 0.679 
+End of epoch 242 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+End of epoch 243 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 244, iters: 12, time: 2.350, data: 0.000) D_A: 0.749 D_B: 0.000 D_C: 0.000 D_D: 0.706 G_A: 0.560 G_B: 9.495 cycle_A: 3.087 cycle_B: 2.709 idt_A: 0.214 idt_B: 1.543 G_dual_A: 12.873 G_dual_B: 0.793 
+End of epoch 244 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 245, iters: 35, time: 2.352, data: 0.000) D_A: 0.730 D_B: 0.000 D_C: 0.000 D_D: 0.682 G_A: 0.479 G_B: 9.359 cycle_A: 2.915 cycle_B: 2.449 idt_A: 0.224 idt_B: 1.457 G_dual_A: 11.992 G_dual_B: 0.654 
+End of epoch 245 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 246, iters: 58, time: 2.351, data: 0.000) D_A: 0.695 D_B: 0.000 D_C: 0.000 D_D: 0.766 G_A: 0.528 G_B: 9.423 cycle_A: 2.956 cycle_B: 2.224 idt_A: 0.431 idt_B: 1.478 G_dual_A: 12.152 G_dual_B: 0.539 
+End of epoch 246 / 1000 	 Time Taken: 177 sec
+learning rate = 0.0002000
+End of epoch 247 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 248, iters: 4, time: 2.353, data: 0.000) D_A: 0.717 D_B: 0.000 D_C: 0.000 D_D: 0.726 G_A: 0.957 G_B: 9.571 cycle_A: 1.228 cycle_B: 1.952 idt_A: 0.182 idt_B: 0.614 G_dual_A: 12.190 G_dual_B: 0.712 
+End of epoch 248 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 249, iters: 27, time: 2.353, data: 0.000) D_A: 0.520 D_B: 0.000 D_C: 0.000 D_D: 0.625 G_A: 0.889 G_B: 9.254 cycle_A: 0.323 cycle_B: 0.977 idt_A: 0.265 idt_B: 0.162 G_dual_A: 9.991 G_dual_B: 0.889 
+End of epoch 249 / 1000 	 Time Taken: 176 sec
+learning rate = 0.0002000
+(epoch: 250, iters: 50, time: 2.351, data: 0.000) D_A: 0.597 D_B: 0.000 D_C: 0.000 D_D: 0.654 G_A: 0.583 G_B: 8.022 cycle_A: 4.736 cycle_B: 3.625 idt_A: 0.302 idt_B: 2.368 G_dual_A: 12.145 G_dual_B: 0.771 
+saving the model at the end of epoch 250, iters 3927
+End of epoch 250 / 1000 	 Time Taken: 179 sec
+learning rate = 0.0002000
+Traceback (most recent call last):
+  File "/home/levibaljer/GAN_suite/train_pup.py", line 103, in <module>
+    model.optimize_parameters(opt)
+  File "/home/levibaljer/GAN_suite/models/pup_gan_model.py", line 211, in optimize_parameters
+    self.backward_D_C(opt)
+  File "/home/levibaljer/GAN_suite/models/pup_gan_model.py", line 147, in backward_D_C
+    self.loss_D_C = self.backward_D_basic(self.netD_C, torch.cat((self.real_A, self.fake_B), 1), torch.cat((self.rec_A, self.fake_B), 1))
+  File "/home/levibaljer/GAN_suite/models/pup_gan_model.py", line 132, in backward_D_basic
+    loss_D.backward()
+  File "/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/_tensor.py", line 525, in backward
+    torch.autograd.backward(
+  File "/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/autograd/__init__.py", line 267, in backward
+    _engine_run_backward(
+  File "/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/autograd/graph.py", line 744, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward.
+----------------- Options ---------------
+               batch_size: 1                             
+                    beta1: 0.5                           
+          checkpoints_dir: /media/hdd/levibaljer/Ea_GAN/checkpoints
+           continue_train: False                         
+                data_path: /media/hdd/levibaljer/Khula_GANs/paired/flirt_train
+              data_path_2: /media/hdd/levibaljer/Khula_GANs/unpaired/train
+               drop_ratio: 0                             
+              epoch_count: 0                             
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 1                             
+                  isTrain: True                          	[default: None]
+              labelSmooth: 0                             
+                lambda_L1: 300.0                         
+             lambda_sobel: 100.0                         
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: lambda                        
+                min_pixel: 0.1                           
+                    model: ea_gan                        
+               n_layers_D: 3                             
+                     name: flirt_Khula                   
+                      ndf: 64                            
+                     netD: n_layers                      
+                     netG: resnet_9blocks                
+           new_resolution: (0.45, 0.45, 0.45)            
+                      ngf: 64                            
+                    niter: 500                           
+              niter_decay: 500                           
+               no_dropout: True                          
+                  no_html: False                         
+                 no_lsgan: True                          
+                     norm: instance                      
+                output_nc: 1                             
+               patch_size: [128, 128, 64]                
+                    phase: train                         
+                pool_size: 50                            
+               print_freq: 100                           
+                 resample: False                         
+           rise_sobelLoss: False                         
+          save_epoch_freq: 200                           
+         save_latest_freq: 1000                          
+                   suffix:                               
+              super_epoch: 0                             
+              super_train: 1                             
+                 val_path: /media/hdd/levibaljer/Hype/test_2
+                  verbose: False                         
+          which_direction: AtoB                          
+              which_epoch: latest                        
+                  workers: 8                             
+----------------- End -------------------
+lenght train list: 77
+torch.Size([1, 128, 128, 64])
+initialize network with normal
+initialize network with normal
+model [EaGANModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 34.111 M
+[Network D] Total number of parameters : 11.056 M
+-----------------------------------------------
+saving the model at the end of epoch 0, iters 77
+End of epoch 0 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+update sobel lambda: 0.000000
+/home/levibaljer/anaconda3/envs/unet/lib/python3.8/site-packages/torch/nn/modules/conv.py:605: UserWarning: Plan failed with a cudnnException: CUDNN_BACKEND_EXECUTION_PLAN_DESCRIPTOR: cudnnFinalize Descriptor Failed cudnn_status: CUDNN_STATUS_NOT_SUPPORTED (Triggered internally at ../aten/src/ATen/native/cudnn/Conv_v8.cpp:919.)
+  return F.conv3d(
+(epoch: 1, iters: 23, time: 0.632, data: 0.917) D: 0.847 G_GAN: 3.673 G_L1: 25.327 G_sobelL1: 0.000 
+End of epoch 1 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 0.666667
+(epoch: 2, iters: 46, time: 0.641, data: 0.000) D: 1.764 G_GAN: 2.019 G_L1: 11.962 G_sobelL1: 0.081 
+End of epoch 2 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 1.333333
+(epoch: 3, iters: 69, time: 0.642, data: 0.000) D: 0.693 G_GAN: 1.511 G_L1: 57.273 G_sobelL1: 0.616 
+End of epoch 3 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 2.000000
+End of epoch 4 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 2.666667
+(epoch: 5, iters: 15, time: 0.641, data: 0.000) D: 0.143 G_GAN: 2.215 G_L1: 56.123 G_sobelL1: 1.120 
+End of epoch 5 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 3.333333
+(epoch: 6, iters: 38, time: 0.640, data: 0.000) D: 0.602 G_GAN: 1.722 G_L1: 34.390 G_sobelL1: 1.021 
+End of epoch 6 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 4.000000
+(epoch: 7, iters: 61, time: 0.642, data: 0.000) D: 0.457 G_GAN: 1.643 G_L1: 15.720 G_sobelL1: 0.759 
+End of epoch 7 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 4.666667
+End of epoch 8 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 5.333333
+(epoch: 9, iters: 7, time: 0.637, data: 0.000) D: 0.050 G_GAN: 2.399 G_L1: 37.284 G_sobelL1: 1.906 
+End of epoch 9 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 6.000000
+(epoch: 10, iters: 30, time: 0.641, data: 0.000) D: 0.179 G_GAN: 2.479 G_L1: 36.878 G_sobelL1: 2.213 
+End of epoch 10 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 6.666667
+(epoch: 11, iters: 53, time: 0.641, data: 0.000) D: 0.011 G_GAN: 4.944 G_L1: 36.647 G_sobelL1: 2.546 
+End of epoch 11 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 7.333333
+(epoch: 12, iters: 76, time: 0.641, data: 0.000) D: 0.095 G_GAN: 3.175 G_L1: 15.751 G_sobelL1: 1.043 
+saving the latest model (epoch 12, total_steps 1000)
+End of epoch 12 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 8.000000
+End of epoch 13 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 8.666667
+(epoch: 14, iters: 22, time: 0.641, data: 0.000) D: 0.124 G_GAN: 3.714 G_L1: 37.089 G_sobelL1: 3.562 
+End of epoch 14 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 9.333333
+(epoch: 15, iters: 45, time: 0.640, data: 0.000) D: 0.580 G_GAN: 2.433 G_L1: 21.587 G_sobelL1: 1.803 
+End of epoch 15 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 10.000000
+(epoch: 16, iters: 68, time: 0.641, data: 0.000) D: 0.317 G_GAN: 4.437 G_L1: 34.423 G_sobelL1: 3.573 
+End of epoch 16 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 10.666667
+End of epoch 17 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 11.333333
+(epoch: 18, iters: 14, time: 0.639, data: 0.000) D: 0.444 G_GAN: 1.123 G_L1: 10.502 G_sobelL1: 1.184 
+End of epoch 18 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 12.000000
+(epoch: 19, iters: 37, time: 0.644, data: 0.000) D: 0.092 G_GAN: 0.521 G_L1: 1.309 G_sobelL1: 0.309 
+End of epoch 19 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 12.666667
+(epoch: 20, iters: 60, time: 0.642, data: 0.000) D: 0.111 G_GAN: 2.438 G_L1: 33.306 G_sobelL1: 3.578 
+End of epoch 20 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 13.333333
+End of epoch 21 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 14.000000
+(epoch: 22, iters: 6, time: 0.640, data: 0.000) D: 0.051 G_GAN: 3.995 G_L1: 30.675 G_sobelL1: 4.901 
+End of epoch 22 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 14.666667
+(epoch: 23, iters: 29, time: 0.641, data: 0.000) D: 0.017 G_GAN: 4.056 G_L1: 36.026 G_sobelL1: 5.419 
+End of epoch 23 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 15.333333
+(epoch: 24, iters: 52, time: 0.639, data: 0.000) D: 0.070 G_GAN: 2.977 G_L1: 30.691 G_sobelL1: 5.706 
+End of epoch 24 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 16.000000
+(epoch: 25, iters: 75, time: 0.639, data: 0.000) D: 0.953 G_GAN: 0.218 G_L1: 40.960 G_sobelL1: 5.704 
+saving the latest model (epoch 25, total_steps 2000)
+End of epoch 25 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 16.666667
+End of epoch 26 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 17.333333
+(epoch: 27, iters: 21, time: 0.639, data: 0.000) D: 1.086 G_GAN: 3.311 G_L1: 21.043 G_sobelL1: 3.333 
+End of epoch 27 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 18.000000
+(epoch: 28, iters: 44, time: 0.634, data: 0.000) D: 0.481 G_GAN: 3.978 G_L1: 29.097 G_sobelL1: 6.151 
+End of epoch 28 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 18.666667
+(epoch: 29, iters: 67, time: 0.640, data: 0.000) D: 0.239 G_GAN: 2.782 G_L1: 25.480 G_sobelL1: 5.376 
+End of epoch 29 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 19.333333
+End of epoch 30 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 20.000000
+(epoch: 31, iters: 13, time: 0.635, data: 0.000) D: 0.580 G_GAN: 4.033 G_L1: 23.260 G_sobelL1: 5.030 
+End of epoch 31 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 20.666667
+(epoch: 32, iters: 36, time: 0.639, data: 0.000) D: 0.201 G_GAN: 1.644 G_L1: 35.706 G_sobelL1: 8.034 
+End of epoch 32 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 21.333333
+(epoch: 33, iters: 59, time: 0.641, data: 0.000) D: 0.506 G_GAN: 0.815 G_L1: 6.791 G_sobelL1: 1.754 
+End of epoch 33 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 22.000000
+End of epoch 34 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 22.666667
+(epoch: 35, iters: 5, time: 0.636, data: 0.000) D: 0.057 G_GAN: 3.037 G_L1: 35.639 G_sobelL1: 7.426 
+End of epoch 35 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 23.333333
+(epoch: 36, iters: 28, time: 0.640, data: 0.000) D: 0.641 G_GAN: 0.487 G_L1: 1.804 G_sobelL1: 0.775 
+End of epoch 36 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 24.000000
+(epoch: 37, iters: 51, time: 0.634, data: 0.000) D: 0.100 G_GAN: 0.503 G_L1: 14.264 G_sobelL1: 3.866 
+End of epoch 37 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 24.666667
+(epoch: 38, iters: 74, time: 0.640, data: 0.000) D: 0.151 G_GAN: 4.493 G_L1: 35.297 G_sobelL1: 9.966 
+saving the latest model (epoch 38, total_steps 3000)
+End of epoch 38 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 25.333333
+End of epoch 39 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 26.000000
+(epoch: 40, iters: 20, time: 0.642, data: 0.000) D: 0.457 G_GAN: 0.599 G_L1: 3.593 G_sobelL1: 0.923 
+End of epoch 40 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 26.666667
+(epoch: 41, iters: 43, time: 0.634, data: 0.000) D: 0.386 G_GAN: 2.908 G_L1: 23.697 G_sobelL1: 6.744 
+End of epoch 41 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 27.333333
+(epoch: 42, iters: 66, time: 0.639, data: 0.000) D: 0.422 G_GAN: 4.293 G_L1: 22.890 G_sobelL1: 7.104 
+End of epoch 42 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 28.000000
+End of epoch 43 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 28.666667
+(epoch: 44, iters: 12, time: 0.640, data: 0.000) D: 0.442 G_GAN: 0.494 G_L1: 31.843 G_sobelL1: 7.624 
+End of epoch 44 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 29.333333
+(epoch: 45, iters: 35, time: 0.640, data: 0.000) D: 0.054 G_GAN: 1.747 G_L1: 43.086 G_sobelL1: 13.415 
+End of epoch 45 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 30.000000
+(epoch: 46, iters: 58, time: 0.638, data: 0.000) D: 0.375 G_GAN: 1.320 G_L1: 19.777 G_sobelL1: 7.285 
+End of epoch 46 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 30.666667
+End of epoch 47 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 31.333333
+(epoch: 48, iters: 4, time: 0.635, data: 0.000) D: 0.894 G_GAN: 1.251 G_L1: 28.985 G_sobelL1: 10.599 
+End of epoch 48 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 32.000000
+(epoch: 49, iters: 27, time: 0.640, data: 0.000) D: 3.296 G_GAN: 0.004 G_L1: 26.585 G_sobelL1: 7.808 
+End of epoch 49 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 32.666667
+(epoch: 50, iters: 50, time: 0.643, data: 0.000) D: 0.314 G_GAN: 2.813 G_L1: 10.130 G_sobelL1: 3.463 
+End of epoch 50 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 33.333333
+(epoch: 51, iters: 73, time: 0.642, data: 0.000) D: 0.826 G_GAN: 4.247 G_L1: 24.874 G_sobelL1: 9.375 
+saving the latest model (epoch 51, total_steps 4000)
+End of epoch 51 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 34.000000
+End of epoch 52 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 34.666667
+(epoch: 53, iters: 19, time: 0.642, data: 0.000) D: 0.869 G_GAN: 0.229 G_L1: 0.465 G_sobelL1: 0.311 
+End of epoch 53 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 35.333333
+(epoch: 54, iters: 42, time: 0.642, data: 0.000) D: 0.497 G_GAN: 4.694 G_L1: 23.600 G_sobelL1: 10.451 
+End of epoch 54 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 36.000000
+(epoch: 55, iters: 65, time: 0.641, data: 0.000) D: 0.068 G_GAN: 0.072 G_L1: 1.212 G_sobelL1: 0.532 
+End of epoch 55 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 36.666667
+End of epoch 56 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 37.333333
+(epoch: 57, iters: 11, time: 0.641, data: 0.000) D: 0.090 G_GAN: 1.394 G_L1: 21.574 G_sobelL1: 7.432 
+End of epoch 57 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 38.000000
+(epoch: 58, iters: 34, time: 0.637, data: 0.000) D: 0.481 G_GAN: 2.038 G_L1: 12.141 G_sobelL1: 3.831 
+End of epoch 58 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 38.666667
+(epoch: 59, iters: 57, time: 0.640, data: 0.000) D: 0.225 G_GAN: 5.223 G_L1: 32.010 G_sobelL1: 13.933 
+End of epoch 59 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 39.333333
+End of epoch 60 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 40.000000
+(epoch: 61, iters: 3, time: 0.669, data: 0.000) D: 0.129 G_GAN: 3.110 G_L1: 22.066 G_sobelL1: 11.191 
+End of epoch 61 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 40.666667
+(epoch: 62, iters: 26, time: 0.642, data: 0.012) D: 0.157 G_GAN: 1.499 G_L1: 19.651 G_sobelL1: 9.666 
+End of epoch 62 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 41.333333
+(epoch: 63, iters: 49, time: 0.644, data: 0.000) D: 0.466 G_GAN: 2.937 G_L1: 29.610 G_sobelL1: 13.506 
+End of epoch 63 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 42.000000
+(epoch: 64, iters: 72, time: 0.642, data: 0.000) D: 0.141 G_GAN: 0.697 G_L1: 29.980 G_sobelL1: 13.008 
+saving the latest model (epoch 64, total_steps 5000)
+End of epoch 64 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 42.666667
+End of epoch 65 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 43.333333
+(epoch: 66, iters: 18, time: 0.642, data: 0.000) D: 0.445 G_GAN: 1.349 G_L1: 11.427 G_sobelL1: 6.030 
+End of epoch 66 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 44.000000
+(epoch: 67, iters: 41, time: 0.644, data: 0.000) D: 0.721 G_GAN: 0.550 G_L1: 5.228 G_sobelL1: 2.218 
+End of epoch 67 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 44.666667
+(epoch: 68, iters: 64, time: 0.642, data: 0.000) D: 0.119 G_GAN: 2.974 G_L1: 28.448 G_sobelL1: 13.803 
+End of epoch 68 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 45.333333
+End of epoch 69 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 46.000000
+(epoch: 70, iters: 10, time: 0.642, data: 0.000) D: 0.237 G_GAN: 4.058 G_L1: 10.638 G_sobelL1: 8.534 
+End of epoch 70 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 46.666667
+(epoch: 71, iters: 33, time: 0.643, data: 0.000) D: 0.076 G_GAN: 4.185 G_L1: 21.855 G_sobelL1: 11.408 
+End of epoch 71 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+update sobel lambda: 47.333333
+(epoch: 72, iters: 56, time: 0.645, data: 0.000) D: 0.967 G_GAN: 3.132 G_L1: 27.770 G_sobelL1: 15.886 
+End of epoch 72 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 48.000000
+End of epoch 73 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 48.666667
+(epoch: 74, iters: 2, time: 0.612, data: 0.000) D: 0.293 G_GAN: 1.381 G_L1: 1.186 G_sobelL1: 0.974 
+End of epoch 74 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 49.333333
+(epoch: 75, iters: 25, time: 0.641, data: 0.000) D: 0.197 G_GAN: 3.861 G_L1: 31.363 G_sobelL1: 17.387 
+End of epoch 75 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 50.000000
+(epoch: 76, iters: 48, time: 0.642, data: 0.000) D: 0.381 G_GAN: 0.344 G_L1: 19.892 G_sobelL1: 12.068 
+End of epoch 76 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 50.666667
+(epoch: 77, iters: 71, time: 0.641, data: 0.000) D: 0.090 G_GAN: 2.145 G_L1: 25.628 G_sobelL1: 13.383 
+saving the latest model (epoch 77, total_steps 6000)
+End of epoch 77 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 51.333333
+End of epoch 78 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 52.000000
+(epoch: 79, iters: 17, time: 0.618, data: 0.000) D: 0.041 G_GAN: 3.609 G_L1: 40.384 G_sobelL1: 20.366 
+End of epoch 79 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 52.666667
+(epoch: 80, iters: 40, time: 0.639, data: 0.000) D: 0.467 G_GAN: 1.474 G_L1: 29.217 G_sobelL1: 17.346 
+End of epoch 80 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 53.333333
+(epoch: 81, iters: 63, time: 0.640, data: 0.000) D: 0.554 G_GAN: 4.466 G_L1: 22.208 G_sobelL1: 14.667 
+End of epoch 81 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 54.000000
+End of epoch 82 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 54.666667
+(epoch: 83, iters: 9, time: 0.642, data: 0.000) D: 0.384 G_GAN: 4.923 G_L1: 25.629 G_sobelL1: 14.822 
+End of epoch 83 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 55.333333
+(epoch: 84, iters: 32, time: 0.640, data: 0.000) D: 0.587 G_GAN: 0.490 G_L1: 23.334 G_sobelL1: 14.358 
+End of epoch 84 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 56.000000
+(epoch: 85, iters: 55, time: 0.641, data: 0.000) D: 0.057 G_GAN: 3.285 G_L1: 35.050 G_sobelL1: 22.850 
+End of epoch 85 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 56.666667
+End of epoch 86 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 57.333333
+(epoch: 87, iters: 1, time: 0.417, data: 0.000) D: 1.705 G_GAN: 0.150 G_L1: 26.904 G_sobelL1: 14.023 
+End of epoch 87 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 58.000000
+(epoch: 88, iters: 24, time: 0.641, data: 0.000) D: 1.262 G_GAN: 3.368 G_L1: 37.798 G_sobelL1: 21.507 
+End of epoch 88 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 58.666667
+(epoch: 89, iters: 47, time: 0.634, data: 0.000) D: 0.282 G_GAN: 0.998 G_L1: 25.633 G_sobelL1: 16.951 
+End of epoch 89 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 59.333333
+(epoch: 90, iters: 70, time: 0.642, data: 0.000) D: 0.687 G_GAN: 0.076 G_L1: 8.405 G_sobelL1: 3.969 
+saving the latest model (epoch 90, total_steps 7000)
+End of epoch 90 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 60.000000
+End of epoch 91 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 60.666667
+(epoch: 92, iters: 16, time: 0.637, data: 0.000) D: 0.070 G_GAN: 2.234 G_L1: 23.080 G_sobelL1: 16.046 
+End of epoch 92 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 61.333333
+(epoch: 93, iters: 39, time: 0.642, data: 0.000) D: 0.375 G_GAN: 1.874 G_L1: 14.059 G_sobelL1: 9.421 
+End of epoch 93 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 62.000000
+(epoch: 94, iters: 62, time: 0.640, data: 0.000) D: 0.411 G_GAN: 0.671 G_L1: 0.952 G_sobelL1: 1.038 
+End of epoch 94 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 62.666667
+End of epoch 95 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 63.333333
+(epoch: 96, iters: 8, time: 0.642, data: 0.000) D: 0.190 G_GAN: 2.790 G_L1: 55.247 G_sobelL1: 28.006 
+End of epoch 96 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 64.000000
+(epoch: 97, iters: 31, time: 0.641, data: 0.000) D: 0.043 G_GAN: 3.323 G_L1: 29.017 G_sobelL1: 19.677 
+End of epoch 97 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 64.666667
+(epoch: 98, iters: 54, time: 0.641, data: 0.000) D: 0.658 G_GAN: 2.418 G_L1: 27.192 G_sobelL1: 16.292 
+End of epoch 98 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 65.333333
+(epoch: 99, iters: 77, time: 0.642, data: 0.000) D: 0.651 G_GAN: 1.965 G_L1: 5.863 G_sobelL1: 4.410 
+End of epoch 99 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 66.000000
+End of epoch 100 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 66.666667
+(epoch: 101, iters: 23, time: 0.640, data: 0.654) D: 0.886 G_GAN: 2.460 G_L1: 29.114 G_sobelL1: 18.545 
+End of epoch 101 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 67.333333
+(epoch: 102, iters: 46, time: 0.642, data: 0.000) D: 0.087 G_GAN: 2.651 G_L1: 23.629 G_sobelL1: 14.236 
+End of epoch 102 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 68.000000
+(epoch: 103, iters: 69, time: 0.639, data: 0.000) D: 0.506 G_GAN: 1.215 G_L1: 11.164 G_sobelL1: 8.073 
+saving the latest model (epoch 103, total_steps 8000)
+End of epoch 103 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+update sobel lambda: 68.666667
+End of epoch 104 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 69.333333
+(epoch: 105, iters: 15, time: 0.643, data: 0.000) D: 0.397 G_GAN: 1.769 G_L1: 21.544 G_sobelL1: 18.980 
+End of epoch 105 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 70.000000
+(epoch: 106, iters: 38, time: 0.636, data: 0.000) D: 0.212 G_GAN: 0.373 G_L1: 25.233 G_sobelL1: 17.598 
+End of epoch 106 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 70.666667
+(epoch: 107, iters: 61, time: 0.642, data: 0.000) D: 0.377 G_GAN: 0.959 G_L1: 72.657 G_sobelL1: 32.949 
+End of epoch 107 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 71.333333
+End of epoch 108 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 72.000000
+(epoch: 109, iters: 7, time: 0.630, data: 0.000) D: 1.059 G_GAN: 4.527 G_L1: 28.440 G_sobelL1: 19.258 
+End of epoch 109 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 72.666667
+(epoch: 110, iters: 30, time: 0.643, data: 0.000) D: 0.436 G_GAN: 1.196 G_L1: 0.664 G_sobelL1: 0.858 
+End of epoch 110 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 73.333333
+(epoch: 111, iters: 53, time: 0.638, data: 0.000) D: 1.260 G_GAN: 5.717 G_L1: 31.126 G_sobelL1: 26.675 
+End of epoch 111 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 74.000000
+(epoch: 112, iters: 76, time: 0.639, data: 0.000) D: 0.048 G_GAN: 2.674 G_L1: 52.010 G_sobelL1: 27.101 
+End of epoch 112 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 74.666667
+End of epoch 113 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 75.333333
+(epoch: 114, iters: 22, time: 0.642, data: 0.000) D: 0.102 G_GAN: 4.146 G_L1: 41.847 G_sobelL1: 30.398 
+End of epoch 114 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 76.000000
+(epoch: 115, iters: 45, time: 0.636, data: 0.000) D: 0.502 G_GAN: 2.320 G_L1: 5.970 G_sobelL1: 5.005 
+End of epoch 115 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 76.666667
+(epoch: 116, iters: 68, time: 0.640, data: 0.000) D: 0.113 G_GAN: 3.378 G_L1: 21.499 G_sobelL1: 18.123 
+saving the latest model (epoch 116, total_steps 9000)
+End of epoch 116 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 77.333333
+End of epoch 117 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 78.000000
+(epoch: 118, iters: 14, time: 0.643, data: 0.000) D: 0.920 G_GAN: 1.452 G_L1: 7.165 G_sobelL1: 3.338 
+End of epoch 118 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 78.666667
+(epoch: 119, iters: 37, time: 0.631, data: 0.000) D: 0.499 G_GAN: 0.763 G_L1: 0.339 G_sobelL1: 0.652 
+End of epoch 119 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 79.333333
+(epoch: 120, iters: 60, time: 0.643, data: 0.000) D: 0.828 G_GAN: 1.242 G_L1: 1.207 G_sobelL1: 1.484 
+End of epoch 120 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 80.000000
+End of epoch 121 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 80.666667
+(epoch: 122, iters: 6, time: 0.633, data: 0.000) D: 0.016 G_GAN: 1.009 G_L1: 37.190 G_sobelL1: 26.514 
+End of epoch 122 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 81.333333
+(epoch: 123, iters: 29, time: 0.637, data: 0.000) D: 0.187 G_GAN: 1.156 G_L1: 17.391 G_sobelL1: 15.664 
+End of epoch 123 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 82.000000
+(epoch: 124, iters: 52, time: 0.638, data: 0.000) D: 0.103 G_GAN: 2.775 G_L1: 26.349 G_sobelL1: 27.503 
+End of epoch 124 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 82.666667
+(epoch: 125, iters: 75, time: 0.641, data: 0.000) D: 0.087 G_GAN: 1.174 G_L1: 27.654 G_sobelL1: 25.970 
+End of epoch 125 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 83.333333
+End of epoch 126 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 84.000000
+(epoch: 127, iters: 21, time: 0.644, data: 0.000) D: 0.284 G_GAN: 1.110 G_L1: 29.249 G_sobelL1: 22.779 
+End of epoch 127 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 84.666667
+(epoch: 128, iters: 44, time: 0.642, data: 0.000) D: 0.194 G_GAN: 2.399 G_L1: 28.780 G_sobelL1: 30.903 
+End of epoch 128 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 85.333333
+(epoch: 129, iters: 67, time: 0.643, data: 0.000) D: 0.706 G_GAN: 1.091 G_L1: 1.532 G_sobelL1: 2.030 
+saving the latest model (epoch 129, total_steps 10000)
+End of epoch 129 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 86.000000
+End of epoch 130 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 86.666667
+(epoch: 131, iters: 13, time: 0.640, data: 0.000) D: 0.361 G_GAN: 0.888 G_L1: 34.232 G_sobelL1: 28.764 
+End of epoch 131 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 87.333333
+(epoch: 132, iters: 36, time: 0.642, data: 0.000) D: 0.589 G_GAN: 0.542 G_L1: 15.613 G_sobelL1: 17.105 
+End of epoch 132 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 88.000000
+(epoch: 133, iters: 59, time: 0.636, data: 0.000) D: 0.628 G_GAN: 1.361 G_L1: 0.383 G_sobelL1: 0.592 
+End of epoch 133 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 88.666667
+End of epoch 134 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 89.333333
+(epoch: 135, iters: 5, time: 0.639, data: 0.000) D: 0.198 G_GAN: 3.222 G_L1: 22.620 G_sobelL1: 22.051 
+End of epoch 135 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 90.000000
+(epoch: 136, iters: 28, time: 0.640, data: 0.000) D: 0.711 G_GAN: 0.659 G_L1: 4.819 G_sobelL1: 4.010 
+End of epoch 136 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+update sobel lambda: 90.666667
+(epoch: 137, iters: 51, time: 0.631, data: 0.000) D: 0.644 G_GAN: 1.325 G_L1: 0.692 G_sobelL1: 0.836 
+End of epoch 137 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 91.333333
+(epoch: 138, iters: 74, time: 0.640, data: 0.000) D: 0.193 G_GAN: 1.390 G_L1: 25.237 G_sobelL1: 24.071 
+End of epoch 138 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 92.000000
+End of epoch 139 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 92.666667
+(epoch: 140, iters: 20, time: 0.640, data: 0.000) D: 0.012 G_GAN: 0.726 G_L1: 24.820 G_sobelL1: 25.408 
+End of epoch 140 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 93.333333
+(epoch: 141, iters: 43, time: 0.642, data: 0.000) D: 0.932 G_GAN: 1.104 G_L1: 6.284 G_sobelL1: 6.489 
+End of epoch 141 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 94.000000
+(epoch: 142, iters: 66, time: 0.642, data: 0.000) D: 0.186 G_GAN: 0.169 G_L1: 13.716 G_sobelL1: 14.853 
+saving the latest model (epoch 142, total_steps 11000)
+End of epoch 142 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 94.666667
+End of epoch 143 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 95.333333
+(epoch: 144, iters: 12, time: 0.637, data: 0.000) D: 0.050 G_GAN: 2.295 G_L1: 25.929 G_sobelL1: 25.306 
+End of epoch 144 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 96.000000
+(epoch: 145, iters: 35, time: 0.642, data: 0.000) D: 1.095 G_GAN: 6.028 G_L1: 18.606 G_sobelL1: 24.090 
+End of epoch 145 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 96.666667
+(epoch: 146, iters: 58, time: 0.640, data: 0.000) D: 0.561 G_GAN: 1.735 G_L1: 13.672 G_sobelL1: 16.096 
+End of epoch 146 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 97.333333
+End of epoch 147 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 98.000000
+(epoch: 148, iters: 4, time: 0.633, data: 0.000) D: 0.050 G_GAN: 2.632 G_L1: 31.605 G_sobelL1: 31.834 
+End of epoch 148 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 98.666667
+(epoch: 149, iters: 27, time: 0.642, data: 0.000) D: 0.323 G_GAN: 1.241 G_L1: 1.131 G_sobelL1: 2.050 
+End of epoch 149 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+update sobel lambda: 99.333333
+(epoch: 150, iters: 50, time: 0.641, data: 0.000) D: 0.181 G_GAN: 2.013 G_L1: 23.199 G_sobelL1: 26.025 
+End of epoch 150 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+update sobel lambda: 100.000000
+(epoch: 151, iters: 73, time: 0.642, data: 0.000) D: 0.622 G_GAN: 2.012 G_L1: 1.174 G_sobelL1: 2.040 
+End of epoch 151 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 152 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 153, iters: 19, time: 0.642, data: 0.000) D: 0.133 G_GAN: 2.410 G_L1: 19.925 G_sobelL1: 21.924 
+End of epoch 153 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 154, iters: 42, time: 0.634, data: 0.000) D: 0.011 G_GAN: 3.585 G_L1: 19.370 G_sobelL1: 21.893 
+End of epoch 154 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 155, iters: 65, time: 0.641, data: 0.000) D: 0.449 G_GAN: 0.168 G_L1: 11.256 G_sobelL1: 15.073 
+saving the latest model (epoch 155, total_steps 12000)
+End of epoch 155 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 156 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 157, iters: 11, time: 0.637, data: 0.000) D: 0.420 G_GAN: 5.032 G_L1: 27.403 G_sobelL1: 31.019 
+End of epoch 157 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 158, iters: 34, time: 0.641, data: 0.000) D: 0.038 G_GAN: 5.211 G_L1: 38.158 G_sobelL1: 39.816 
+End of epoch 158 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 159, iters: 57, time: 0.611, data: 0.000) D: 0.247 G_GAN: 0.969 G_L1: 2.292 G_sobelL1: 2.865 
+End of epoch 159 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 160 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 161, iters: 3, time: 0.394, data: 0.000) D: 0.112 G_GAN: 1.043 G_L1: 34.012 G_sobelL1: 34.238 
+End of epoch 161 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 162, iters: 26, time: 0.640, data: 0.000) D: 0.084 G_GAN: 1.098 G_L1: 14.059 G_sobelL1: 17.836 
+End of epoch 162 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 163, iters: 49, time: 0.636, data: 0.000) D: 1.256 G_GAN: 1.777 G_L1: 7.691 G_sobelL1: 8.453 
+End of epoch 163 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 164, iters: 72, time: 0.642, data: 0.000) D: 0.012 G_GAN: 4.628 G_L1: 24.004 G_sobelL1: 31.741 
+End of epoch 164 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 165 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 166, iters: 18, time: 0.629, data: 0.000) D: 0.068 G_GAN: 2.490 G_L1: 18.316 G_sobelL1: 23.046 
+End of epoch 166 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 167, iters: 41, time: 0.640, data: 0.000) D: 0.038 G_GAN: 4.401 G_L1: 30.873 G_sobelL1: 28.396 
+End of epoch 167 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 168, iters: 64, time: 0.640, data: 0.000) D: 0.627 G_GAN: 0.396 G_L1: 22.284 G_sobelL1: 22.727 
+saving the latest model (epoch 168, total_steps 13000)
+End of epoch 168 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 169 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 170, iters: 10, time: 0.642, data: 0.000) D: 0.300 G_GAN: 0.456 G_L1: 14.231 G_sobelL1: 13.496 
+End of epoch 170 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 171, iters: 33, time: 0.636, data: 0.000) D: 0.263 G_GAN: 0.813 G_L1: 0.372 G_sobelL1: 0.663 
+End of epoch 171 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 172, iters: 56, time: 0.640, data: 0.000) D: 0.431 G_GAN: 4.575 G_L1: 32.462 G_sobelL1: 30.991 
+End of epoch 172 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 173 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 174, iters: 2, time: 0.626, data: 0.000) D: 0.086 G_GAN: 4.578 G_L1: 26.585 G_sobelL1: 32.567 
+End of epoch 174 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 175, iters: 25, time: 0.640, data: 0.000) D: 0.239 G_GAN: 0.593 G_L1: 27.336 G_sobelL1: 31.721 
+End of epoch 175 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 176, iters: 48, time: 0.641, data: 0.000) D: 0.459 G_GAN: 4.300 G_L1: 13.106 G_sobelL1: 16.670 
+End of epoch 176 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 177, iters: 71, time: 0.638, data: 0.000) D: 0.451 G_GAN: 4.547 G_L1: 30.916 G_sobelL1: 33.018 
+End of epoch 177 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 178 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 179, iters: 17, time: 0.639, data: 0.000) D: 0.265 G_GAN: 1.004 G_L1: 33.401 G_sobelL1: 27.854 
+End of epoch 179 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 180, iters: 40, time: 0.642, data: 0.000) D: 0.128 G_GAN: 2.243 G_L1: 21.001 G_sobelL1: 22.066 
+End of epoch 180 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 181, iters: 63, time: 0.640, data: 0.000) D: 0.095 G_GAN: 3.363 G_L1: 24.565 G_sobelL1: 28.623 
+saving the latest model (epoch 181, total_steps 14000)
+End of epoch 181 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 182 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 183, iters: 9, time: 0.640, data: 0.000) D: 0.267 G_GAN: 1.021 G_L1: 24.570 G_sobelL1: 29.625 
+End of epoch 183 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 184, iters: 32, time: 0.639, data: 0.000) D: 0.664 G_GAN: 0.733 G_L1: 0.756 G_sobelL1: 1.369 
+End of epoch 184 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 185, iters: 55, time: 0.639, data: 0.000) D: 0.084 G_GAN: 1.557 G_L1: 17.724 G_sobelL1: 19.653 
+End of epoch 185 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 186 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 187, iters: 1, time: 0.409, data: 0.000) D: 0.157 G_GAN: 4.697 G_L1: 35.474 G_sobelL1: 23.166 
+End of epoch 187 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 188, iters: 24, time: 0.640, data: 0.000) D: 0.039 G_GAN: 2.474 G_L1: 19.719 G_sobelL1: 25.002 
+End of epoch 188 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 189, iters: 47, time: 0.641, data: 0.000) D: 1.109 G_GAN: 4.077 G_L1: 9.279 G_sobelL1: 9.797 
+End of epoch 189 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 190, iters: 70, time: 0.641, data: 0.000) D: 0.849 G_GAN: 0.337 G_L1: 43.786 G_sobelL1: 28.987 
+End of epoch 190 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 191 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 192, iters: 16, time: 0.619, data: 0.000) D: 0.026 G_GAN: 3.069 G_L1: 27.392 G_sobelL1: 33.952 
+End of epoch 192 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 193, iters: 39, time: 0.639, data: 0.000) D: 0.270 G_GAN: 1.205 G_L1: 10.583 G_sobelL1: 10.820 
+End of epoch 193 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 194, iters: 62, time: 0.640, data: 0.000) D: 0.585 G_GAN: 1.988 G_L1: 25.478 G_sobelL1: 28.771 
+saving the latest model (epoch 194, total_steps 15000)
+End of epoch 194 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+End of epoch 195 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 196, iters: 8, time: 0.639, data: 0.000) D: 0.325 G_GAN: 4.832 G_L1: 26.303 G_sobelL1: 30.472 
+End of epoch 196 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 197, iters: 31, time: 0.621, data: 0.000) D: 0.089 G_GAN: 4.738 G_L1: 31.885 G_sobelL1: 31.288 
+End of epoch 197 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 198, iters: 54, time: 0.642, data: 0.000) D: 0.233 G_GAN: 1.889 G_L1: 12.813 G_sobelL1: 18.104 
+End of epoch 198 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 199, iters: 77, time: 0.640, data: 0.000) D: 0.142 G_GAN: 4.136 G_L1: 31.252 G_sobelL1: 35.550 
+End of epoch 199 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+saving the model at the end of epoch 200, iters 15477
+End of epoch 200 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 201, iters: 23, time: 0.639, data: 0.670) D: 3.614 G_GAN: 4.757 G_L1: 29.227 G_sobelL1: 28.680 
+End of epoch 201 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 202, iters: 46, time: 0.639, data: 0.000) D: 0.483 G_GAN: 3.537 G_L1: 37.271 G_sobelL1: 31.770 
+End of epoch 202 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 203, iters: 69, time: 0.641, data: 0.000) D: 0.064 G_GAN: 1.394 G_L1: 32.111 G_sobelL1: 31.602 
+End of epoch 203 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 204 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 205, iters: 15, time: 0.640, data: 0.000) D: 0.565 G_GAN: 1.031 G_L1: 22.713 G_sobelL1: 18.578 
+End of epoch 205 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 206, iters: 38, time: 0.642, data: 0.000) D: 0.280 G_GAN: 2.227 G_L1: 35.201 G_sobelL1: 26.377 
+End of epoch 206 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 207, iters: 61, time: 0.642, data: 0.000) D: 0.919 G_GAN: 3.427 G_L1: 23.014 G_sobelL1: 27.721 
+saving the latest model (epoch 207, total_steps 16000)
+End of epoch 207 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 208 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 209, iters: 7, time: 0.639, data: 0.000) D: 0.230 G_GAN: 0.294 G_L1: 3.882 G_sobelL1: 4.435 
+End of epoch 209 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 210, iters: 30, time: 0.641, data: 0.000) D: 0.068 G_GAN: 1.432 G_L1: 18.612 G_sobelL1: 27.716 
+End of epoch 210 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 211, iters: 53, time: 0.642, data: 0.000) D: 0.539 G_GAN: 1.200 G_L1: 2.946 G_sobelL1: 3.283 
+End of epoch 211 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 212, iters: 76, time: 0.641, data: 0.000) D: 0.543 G_GAN: 0.261 G_L1: 7.624 G_sobelL1: 8.639 
+End of epoch 212 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 213 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 214, iters: 22, time: 0.637, data: 0.000) D: 0.108 G_GAN: 2.755 G_L1: 16.722 G_sobelL1: 17.723 
+End of epoch 214 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 215, iters: 45, time: 0.642, data: 0.000) D: 0.339 G_GAN: 2.651 G_L1: 26.424 G_sobelL1: 13.270 
+End of epoch 215 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 216, iters: 68, time: 0.640, data: 0.000) D: 0.067 G_GAN: 2.933 G_L1: 15.560 G_sobelL1: 19.616 
+End of epoch 216 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 217 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 218, iters: 14, time: 0.641, data: 0.000) D: 0.602 G_GAN: 5.105 G_L1: 34.007 G_sobelL1: 35.822 
+End of epoch 218 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 219, iters: 37, time: 0.642, data: 0.000) D: 0.207 G_GAN: 1.301 G_L1: 24.683 G_sobelL1: 19.945 
+End of epoch 219 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 220, iters: 60, time: 0.640, data: 0.000) D: 0.197 G_GAN: 0.286 G_L1: 27.261 G_sobelL1: 34.295 
+saving the latest model (epoch 220, total_steps 17000)
+End of epoch 220 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 221 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 222, iters: 6, time: 0.620, data: 0.000) D: 0.752 G_GAN: 1.822 G_L1: 24.948 G_sobelL1: 26.522 
+End of epoch 222 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 223, iters: 29, time: 0.640, data: 0.000) D: 0.150 G_GAN: 2.404 G_L1: 29.611 G_sobelL1: 32.812 
+End of epoch 223 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 224, iters: 52, time: 0.639, data: 0.000) D: 0.402 G_GAN: 0.096 G_L1: 10.972 G_sobelL1: 11.143 
+End of epoch 224 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 225, iters: 75, time: 0.642, data: 0.000) D: 0.662 G_GAN: 2.250 G_L1: 5.368 G_sobelL1: 4.944 
+End of epoch 225 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 226 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 227, iters: 21, time: 0.634, data: 0.000) D: 0.398 G_GAN: 1.540 G_L1: 7.442 G_sobelL1: 10.286 
+End of epoch 227 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 228, iters: 44, time: 0.640, data: 0.000) D: 0.868 G_GAN: 1.647 G_L1: 0.789 G_sobelL1: 1.130 
+End of epoch 228 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 229, iters: 67, time: 0.641, data: 0.000) D: 0.291 G_GAN: 2.203 G_L1: 11.396 G_sobelL1: 11.484 
+End of epoch 229 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 230 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 231, iters: 13, time: 0.639, data: 0.000) D: 0.338 G_GAN: 1.755 G_L1: 14.819 G_sobelL1: 16.385 
+End of epoch 231 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 232, iters: 36, time: 0.636, data: 0.000) D: 0.754 G_GAN: 2.622 G_L1: 31.409 G_sobelL1: 37.913 
+End of epoch 232 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 233, iters: 59, time: 0.641, data: 0.000) D: 0.147 G_GAN: 2.004 G_L1: 16.327 G_sobelL1: 21.303 
+saving the latest model (epoch 233, total_steps 18000)
+End of epoch 233 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 234 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 235, iters: 5, time: 0.636, data: 0.000) D: 0.713 G_GAN: 3.395 G_L1: 15.170 G_sobelL1: 19.840 
+End of epoch 235 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 236, iters: 28, time: 0.635, data: 0.000) D: 1.290 G_GAN: 1.624 G_L1: 37.610 G_sobelL1: 43.429 
+End of epoch 236 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 237, iters: 51, time: 0.641, data: 0.000) D: 0.247 G_GAN: 0.648 G_L1: 1.736 G_sobelL1: 2.999 
+End of epoch 237 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 238, iters: 74, time: 0.641, data: 0.000) D: 0.320 G_GAN: 2.537 G_L1: 17.042 G_sobelL1: 19.607 
+End of epoch 238 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 239 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 240, iters: 20, time: 0.641, data: 0.000) D: 0.543 G_GAN: 0.454 G_L1: 51.823 G_sobelL1: 18.015 
+End of epoch 240 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 241, iters: 43, time: 0.642, data: 0.000) D: 0.837 G_GAN: 1.538 G_L1: 21.639 G_sobelL1: 19.641 
+End of epoch 241 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 242, iters: 66, time: 0.639, data: 0.000) D: 0.871 G_GAN: 0.251 G_L1: 22.379 G_sobelL1: 24.216 
+End of epoch 242 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 243 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 244, iters: 12, time: 0.640, data: 0.000) D: 0.725 G_GAN: 0.427 G_L1: 22.152 G_sobelL1: 23.616 
+End of epoch 244 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 245, iters: 35, time: 0.634, data: 0.000) D: 0.405 G_GAN: 0.955 G_L1: 11.535 G_sobelL1: 16.055 
+End of epoch 245 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 246, iters: 58, time: 0.636, data: 0.000) D: 0.069 G_GAN: 2.799 G_L1: 26.137 G_sobelL1: 31.370 
+saving the latest model (epoch 246, total_steps 19000)
+End of epoch 246 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 247 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 248, iters: 4, time: 0.424, data: 0.000) D: 0.617 G_GAN: 0.805 G_L1: 0.255 G_sobelL1: 0.380 
+End of epoch 248 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 249, iters: 27, time: 0.636, data: 0.000) D: 0.957 G_GAN: 0.241 G_L1: 17.885 G_sobelL1: 19.508 
+End of epoch 249 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 250, iters: 50, time: 0.635, data: 0.000) D: 0.125 G_GAN: 2.624 G_L1: 33.819 G_sobelL1: 38.358 
+End of epoch 250 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 251, iters: 73, time: 0.640, data: 0.000) D: 0.323 G_GAN: 2.650 G_L1: 22.885 G_sobelL1: 27.453 
+End of epoch 251 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 252 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 253, iters: 19, time: 0.639, data: 0.000) D: 0.171 G_GAN: 4.401 G_L1: 28.875 G_sobelL1: 28.338 
+End of epoch 253 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 254, iters: 42, time: 0.642, data: 0.000) D: 0.039 G_GAN: 4.521 G_L1: 25.048 G_sobelL1: 29.411 
+End of epoch 254 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 255, iters: 65, time: 0.642, data: 0.000) D: 0.923 G_GAN: 1.624 G_L1: 31.318 G_sobelL1: 28.589 
+End of epoch 255 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 256 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 257, iters: 11, time: 0.636, data: 0.000) D: 0.173 G_GAN: 0.283 G_L1: 21.714 G_sobelL1: 22.559 
+End of epoch 257 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 258, iters: 34, time: 0.640, data: 0.000) D: 0.154 G_GAN: 1.570 G_L1: 39.149 G_sobelL1: 36.058 
+End of epoch 258 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 259, iters: 57, time: 0.640, data: 0.000) D: 1.378 G_GAN: 5.204 G_L1: 31.463 G_sobelL1: 29.679 
+saving the latest model (epoch 259, total_steps 20000)
+End of epoch 259 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+End of epoch 260 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 261, iters: 3, time: 0.637, data: 0.000) D: 0.855 G_GAN: 1.463 G_L1: 0.541 G_sobelL1: 0.997 
+End of epoch 261 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 262, iters: 26, time: 0.641, data: 0.000) D: 0.577 G_GAN: 1.808 G_L1: 12.739 G_sobelL1: 16.309 
+End of epoch 262 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 263, iters: 49, time: 0.640, data: 0.000) D: 0.520 G_GAN: 4.837 G_L1: 19.037 G_sobelL1: 19.674 
+End of epoch 263 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 264, iters: 72, time: 0.643, data: 0.000) D: 0.819 G_GAN: 0.281 G_L1: 6.575 G_sobelL1: 7.030 
+End of epoch 264 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 265 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 266, iters: 18, time: 0.642, data: 0.000) D: 0.242 G_GAN: 1.480 G_L1: 13.454 G_sobelL1: 14.505 
+End of epoch 266 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 267, iters: 41, time: 0.639, data: 0.000) D: 0.718 G_GAN: 1.237 G_L1: 22.502 G_sobelL1: 22.220 
+End of epoch 267 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 268, iters: 64, time: 0.641, data: 0.000) D: 0.429 G_GAN: 1.560 G_L1: 17.436 G_sobelL1: 17.783 
+End of epoch 268 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 269 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 270, iters: 10, time: 0.633, data: 0.000) D: 0.196 G_GAN: 3.042 G_L1: 37.901 G_sobelL1: 31.523 
+End of epoch 270 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 271, iters: 33, time: 0.640, data: 0.000) D: 0.076 G_GAN: 1.938 G_L1: 21.360 G_sobelL1: 25.981 
+End of epoch 271 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 272, iters: 56, time: 0.643, data: 0.000) D: 0.174 G_GAN: 1.617 G_L1: 26.374 G_sobelL1: 19.845 
+saving the latest model (epoch 272, total_steps 21000)
+End of epoch 272 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 273 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 274, iters: 2, time: 0.643, data: 0.000) D: 0.236 G_GAN: 1.135 G_L1: 37.645 G_sobelL1: 28.487 
+End of epoch 274 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 275, iters: 25, time: 0.639, data: 0.000) D: 1.548 G_GAN: 1.674 G_L1: 22.079 G_sobelL1: 25.531 
+End of epoch 275 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 276, iters: 48, time: 0.640, data: 0.000) D: 0.993 G_GAN: 0.209 G_L1: 5.464 G_sobelL1: 3.054 
+End of epoch 276 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 277, iters: 71, time: 0.641, data: 0.000) D: 0.507 G_GAN: 1.547 G_L1: 26.453 G_sobelL1: 30.172 
+End of epoch 277 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 278 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 279, iters: 17, time: 0.641, data: 0.000) D: 0.098 G_GAN: 0.279 G_L1: 6.030 G_sobelL1: 8.614 
+End of epoch 279 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 280, iters: 40, time: 0.638, data: 0.000) D: 0.501 G_GAN: 1.241 G_L1: 1.930 G_sobelL1: 2.391 
+End of epoch 280 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 281, iters: 63, time: 0.641, data: 0.000) D: 0.137 G_GAN: 1.240 G_L1: 28.230 G_sobelL1: 34.210 
+End of epoch 281 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 282 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 283, iters: 9, time: 0.634, data: 0.000) D: 0.241 G_GAN: 3.719 G_L1: 22.720 G_sobelL1: 27.799 
+End of epoch 283 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 284, iters: 32, time: 0.639, data: 0.000) D: 0.050 G_GAN: 0.559 G_L1: 21.628 G_sobelL1: 24.649 
+End of epoch 284 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 285, iters: 55, time: 0.640, data: 0.000) D: 0.126 G_GAN: 3.544 G_L1: 33.629 G_sobelL1: 34.808 
+saving the latest model (epoch 285, total_steps 22000)
+End of epoch 285 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 286 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 287, iters: 1, time: 0.396, data: 0.000) D: 0.098 G_GAN: 2.524 G_L1: 18.926 G_sobelL1: 24.604 
+End of epoch 287 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 288, iters: 24, time: 0.639, data: 0.000) D: 0.154 G_GAN: 1.416 G_L1: 25.239 G_sobelL1: 28.046 
+End of epoch 288 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 289, iters: 47, time: 0.641, data: 0.000) D: 1.001 G_GAN: 1.353 G_L1: 19.162 G_sobelL1: 23.384 
+End of epoch 289 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 290, iters: 70, time: 0.640, data: 0.000) D: 0.429 G_GAN: 1.592 G_L1: 18.835 G_sobelL1: 24.186 
+End of epoch 290 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 291 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 292, iters: 16, time: 0.645, data: 0.000) D: 0.680 G_GAN: 2.542 G_L1: 25.424 G_sobelL1: 21.163 
+End of epoch 292 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 293, iters: 39, time: 0.633, data: 0.000) D: 0.042 G_GAN: 1.156 G_L1: 16.232 G_sobelL1: 20.920 
+End of epoch 293 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 294, iters: 62, time: 0.640, data: 0.000) D: 0.326 G_GAN: 1.298 G_L1: 58.631 G_sobelL1: 35.978 
+End of epoch 294 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+End of epoch 295 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 296, iters: 8, time: 0.632, data: 0.000) D: 0.064 G_GAN: 1.686 G_L1: 26.365 G_sobelL1: 21.744 
+End of epoch 296 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 297, iters: 31, time: 0.638, data: 0.000) D: 0.702 G_GAN: 0.346 G_L1: 19.959 G_sobelL1: 20.682 
+End of epoch 297 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 298, iters: 54, time: 0.635, data: 0.000) D: 0.494 G_GAN: 0.571 G_L1: 28.656 G_sobelL1: 31.412 
+saving the latest model (epoch 298, total_steps 23000)
+End of epoch 298 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 299, iters: 77, time: 0.639, data: 0.000) D: 0.947 G_GAN: 2.838 G_L1: 7.960 G_sobelL1: 8.158 
+End of epoch 299 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 300 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 301, iters: 23, time: 0.640, data: 0.714) D: 0.651 G_GAN: 1.181 G_L1: 2.437 G_sobelL1: 2.732 
+End of epoch 301 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 302, iters: 46, time: 0.637, data: 0.000) D: 0.879 G_GAN: 5.341 G_L1: 28.634 G_sobelL1: 27.712 
+End of epoch 302 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 303, iters: 69, time: 0.639, data: 0.000) D: 1.494 G_GAN: 1.249 G_L1: 6.862 G_sobelL1: 7.202 
+End of epoch 303 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 304 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 305, iters: 15, time: 0.639, data: 0.000) D: 0.195 G_GAN: 1.149 G_L1: 18.095 G_sobelL1: 18.637 
+End of epoch 305 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 306, iters: 38, time: 0.642, data: 0.000) D: 0.402 G_GAN: 0.710 G_L1: 20.602 G_sobelL1: 17.803 
+End of epoch 306 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 307, iters: 61, time: 0.642, data: 0.000) D: 0.457 G_GAN: 0.204 G_L1: 33.350 G_sobelL1: 37.809 
+End of epoch 307 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 308 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 309, iters: 7, time: 0.640, data: 0.000) D: 0.088 G_GAN: 5.287 G_L1: 38.410 G_sobelL1: 34.721 
+End of epoch 309 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 310, iters: 30, time: 0.639, data: 0.000) D: 0.580 G_GAN: 3.489 G_L1: 24.138 G_sobelL1: 30.368 
+End of epoch 310 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 311, iters: 53, time: 0.634, data: 0.000) D: 0.356 G_GAN: 2.348 G_L1: 12.505 G_sobelL1: 16.697 
+saving the latest model (epoch 311, total_steps 24000)
+End of epoch 311 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 312, iters: 76, time: 0.640, data: 0.000) D: 0.186 G_GAN: 1.354 G_L1: 9.822 G_sobelL1: 9.147 
+End of epoch 312 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 313 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 314, iters: 22, time: 0.641, data: 0.000) D: 0.688 G_GAN: 0.347 G_L1: 35.823 G_sobelL1: 33.536 
+End of epoch 314 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 315, iters: 45, time: 0.639, data: 0.000) D: 0.166 G_GAN: 1.262 G_L1: 25.546 G_sobelL1: 29.241 
+End of epoch 315 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 316, iters: 68, time: 0.637, data: 0.000) D: 0.399 G_GAN: 2.677 G_L1: 24.198 G_sobelL1: 30.225 
+End of epoch 316 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 317 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 318, iters: 14, time: 0.642, data: 0.000) D: 0.085 G_GAN: 2.377 G_L1: 18.305 G_sobelL1: 25.609 
+End of epoch 318 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 319, iters: 37, time: 0.639, data: 0.000) D: 0.685 G_GAN: 0.622 G_L1: 25.705 G_sobelL1: 29.361 
+End of epoch 319 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 320, iters: 60, time: 0.641, data: 0.000) D: 0.054 G_GAN: 3.288 G_L1: 25.818 G_sobelL1: 29.984 
+End of epoch 320 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 321 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 322, iters: 6, time: 0.635, data: 0.000) D: 0.130 G_GAN: 5.360 G_L1: 37.298 G_sobelL1: 38.252 
+End of epoch 322 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 323, iters: 29, time: 0.642, data: 0.000) D: 0.561 G_GAN: 1.513 G_L1: 20.296 G_sobelL1: 23.699 
+End of epoch 323 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 324, iters: 52, time: 0.639, data: 0.000) D: 0.608 G_GAN: 0.563 G_L1: 11.354 G_sobelL1: 11.502 
+saving the latest model (epoch 324, total_steps 25000)
+End of epoch 324 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 325, iters: 75, time: 0.641, data: 0.000) D: 0.150 G_GAN: 1.804 G_L1: 39.684 G_sobelL1: 25.680 
+End of epoch 325 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 326 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 327, iters: 21, time: 0.642, data: 0.000) D: 0.094 G_GAN: 0.177 G_L1: 0.407 G_sobelL1: 0.471 
+End of epoch 327 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 328, iters: 44, time: 0.639, data: 0.000) D: 0.730 G_GAN: 3.418 G_L1: 19.367 G_sobelL1: 22.360 
+End of epoch 328 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 329, iters: 67, time: 0.640, data: 0.000) D: 0.578 G_GAN: 1.564 G_L1: 0.426 G_sobelL1: 0.918 
+End of epoch 329 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 330 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 331, iters: 13, time: 0.642, data: 0.000) D: 0.535 G_GAN: 1.550 G_L1: 22.757 G_sobelL1: 25.549 
+End of epoch 331 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 332, iters: 36, time: 0.640, data: 0.000) D: 1.077 G_GAN: 0.519 G_L1: 5.170 G_sobelL1: 7.574 
+End of epoch 332 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 333, iters: 59, time: 0.641, data: 0.000) D: 0.179 G_GAN: 1.098 G_L1: 15.501 G_sobelL1: 15.076 
+End of epoch 333 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 334 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 335, iters: 5, time: 0.624, data: 0.000) D: 0.143 G_GAN: 1.922 G_L1: 22.861 G_sobelL1: 26.191 
+End of epoch 335 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 336, iters: 28, time: 0.640, data: 0.000) D: 0.301 G_GAN: 0.828 G_L1: 14.657 G_sobelL1: 13.021 
+End of epoch 336 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 337, iters: 51, time: 0.636, data: 0.000) D: 0.055 G_GAN: 2.614 G_L1: 32.556 G_sobelL1: 33.687 
+saving the latest model (epoch 337, total_steps 26000)
+End of epoch 337 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 338, iters: 74, time: 0.640, data: 0.000) D: 0.216 G_GAN: 3.387 G_L1: 24.242 G_sobelL1: 28.853 
+End of epoch 338 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 339 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 340, iters: 20, time: 0.642, data: 0.000) D: 0.166 G_GAN: 0.390 G_L1: 0.771 G_sobelL1: 1.110 
+End of epoch 340 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 341, iters: 43, time: 0.633, data: 0.000) D: 1.658 G_GAN: 5.816 G_L1: 22.429 G_sobelL1: 27.066 
+End of epoch 341 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 342, iters: 66, time: 0.641, data: 0.000) D: 0.084 G_GAN: 2.875 G_L1: 24.107 G_sobelL1: 30.373 
+End of epoch 342 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 343 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 344, iters: 12, time: 0.642, data: 0.000) D: 0.054 G_GAN: 2.707 G_L1: 29.925 G_sobelL1: 33.100 
+End of epoch 344 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 345, iters: 35, time: 0.633, data: 0.000) D: 0.442 G_GAN: 0.710 G_L1: 19.592 G_sobelL1: 24.103 
+End of epoch 345 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 346, iters: 58, time: 0.641, data: 0.000) D: 0.136 G_GAN: 1.971 G_L1: 15.536 G_sobelL1: 23.083 
+End of epoch 346 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 347 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 348, iters: 4, time: 0.634, data: 0.000) D: 0.024 G_GAN: 4.022 G_L1: 51.214 G_sobelL1: 34.800 
+End of epoch 348 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 349, iters: 27, time: 0.641, data: 0.000) D: 0.061 G_GAN: 3.108 G_L1: 31.097 G_sobelL1: 33.605 
+End of epoch 349 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 350, iters: 50, time: 0.638, data: 0.000) D: 0.920 G_GAN: 0.246 G_L1: 23.400 G_sobelL1: 26.740 
+saving the latest model (epoch 350, total_steps 27000)
+End of epoch 350 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 351, iters: 73, time: 0.639, data: 0.000) D: 1.153 G_GAN: 3.144 G_L1: 14.434 G_sobelL1: 19.398 
+End of epoch 351 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 352 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 353, iters: 19, time: 0.638, data: 0.000) D: 0.636 G_GAN: 0.816 G_L1: 0.943 G_sobelL1: 1.447 
+End of epoch 353 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 354, iters: 42, time: 0.636, data: 0.000) D: 0.149 G_GAN: 0.170 G_L1: 19.268 G_sobelL1: 21.385 
+End of epoch 354 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 355, iters: 65, time: 0.641, data: 0.000) D: 0.286 G_GAN: 2.870 G_L1: 22.374 G_sobelL1: 26.999 
+End of epoch 355 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 356 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 357, iters: 11, time: 0.641, data: 0.000) D: 0.296 G_GAN: 1.088 G_L1: 3.530 G_sobelL1: 3.808 
+End of epoch 357 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 358, iters: 34, time: 0.641, data: 0.000) D: 0.990 G_GAN: 0.187 G_L1: 22.276 G_sobelL1: 30.251 
+End of epoch 358 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 359, iters: 57, time: 0.639, data: 0.000) D: 0.467 G_GAN: 3.815 G_L1: 24.992 G_sobelL1: 27.668 
+End of epoch 359 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 360 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 361, iters: 3, time: 0.395, data: 0.000) D: 0.608 G_GAN: 1.349 G_L1: 24.503 G_sobelL1: 29.365 
+End of epoch 361 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 362, iters: 26, time: 0.639, data: 0.000) D: 0.215 G_GAN: 2.467 G_L1: 19.691 G_sobelL1: 23.668 
+End of epoch 362 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 363, iters: 49, time: 0.636, data: 0.000) D: 0.577 G_GAN: 1.922 G_L1: 0.455 G_sobelL1: 0.948 
+saving the latest model (epoch 363, total_steps 28000)
+End of epoch 363 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 364, iters: 72, time: 0.640, data: 0.000) D: 0.022 G_GAN: 1.141 G_L1: 25.139 G_sobelL1: 28.520 
+End of epoch 364 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 365 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 366, iters: 18, time: 0.640, data: 0.000) D: 0.943 G_GAN: 1.864 G_L1: 21.694 G_sobelL1: 27.498 
+End of epoch 366 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 367, iters: 41, time: 0.618, data: 0.000) D: 0.367 G_GAN: 3.155 G_L1: 15.416 G_sobelL1: 18.824 
+End of epoch 367 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 368, iters: 64, time: 0.640, data: 0.000) D: 0.454 G_GAN: 1.208 G_L1: 13.719 G_sobelL1: 12.958 
+End of epoch 368 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 369 / 1000 	 Time Taken: 34 sec
+learning rate = 0.0002000
+(epoch: 370, iters: 10, time: 0.660, data: 0.000) D: 0.074 G_GAN: 2.982 G_L1: 17.290 G_sobelL1: 23.465 
+End of epoch 370 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 371, iters: 33, time: 0.636, data: 0.000) D: 0.441 G_GAN: 1.394 G_L1: 5.860 G_sobelL1: 5.287 
+End of epoch 371 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 372, iters: 56, time: 0.642, data: 0.000) D: 0.591 G_GAN: 3.101 G_L1: 14.480 G_sobelL1: 19.524 
+End of epoch 372 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 373 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 374, iters: 2, time: 0.618, data: 0.000) D: 0.388 G_GAN: 1.720 G_L1: 0.279 G_sobelL1: 0.628 
+End of epoch 374 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 375, iters: 25, time: 0.645, data: 0.000) D: 0.186 G_GAN: 2.306 G_L1: 15.041 G_sobelL1: 17.173 
+End of epoch 375 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 376, iters: 48, time: 0.641, data: 0.000) D: 0.260 G_GAN: 2.600 G_L1: 15.499 G_sobelL1: 17.190 
+saving the latest model (epoch 376, total_steps 29000)
+End of epoch 376 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 377, iters: 71, time: 0.642, data: 0.000) D: 0.494 G_GAN: 2.531 G_L1: 20.465 G_sobelL1: 22.425 
+End of epoch 377 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 378 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 379, iters: 17, time: 0.639, data: 0.000) D: 0.610 G_GAN: 1.047 G_L1: 3.064 G_sobelL1: 2.945 
+End of epoch 379 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 380, iters: 40, time: 0.630, data: 0.000) D: 0.454 G_GAN: 0.259 G_L1: 10.730 G_sobelL1: 14.692 
+End of epoch 380 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 381, iters: 63, time: 0.641, data: 0.000) D: 0.253 G_GAN: 3.361 G_L1: 34.166 G_sobelL1: 30.815 
+End of epoch 381 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 382 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 383, iters: 9, time: 0.639, data: 0.000) D: 0.149 G_GAN: 1.975 G_L1: 29.330 G_sobelL1: 29.584 
+End of epoch 383 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 384, iters: 32, time: 0.640, data: 0.000) D: 0.630 G_GAN: 0.964 G_L1: 1.875 G_sobelL1: 3.250 
+End of epoch 384 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 385, iters: 55, time: 0.641, data: 0.000) D: 0.949 G_GAN: 0.235 G_L1: 2.743 G_sobelL1: 4.783 
+End of epoch 385 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 386 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 387, iters: 1, time: 0.398, data: 0.000) D: 0.440 G_GAN: 1.987 G_L1: 16.172 G_sobelL1: 22.103 
+End of epoch 387 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 388, iters: 24, time: 0.641, data: 1.397) D: 0.140 G_GAN: 0.479 G_L1: 21.152 G_sobelL1: 25.809 
+End of epoch 388 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 389, iters: 47, time: 0.641, data: 0.000) D: 1.282 G_GAN: 5.339 G_L1: 25.594 G_sobelL1: 26.449 
+saving the latest model (epoch 389, total_steps 30000)
+End of epoch 389 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 390, iters: 70, time: 0.642, data: 0.000) D: 0.204 G_GAN: 1.638 G_L1: 23.885 G_sobelL1: 4.556 
+End of epoch 390 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 391 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 392, iters: 16, time: 0.644, data: 0.000) D: 0.191 G_GAN: 1.443 G_L1: 27.825 G_sobelL1: 30.283 
+End of epoch 392 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 393, iters: 39, time: 0.635, data: 0.000) D: 0.281 G_GAN: 1.434 G_L1: 17.424 G_sobelL1: 20.746 
+End of epoch 393 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 394, iters: 62, time: 0.641, data: 0.000) D: 1.095 G_GAN: 1.385 G_L1: 1.282 G_sobelL1: 1.880 
+End of epoch 394 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 395 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 396, iters: 8, time: 0.638, data: 0.000) D: 0.855 G_GAN: 0.353 G_L1: 0.833 G_sobelL1: 0.813 
+End of epoch 396 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 397, iters: 31, time: 0.638, data: 0.000) D: 0.327 G_GAN: 0.909 G_L1: 25.463 G_sobelL1: 29.012 
+End of epoch 397 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 398, iters: 54, time: 0.640, data: 0.000) D: 0.024 G_GAN: 4.440 G_L1: 16.294 G_sobelL1: 21.595 
+End of epoch 398 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 399, iters: 77, time: 0.640, data: 0.000) D: 0.288 G_GAN: 0.543 G_L1: 9.117 G_sobelL1: 7.889 
+End of epoch 399 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+saving the model at the end of epoch 400, iters 30877
+End of epoch 400 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 401, iters: 23, time: 0.634, data: 1.018) D: 0.362 G_GAN: 0.291 G_L1: 11.555 G_sobelL1: 13.201 
+End of epoch 401 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 402, iters: 46, time: 0.640, data: 0.000) D: 0.060 G_GAN: 3.867 G_L1: 29.539 G_sobelL1: 29.319 
+saving the latest model (epoch 402, total_steps 31000)
+End of epoch 402 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 403, iters: 69, time: 0.638, data: 0.000) D: 1.794 G_GAN: 0.094 G_L1: 33.426 G_sobelL1: 33.974 
+End of epoch 403 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+End of epoch 404 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 405, iters: 15, time: 0.638, data: 0.000) D: 0.226 G_GAN: 1.221 G_L1: 25.454 G_sobelL1: 28.743 
+End of epoch 405 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 406, iters: 38, time: 0.641, data: 0.000) D: 0.038 G_GAN: 2.092 G_L1: 39.892 G_sobelL1: 37.062 
+End of epoch 406 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 407, iters: 61, time: 0.639, data: 0.000) D: 0.695 G_GAN: 3.242 G_L1: 25.759 G_sobelL1: 27.121 
+End of epoch 407 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 408 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 409, iters: 7, time: 0.637, data: 0.000) D: 0.918 G_GAN: 1.484 G_L1: 15.030 G_sobelL1: 19.938 
+End of epoch 409 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 410, iters: 30, time: 0.639, data: 0.000) D: 0.435 G_GAN: 1.901 G_L1: 53.144 G_sobelL1: 34.441 
+End of epoch 410 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 411, iters: 53, time: 0.638, data: 0.000) D: 0.552 G_GAN: 2.402 G_L1: 27.091 G_sobelL1: 19.395 
+End of epoch 411 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 412, iters: 76, time: 0.640, data: 0.000) D: 0.865 G_GAN: 1.647 G_L1: 3.211 G_sobelL1: 5.556 
+End of epoch 412 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 413 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 414, iters: 22, time: 0.637, data: 0.000) D: 0.359 G_GAN: 7.065 G_L1: 30.487 G_sobelL1: 33.314 
+End of epoch 414 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 415, iters: 45, time: 0.642, data: 0.000) D: 0.525 G_GAN: 3.974 G_L1: 21.150 G_sobelL1: 23.340 
+saving the latest model (epoch 415, total_steps 32000)
+End of epoch 415 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 416, iters: 68, time: 0.642, data: 0.000) D: 0.414 G_GAN: 0.819 G_L1: 13.018 G_sobelL1: 15.123 
+End of epoch 416 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 417 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 418, iters: 14, time: 0.640, data: 0.000) D: 0.505 G_GAN: 0.525 G_L1: 5.082 G_sobelL1: 4.880 
+End of epoch 418 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 419, iters: 37, time: 0.634, data: 0.000) D: 0.399 G_GAN: 0.729 G_L1: 39.691 G_sobelL1: 32.147 
+End of epoch 419 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 420, iters: 60, time: 0.638, data: 0.000) D: 0.983 G_GAN: 1.280 G_L1: 14.985 G_sobelL1: 17.770 
+End of epoch 420 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 421 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 422, iters: 6, time: 0.638, data: 0.000) D: 0.078 G_GAN: 2.401 G_L1: 34.639 G_sobelL1: 25.917 
+End of epoch 422 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 423, iters: 29, time: 0.641, data: 0.000) D: 0.585 G_GAN: 2.175 G_L1: 0.620 G_sobelL1: 1.540 
+End of epoch 423 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 424, iters: 52, time: 0.641, data: 0.000) D: 1.217 G_GAN: 0.389 G_L1: 1.469 G_sobelL1: 1.641 
+End of epoch 424 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 425, iters: 75, time: 0.640, data: 0.000) D: 0.340 G_GAN: 2.776 G_L1: 20.010 G_sobelL1: 24.100 
+End of epoch 425 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 426 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 427, iters: 21, time: 0.635, data: 0.000) D: 0.377 G_GAN: 0.482 G_L1: 5.403 G_sobelL1: 6.412 
+End of epoch 427 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 428, iters: 44, time: 0.638, data: 0.000) D: 0.457 G_GAN: 0.085 G_L1: 14.971 G_sobelL1: 16.017 
+saving the latest model (epoch 428, total_steps 33000)
+End of epoch 428 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 429, iters: 67, time: 0.640, data: 0.000) D: 0.543 G_GAN: 1.182 G_L1: 0.463 G_sobelL1: 0.735 
+End of epoch 429 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 430 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 431, iters: 13, time: 0.639, data: 0.000) D: 0.742 G_GAN: 0.379 G_L1: 25.344 G_sobelL1: 27.040 
+End of epoch 431 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 432, iters: 36, time: 0.640, data: 0.000) D: 0.465 G_GAN: 2.563 G_L1: 21.660 G_sobelL1: 26.990 
+End of epoch 432 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 433, iters: 59, time: 0.639, data: 0.000) D: 0.147 G_GAN: 2.385 G_L1: 27.000 G_sobelL1: 29.631 
+End of epoch 433 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 434 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 435, iters: 5, time: 0.640, data: 0.000) D: 0.796 G_GAN: 1.087 G_L1: 7.947 G_sobelL1: 7.619 
+End of epoch 435 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 436, iters: 28, time: 0.640, data: 0.000) D: 0.204 G_GAN: 2.062 G_L1: 23.960 G_sobelL1: 30.111 
+End of epoch 436 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 437, iters: 51, time: 0.639, data: 0.000) D: 0.788 G_GAN: 0.379 G_L1: 25.787 G_sobelL1: 22.328 
+End of epoch 437 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 438, iters: 74, time: 0.640, data: 0.000) D: 0.140 G_GAN: 4.739 G_L1: 18.784 G_sobelL1: 23.049 
+End of epoch 438 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 439 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 440, iters: 20, time: 0.637, data: 0.000) D: 1.513 G_GAN: 2.022 G_L1: 18.016 G_sobelL1: 22.059 
+End of epoch 440 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 441, iters: 43, time: 0.641, data: 0.000) D: 0.045 G_GAN: 0.618 G_L1: 21.670 G_sobelL1: 19.587 
+saving the latest model (epoch 441, total_steps 34000)
+End of epoch 441 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 442, iters: 66, time: 0.643, data: 0.000) D: 0.186 G_GAN: 3.743 G_L1: 13.576 G_sobelL1: 16.934 
+End of epoch 442 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 443 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 444, iters: 12, time: 0.641, data: 0.000) D: 0.668 G_GAN: 1.048 G_L1: 0.203 G_sobelL1: 0.350 
+End of epoch 444 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 445, iters: 35, time: 0.636, data: 0.000) D: 0.590 G_GAN: 0.465 G_L1: 10.204 G_sobelL1: 11.052 
+End of epoch 445 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 446, iters: 58, time: 0.641, data: 0.000) D: 0.032 G_GAN: 3.841 G_L1: 32.113 G_sobelL1: 31.950 
+End of epoch 446 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 447 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 448, iters: 4, time: 0.633, data: 0.000) D: 0.579 G_GAN: 1.316 G_L1: 6.013 G_sobelL1: 5.643 
+End of epoch 448 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 449, iters: 27, time: 0.639, data: 0.000) D: 0.676 G_GAN: 0.332 G_L1: 29.213 G_sobelL1: 25.432 
+End of epoch 449 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 450, iters: 50, time: 0.641, data: 0.000) D: 0.685 G_GAN: 1.009 G_L1: 3.454 G_sobelL1: 5.897 
+End of epoch 450 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 451, iters: 73, time: 0.642, data: 0.000) D: 0.321 G_GAN: 0.963 G_L1: 6.681 G_sobelL1: 6.844 
+End of epoch 451 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 452 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 453, iters: 19, time: 0.641, data: 0.000) D: 0.176 G_GAN: 1.810 G_L1: 27.809 G_sobelL1: 31.854 
+End of epoch 453 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 454, iters: 42, time: 0.634, data: 0.000) D: 0.141 G_GAN: 2.074 G_L1: 15.205 G_sobelL1: 19.320 
+saving the latest model (epoch 454, total_steps 35000)
+End of epoch 454 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 455, iters: 65, time: 0.638, data: 0.000) D: 0.321 G_GAN: 3.399 G_L1: 25.470 G_sobelL1: 24.831 
+End of epoch 455 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+End of epoch 456 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 457, iters: 11, time: 0.639, data: 0.000) D: 0.254 G_GAN: 1.172 G_L1: 20.497 G_sobelL1: 27.879 
+End of epoch 457 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 458, iters: 34, time: 0.641, data: 0.000) D: 0.249 G_GAN: 1.400 G_L1: 25.120 G_sobelL1: 33.449 
+End of epoch 458 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 459, iters: 57, time: 0.631, data: 0.000) D: 0.153 G_GAN: 3.198 G_L1: 19.495 G_sobelL1: 21.489 
+End of epoch 459 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 460 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 461, iters: 3, time: 0.634, data: 0.000) D: 0.019 G_GAN: 1.223 G_L1: 29.038 G_sobelL1: 33.020 
+End of epoch 461 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 462, iters: 26, time: 0.637, data: 0.478) D: 0.126 G_GAN: 2.620 G_L1: 24.820 G_sobelL1: 30.264 
+End of epoch 462 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 463, iters: 49, time: 0.641, data: 0.000) D: 1.077 G_GAN: 5.087 G_L1: 21.038 G_sobelL1: 23.609 
+End of epoch 463 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 464, iters: 72, time: 0.638, data: 0.000) D: 0.902 G_GAN: 0.281 G_L1: 26.211 G_sobelL1: 33.060 
+End of epoch 464 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 465 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 466, iters: 18, time: 0.641, data: 0.000) D: 0.734 G_GAN: 0.453 G_L1: 3.115 G_sobelL1: 3.500 
+End of epoch 466 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 467, iters: 41, time: 0.641, data: 0.000) D: 0.911 G_GAN: 1.606 G_L1: 6.475 G_sobelL1: 6.235 
+saving the latest model (epoch 467, total_steps 36000)
+End of epoch 467 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 468, iters: 64, time: 0.639, data: 0.000) D: 0.451 G_GAN: 0.757 G_L1: 0.386 G_sobelL1: 0.658 
+End of epoch 468 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 469 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 470, iters: 10, time: 0.641, data: 0.000) D: 0.427 G_GAN: 3.021 G_L1: 21.419 G_sobelL1: 25.121 
+End of epoch 470 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 471, iters: 33, time: 0.637, data: 0.000) D: 1.291 G_GAN: 5.968 G_L1: 18.332 G_sobelL1: 23.179 
+End of epoch 471 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 472, iters: 56, time: 0.639, data: 0.000) D: 0.136 G_GAN: 2.353 G_L1: 25.932 G_sobelL1: 30.385 
+End of epoch 472 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 473 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 474, iters: 2, time: 0.635, data: 0.000) D: 0.415 G_GAN: 1.527 G_L1: 18.129 G_sobelL1: 18.570 
+End of epoch 474 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 475, iters: 25, time: 0.631, data: 0.000) D: 0.311 G_GAN: 3.375 G_L1: 26.879 G_sobelL1: 30.942 
+End of epoch 475 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0002000
+(epoch: 476, iters: 48, time: 0.640, data: 0.000) D: 0.995 G_GAN: 0.219 G_L1: 18.537 G_sobelL1: 16.133 
+End of epoch 476 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 477, iters: 71, time: 0.640, data: 0.000) D: 0.647 G_GAN: 0.855 G_L1: 5.709 G_sobelL1: 6.496 
+End of epoch 477 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 478 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 479, iters: 17, time: 0.640, data: 0.000) D: 0.579 G_GAN: 1.484 G_L1: 0.374 G_sobelL1: 0.736 
+End of epoch 479 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 480, iters: 40, time: 0.634, data: 0.000) D: 0.253 G_GAN: 2.087 G_L1: 35.929 G_sobelL1: 31.587 
+saving the latest model (epoch 480, total_steps 37000)
+End of epoch 480 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 481, iters: 63, time: 0.640, data: 0.000) D: 0.778 G_GAN: 0.294 G_L1: 32.595 G_sobelL1: 30.441 
+End of epoch 481 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+End of epoch 482 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 483, iters: 9, time: 0.635, data: 0.000) D: 0.166 G_GAN: 1.994 G_L1: 27.653 G_sobelL1: 31.148 
+End of epoch 483 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 484, iters: 32, time: 0.642, data: 0.000) D: 0.163 G_GAN: 1.626 G_L1: 23.223 G_sobelL1: 30.881 
+End of epoch 484 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 485, iters: 55, time: 0.624, data: 0.000) D: 0.220 G_GAN: 0.341 G_L1: 6.164 G_sobelL1: 6.983 
+End of epoch 485 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 486 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 487, iters: 1, time: 0.408, data: 0.000) D: 0.115 G_GAN: 0.442 G_L1: 36.444 G_sobelL1: 35.671 
+End of epoch 487 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 488, iters: 24, time: 0.639, data: 0.000) D: 0.677 G_GAN: 2.859 G_L1: 12.014 G_sobelL1: 11.131 
+End of epoch 488 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 489, iters: 47, time: 0.642, data: 0.000) D: 1.467 G_GAN: 5.103 G_L1: 12.653 G_sobelL1: 18.258 
+End of epoch 489 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 490, iters: 70, time: 0.641, data: 0.000) D: 0.117 G_GAN: 1.959 G_L1: 29.463 G_sobelL1: 5.578 
+End of epoch 490 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 491 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0002000
+(epoch: 492, iters: 16, time: 0.641, data: 0.000) D: 0.856 G_GAN: 2.901 G_L1: 8.982 G_sobelL1: 10.583 
+End of epoch 492 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 493, iters: 39, time: 0.637, data: 0.000) D: 0.840 G_GAN: 0.538 G_L1: 0.791 G_sobelL1: 1.483 
+saving the latest model (epoch 493, total_steps 38000)
+End of epoch 493 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 494, iters: 62, time: 0.641, data: 0.000) D: 0.719 G_GAN: 1.282 G_L1: 1.321 G_sobelL1: 1.980 
+End of epoch 494 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+End of epoch 495 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 496, iters: 8, time: 0.630, data: 0.000) D: 0.866 G_GAN: 2.238 G_L1: 20.333 G_sobelL1: 24.516 
+End of epoch 496 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0002000
+(epoch: 497, iters: 31, time: 0.641, data: 0.000) D: 0.578 G_GAN: 1.086 G_L1: 18.256 G_sobelL1: 24.974 
+End of epoch 497 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 498, iters: 54, time: 0.637, data: 0.000) D: 0.240 G_GAN: 0.779 G_L1: 17.262 G_sobelL1: 19.605 
+End of epoch 498 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0002000
+(epoch: 499, iters: 77, time: 0.640, data: 0.000) D: 0.208 G_GAN: 2.334 G_L1: 20.462 G_sobelL1: 22.881 
+End of epoch 499 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001996
+End of epoch 500 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001992
+(epoch: 501, iters: 23, time: 0.640, data: 0.757) D: 0.182 G_GAN: 2.022 G_L1: 26.706 G_sobelL1: 26.173 
+End of epoch 501 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001988
+(epoch: 502, iters: 46, time: 0.640, data: 0.000) D: 0.031 G_GAN: 3.117 G_L1: 26.517 G_sobelL1: 35.751 
+End of epoch 502 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001984
+(epoch: 503, iters: 69, time: 0.639, data: 0.000) D: 0.327 G_GAN: 4.706 G_L1: 30.799 G_sobelL1: 34.888 
+End of epoch 503 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001980
+End of epoch 504 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001976
+(epoch: 505, iters: 15, time: 0.637, data: 0.000) D: 1.625 G_GAN: 2.731 G_L1: 22.392 G_sobelL1: 29.466 
+End of epoch 505 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001972
+(epoch: 506, iters: 38, time: 0.639, data: 0.000) D: 0.753 G_GAN: 1.094 G_L1: 2.987 G_sobelL1: 2.999 
+saving the latest model (epoch 506, total_steps 39000)
+End of epoch 506 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001968
+(epoch: 507, iters: 61, time: 0.622, data: 0.000) D: 1.180 G_GAN: 3.820 G_L1: 17.026 G_sobelL1: 23.229 
+End of epoch 507 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001964
+End of epoch 508 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001960
+(epoch: 509, iters: 7, time: 0.631, data: 0.000) D: 0.441 G_GAN: 0.998 G_L1: 27.149 G_sobelL1: 24.536 
+End of epoch 509 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001956
+(epoch: 510, iters: 30, time: 0.640, data: 0.001) D: 0.661 G_GAN: 0.640 G_L1: 4.886 G_sobelL1: 5.269 
+End of epoch 510 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001952
+(epoch: 511, iters: 53, time: 0.634, data: 0.000) D: 0.460 G_GAN: 0.592 G_L1: 18.222 G_sobelL1: 20.097 
+End of epoch 511 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001948
+(epoch: 512, iters: 76, time: 0.643, data: 0.000) D: 1.265 G_GAN: 4.454 G_L1: 17.796 G_sobelL1: 17.989 
+End of epoch 512 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001944
+End of epoch 513 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001940
+(epoch: 514, iters: 22, time: 0.639, data: 0.000) D: 0.117 G_GAN: 1.311 G_L1: 19.309 G_sobelL1: 18.970 
+End of epoch 514 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001936
+(epoch: 515, iters: 45, time: 0.639, data: 0.000) D: 0.204 G_GAN: 1.616 G_L1: 16.554 G_sobelL1: 22.729 
+End of epoch 515 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001932
+(epoch: 516, iters: 68, time: 0.642, data: 0.000) D: 0.688 G_GAN: 1.704 G_L1: 1.148 G_sobelL1: 1.209 
+End of epoch 516 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001928
+End of epoch 517 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001924
+(epoch: 518, iters: 14, time: 0.638, data: 0.000) D: 1.337 G_GAN: 3.146 G_L1: 23.790 G_sobelL1: 29.149 
+End of epoch 518 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001920
+(epoch: 519, iters: 37, time: 0.630, data: 0.000) D: 0.741 G_GAN: 1.874 G_L1: 4.389 G_sobelL1: 4.769 
+saving the latest model (epoch 519, total_steps 40000)
+End of epoch 519 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001916
+(epoch: 520, iters: 60, time: 0.640, data: 0.000) D: 0.138 G_GAN: 1.977 G_L1: 19.206 G_sobelL1: 23.471 
+End of epoch 520 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001912
+End of epoch 521 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001908
+(epoch: 522, iters: 6, time: 0.633, data: 0.000) D: 0.590 G_GAN: 1.706 G_L1: 10.810 G_sobelL1: 13.679 
+End of epoch 522 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001904
+(epoch: 523, iters: 29, time: 0.634, data: 0.000) D: 0.143 G_GAN: 3.143 G_L1: 31.308 G_sobelL1: 30.245 
+End of epoch 523 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001900
+(epoch: 524, iters: 52, time: 0.634, data: 0.000) D: 0.974 G_GAN: 4.506 G_L1: 38.546 G_sobelL1: 29.731 
+End of epoch 524 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001896
+(epoch: 525, iters: 75, time: 0.640, data: 0.000) D: 1.221 G_GAN: 1.445 G_L1: 14.014 G_sobelL1: 19.972 
+End of epoch 525 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001892
+End of epoch 526 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001888
+(epoch: 527, iters: 21, time: 0.640, data: 0.000) D: 0.649 G_GAN: 3.999 G_L1: 16.975 G_sobelL1: 20.896 
+End of epoch 527 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001884
+(epoch: 528, iters: 44, time: 0.638, data: 0.015) D: 0.856 G_GAN: 0.486 G_L1: 0.331 G_sobelL1: 0.479 
+End of epoch 528 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001880
+(epoch: 529, iters: 67, time: 0.639, data: 0.000) D: 0.452 G_GAN: 0.738 G_L1: 21.413 G_sobelL1: 25.437 
+End of epoch 529 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001876
+End of epoch 530 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001872
+(epoch: 531, iters: 13, time: 0.633, data: 0.000) D: 0.781 G_GAN: 1.563 G_L1: 17.921 G_sobelL1: 25.210 
+End of epoch 531 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001868
+(epoch: 532, iters: 36, time: 0.630, data: 0.000) D: 0.664 G_GAN: 0.358 G_L1: 8.441 G_sobelL1: 10.258 
+saving the latest model (epoch 532, total_steps 41000)
+End of epoch 532 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001864
+(epoch: 533, iters: 59, time: 0.628, data: 0.000) D: 0.460 G_GAN: 1.904 G_L1: 8.851 G_sobelL1: 10.999 
+End of epoch 533 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001860
+End of epoch 534 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001856
+(epoch: 535, iters: 5, time: 0.636, data: 0.011) D: 0.372 G_GAN: 1.484 G_L1: 3.131 G_sobelL1: 3.454 
+End of epoch 535 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001852
+(epoch: 536, iters: 28, time: 0.640, data: 0.000) D: 0.337 G_GAN: 1.446 G_L1: 22.620 G_sobelL1: 20.837 
+End of epoch 536 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001848
+(epoch: 537, iters: 51, time: 0.638, data: 0.000) D: 0.470 G_GAN: 2.147 G_L1: 8.479 G_sobelL1: 11.073 
+End of epoch 537 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001844
+(epoch: 538, iters: 74, time: 0.639, data: 0.000) D: 0.354 G_GAN: 5.165 G_L1: 31.800 G_sobelL1: 32.617 
+End of epoch 538 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001840
+End of epoch 539 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001836
+(epoch: 540, iters: 20, time: 0.635, data: 0.000) D: 1.213 G_GAN: 1.337 G_L1: 11.552 G_sobelL1: 13.832 
+End of epoch 540 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001832
+(epoch: 541, iters: 43, time: 0.640, data: 0.000) D: 1.042 G_GAN: 2.328 G_L1: 0.358 G_sobelL1: 0.681 
+End of epoch 541 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001828
+(epoch: 542, iters: 66, time: 0.638, data: 0.000) D: 1.049 G_GAN: 0.305 G_L1: 7.197 G_sobelL1: 8.124 
+End of epoch 542 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001824
+End of epoch 543 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001820
+(epoch: 544, iters: 12, time: 0.640, data: 0.000) D: 0.470 G_GAN: 0.640 G_L1: 26.541 G_sobelL1: 31.860 
+End of epoch 544 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001816
+(epoch: 545, iters: 35, time: 0.640, data: 0.000) D: 0.213 G_GAN: 0.365 G_L1: 22.557 G_sobelL1: 22.248 
+saving the latest model (epoch 545, total_steps 42000)
+End of epoch 545 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001812
+(epoch: 546, iters: 58, time: 0.640, data: 0.000) D: 0.737 G_GAN: 0.938 G_L1: 23.603 G_sobelL1: 23.539 
+End of epoch 546 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001808
+End of epoch 547 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001804
+(epoch: 548, iters: 4, time: 0.631, data: 0.000) D: 0.870 G_GAN: 0.818 G_L1: 10.792 G_sobelL1: 12.897 
+End of epoch 548 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001800
+(epoch: 549, iters: 27, time: 0.640, data: 0.000) D: 0.715 G_GAN: 1.593 G_L1: 1.623 G_sobelL1: 2.247 
+End of epoch 549 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001796
+(epoch: 550, iters: 50, time: 0.634, data: 0.000) D: 0.032 G_GAN: 0.651 G_L1: 18.562 G_sobelL1: 18.632 
+End of epoch 550 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001792
+(epoch: 551, iters: 73, time: 0.638, data: 0.000) D: 0.111 G_GAN: 1.724 G_L1: 39.841 G_sobelL1: 41.277 
+End of epoch 551 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001788
+End of epoch 552 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001784
+(epoch: 553, iters: 19, time: 0.632, data: 0.000) D: 0.412 G_GAN: 1.399 G_L1: 26.706 G_sobelL1: 27.222 
+End of epoch 553 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001780
+(epoch: 554, iters: 42, time: 0.643, data: 0.000) D: 0.204 G_GAN: 1.432 G_L1: 14.258 G_sobelL1: 21.781 
+End of epoch 554 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001776
+(epoch: 555, iters: 65, time: 0.638, data: 0.000) D: 0.097 G_GAN: 3.168 G_L1: 22.582 G_sobelL1: 25.931 
+End of epoch 555 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001772
+End of epoch 556 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001768
+(epoch: 557, iters: 11, time: 0.634, data: 0.000) D: 0.652 G_GAN: 2.072 G_L1: 14.276 G_sobelL1: 17.525 
+End of epoch 557 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001764
+(epoch: 558, iters: 34, time: 0.639, data: 0.000) D: 0.442 G_GAN: 0.969 G_L1: 9.191 G_sobelL1: 9.381 
+saving the latest model (epoch 558, total_steps 43000)
+End of epoch 558 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001760
+(epoch: 559, iters: 57, time: 0.642, data: 0.000) D: 0.444 G_GAN: 2.558 G_L1: 17.873 G_sobelL1: 20.852 
+End of epoch 559 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001756
+End of epoch 560 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001752
+(epoch: 561, iters: 3, time: 0.634, data: 0.000) D: 0.079 G_GAN: 2.630 G_L1: 24.052 G_sobelL1: 28.556 
+End of epoch 561 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001749
+(epoch: 562, iters: 26, time: 0.640, data: 0.000) D: 1.684 G_GAN: 2.524 G_L1: 20.073 G_sobelL1: 24.008 
+End of epoch 562 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001745
+(epoch: 563, iters: 49, time: 0.641, data: 0.000) D: 0.165 G_GAN: 0.714 G_L1: 27.222 G_sobelL1: 30.800 
+End of epoch 563 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001741
+(epoch: 564, iters: 72, time: 0.639, data: 0.000) D: 0.160 G_GAN: 3.051 G_L1: 25.353 G_sobelL1: 26.450 
+End of epoch 564 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001737
+End of epoch 565 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001733
+(epoch: 566, iters: 18, time: 0.634, data: 0.000) D: 1.232 G_GAN: 0.122 G_L1: 20.743 G_sobelL1: 26.052 
+End of epoch 566 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001729
+(epoch: 567, iters: 41, time: 0.641, data: 0.000) D: 0.602 G_GAN: 1.139 G_L1: 22.475 G_sobelL1: 25.808 
+End of epoch 567 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001725
+(epoch: 568, iters: 64, time: 0.640, data: 0.000) D: 0.247 G_GAN: 1.644 G_L1: 21.274 G_sobelL1: 26.095 
+End of epoch 568 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001721
+End of epoch 569 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001717
+(epoch: 570, iters: 10, time: 0.632, data: 0.000) D: 0.610 G_GAN: 0.392 G_L1: 22.754 G_sobelL1: 10.489 
+End of epoch 570 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001713
+(epoch: 571, iters: 33, time: 0.639, data: 0.000) D: 0.075 G_GAN: 0.764 G_L1: 13.056 G_sobelL1: 3.784 
+saving the latest model (epoch 571, total_steps 44000)
+End of epoch 571 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001709
+(epoch: 572, iters: 56, time: 0.641, data: 0.000) D: 0.178 G_GAN: 3.378 G_L1: 27.104 G_sobelL1: 29.751 
+End of epoch 572 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001705
+End of epoch 573 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001701
+(epoch: 574, iters: 2, time: 0.657, data: 0.000) D: 0.404 G_GAN: 0.687 G_L1: 44.165 G_sobelL1: 11.167 
+End of epoch 574 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001697
+(epoch: 575, iters: 25, time: 0.635, data: 0.469) D: 0.179 G_GAN: 2.056 G_L1: 25.775 G_sobelL1: 31.950 
+End of epoch 575 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001693
+(epoch: 576, iters: 48, time: 0.642, data: 0.000) D: 0.182 G_GAN: 2.714 G_L1: 15.924 G_sobelL1: 20.088 
+End of epoch 576 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001689
+(epoch: 577, iters: 71, time: 0.640, data: 0.000) D: 0.039 G_GAN: 0.610 G_L1: 22.067 G_sobelL1: 28.519 
+End of epoch 577 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001685
+End of epoch 578 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001681
+(epoch: 579, iters: 17, time: 0.640, data: 0.000) D: 0.242 G_GAN: 0.784 G_L1: 112.284 G_sobelL1: 49.662 
+End of epoch 579 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001677
+(epoch: 580, iters: 40, time: 0.639, data: 0.000) D: 0.477 G_GAN: 0.832 G_L1: 17.774 G_sobelL1: 22.230 
+End of epoch 580 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001673
+(epoch: 581, iters: 63, time: 0.639, data: 0.000) D: 0.513 G_GAN: 1.514 G_L1: 26.905 G_sobelL1: 29.101 
+End of epoch 581 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001669
+End of epoch 582 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001665
+(epoch: 583, iters: 9, time: 0.639, data: 0.000) D: 0.307 G_GAN: 3.284 G_L1: 22.396 G_sobelL1: 21.657 
+End of epoch 583 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001661
+(epoch: 584, iters: 32, time: 0.638, data: 0.000) D: 0.367 G_GAN: 1.338 G_L1: 27.718 G_sobelL1: 28.765 
+saving the latest model (epoch 584, total_steps 45000)
+End of epoch 584 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001657
+(epoch: 585, iters: 55, time: 0.642, data: 0.000) D: 0.677 G_GAN: 1.100 G_L1: 0.988 G_sobelL1: 1.509 
+End of epoch 585 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001653
+End of epoch 586 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001649
+(epoch: 587, iters: 1, time: 0.425, data: 0.000) D: 0.638 G_GAN: 2.165 G_L1: 26.051 G_sobelL1: 28.202 
+End of epoch 587 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001645
+(epoch: 588, iters: 24, time: 0.639, data: 0.002) D: 0.453 G_GAN: 0.337 G_L1: 11.922 G_sobelL1: 2.652 
+End of epoch 588 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001641
+(epoch: 589, iters: 47, time: 0.635, data: 0.000) D: 0.448 G_GAN: 2.024 G_L1: 17.568 G_sobelL1: 18.637 
+End of epoch 589 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001637
+(epoch: 590, iters: 70, time: 0.641, data: 0.000) D: 0.351 G_GAN: 1.679 G_L1: 15.382 G_sobelL1: 10.591 
+End of epoch 590 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001633
+End of epoch 591 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001629
+(epoch: 592, iters: 16, time: 0.639, data: 0.000) D: 0.684 G_GAN: 0.884 G_L1: 3.554 G_sobelL1: 4.561 
+End of epoch 592 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001625
+(epoch: 593, iters: 39, time: 0.640, data: 0.000) D: 0.514 G_GAN: 1.870 G_L1: 8.118 G_sobelL1: 8.503 
+End of epoch 593 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001621
+(epoch: 594, iters: 62, time: 0.637, data: 0.000) D: 0.620 G_GAN: 0.664 G_L1: 0.510 G_sobelL1: 0.769 
+End of epoch 594 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001617
+End of epoch 595 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001613
+(epoch: 596, iters: 8, time: 0.638, data: 0.000) D: 1.187 G_GAN: 3.490 G_L1: 16.026 G_sobelL1: 19.805 
+End of epoch 596 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001609
+(epoch: 597, iters: 31, time: 0.635, data: 0.000) D: 0.047 G_GAN: 3.630 G_L1: 26.273 G_sobelL1: 27.948 
+saving the latest model (epoch 597, total_steps 46000)
+End of epoch 597 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001605
+(epoch: 598, iters: 54, time: 0.641, data: 0.000) D: 0.137 G_GAN: 2.365 G_L1: 22.484 G_sobelL1: 19.839 
+End of epoch 598 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001601
+(epoch: 599, iters: 77, time: 0.642, data: 0.000) D: 0.284 G_GAN: 1.595 G_L1: 21.716 G_sobelL1: 29.232 
+End of epoch 599 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001597
+saving the model at the end of epoch 600, iters 46277
+End of epoch 600 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001593
+(epoch: 601, iters: 23, time: 0.636, data: 0.907) D: 0.210 G_GAN: 2.137 G_L1: 13.725 G_sobelL1: 17.601 
+End of epoch 601 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001589
+(epoch: 602, iters: 46, time: 0.641, data: 0.000) D: 0.190 G_GAN: 2.146 G_L1: 14.233 G_sobelL1: 16.585 
+End of epoch 602 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001585
+(epoch: 603, iters: 69, time: 0.641, data: 0.000) D: 0.312 G_GAN: 2.750 G_L1: 22.878 G_sobelL1: 26.463 
+End of epoch 603 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001581
+End of epoch 604 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001577
+(epoch: 605, iters: 15, time: 0.640, data: 0.000) D: 0.094 G_GAN: 5.109 G_L1: 31.447 G_sobelL1: 32.496 
+End of epoch 605 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001573
+(epoch: 606, iters: 38, time: 0.638, data: 0.000) D: 0.388 G_GAN: 0.818 G_L1: 15.176 G_sobelL1: 16.675 
+End of epoch 606 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001569
+(epoch: 607, iters: 61, time: 0.640, data: 0.000) D: 0.366 G_GAN: 1.471 G_L1: 32.394 G_sobelL1: 35.192 
+End of epoch 607 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001565
+End of epoch 608 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001561
+(epoch: 609, iters: 7, time: 0.640, data: 0.000) D: 0.495 G_GAN: 0.905 G_L1: 4.917 G_sobelL1: 5.727 
+End of epoch 609 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001557
+(epoch: 610, iters: 30, time: 0.640, data: 0.000) D: 0.607 G_GAN: 0.511 G_L1: 32.540 G_sobelL1: 18.708 
+saving the latest model (epoch 610, total_steps 47000)
+End of epoch 610 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001553
+(epoch: 611, iters: 53, time: 0.641, data: 0.000) D: 0.249 G_GAN: 1.794 G_L1: 15.110 G_sobelL1: 22.687 
+End of epoch 611 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001549
+(epoch: 612, iters: 76, time: 0.639, data: 0.000) D: 0.228 G_GAN: 1.501 G_L1: 10.463 G_sobelL1: 13.238 
+End of epoch 612 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001545
+End of epoch 613 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001541
+(epoch: 614, iters: 22, time: 0.638, data: 0.000) D: 0.392 G_GAN: 1.089 G_L1: 13.215 G_sobelL1: 14.360 
+End of epoch 614 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001537
+(epoch: 615, iters: 45, time: 0.638, data: 0.000) D: 0.320 G_GAN: 1.212 G_L1: 23.133 G_sobelL1: 28.201 
+End of epoch 615 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001533
+(epoch: 616, iters: 68, time: 0.640, data: 0.000) D: 0.635 G_GAN: 3.326 G_L1: 13.555 G_sobelL1: 19.069 
+End of epoch 616 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001529
+End of epoch 617 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001525
+(epoch: 618, iters: 14, time: 0.639, data: 0.000) D: 0.063 G_GAN: 0.580 G_L1: 24.507 G_sobelL1: 25.549 
+End of epoch 618 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001521
+(epoch: 619, iters: 37, time: 0.636, data: 0.000) D: 0.583 G_GAN: 0.498 G_L1: 8.026 G_sobelL1: 7.261 
+End of epoch 619 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001517
+(epoch: 620, iters: 60, time: 0.642, data: 0.000) D: 0.828 G_GAN: 2.057 G_L1: 4.419 G_sobelL1: 5.133 
+End of epoch 620 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001513
+End of epoch 621 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001509
+(epoch: 622, iters: 6, time: 0.638, data: 0.000) D: 0.467 G_GAN: 1.828 G_L1: 21.807 G_sobelL1: 25.935 
+End of epoch 622 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001505
+(epoch: 623, iters: 29, time: 0.640, data: 0.000) D: 1.042 G_GAN: 2.569 G_L1: 5.785 G_sobelL1: 7.611 
+saving the latest model (epoch 623, total_steps 48000)
+End of epoch 623 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001501
+(epoch: 624, iters: 52, time: 0.640, data: 0.000) D: 0.621 G_GAN: 0.915 G_L1: 1.248 G_sobelL1: 1.764 
+End of epoch 624 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001497
+(epoch: 625, iters: 75, time: 0.640, data: 0.000) D: 0.554 G_GAN: 2.668 G_L1: 16.998 G_sobelL1: 17.247 
+End of epoch 625 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001493
+End of epoch 626 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001489
+(epoch: 627, iters: 21, time: 0.640, data: 0.000) D: 0.395 G_GAN: 0.829 G_L1: 7.210 G_sobelL1: 9.336 
+End of epoch 627 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001485
+(epoch: 628, iters: 44, time: 0.640, data: 0.000) D: 0.344 G_GAN: 1.622 G_L1: 11.138 G_sobelL1: 12.867 
+End of epoch 628 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001481
+(epoch: 629, iters: 67, time: 0.641, data: 0.000) D: 0.294 G_GAN: 1.888 G_L1: 15.294 G_sobelL1: 21.062 
+End of epoch 629 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001477
+End of epoch 630 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001473
+(epoch: 631, iters: 13, time: 0.639, data: 0.000) D: 0.338 G_GAN: 0.991 G_L1: 13.844 G_sobelL1: 15.703 
+End of epoch 631 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001469
+(epoch: 632, iters: 36, time: 0.640, data: 0.000) D: 0.293 G_GAN: 1.132 G_L1: 13.399 G_sobelL1: 18.947 
+End of epoch 632 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001465
+(epoch: 633, iters: 59, time: 0.639, data: 0.000) D: 0.615 G_GAN: 1.499 G_L1: 12.355 G_sobelL1: 13.550 
+End of epoch 633 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001461
+End of epoch 634 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001457
+(epoch: 635, iters: 5, time: 0.621, data: 0.000) D: 0.072 G_GAN: 3.794 G_L1: 25.542 G_sobelL1: 31.563 
+End of epoch 635 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001453
+(epoch: 636, iters: 28, time: 0.642, data: 0.000) D: 0.448 G_GAN: 0.459 G_L1: 15.816 G_sobelL1: 17.877 
+saving the latest model (epoch 636, total_steps 49000)
+End of epoch 636 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001449
+(epoch: 637, iters: 51, time: 0.641, data: 0.000) D: 0.231 G_GAN: 1.951 G_L1: 13.970 G_sobelL1: 19.249 
+End of epoch 637 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001445
+(epoch: 638, iters: 74, time: 0.642, data: 0.000) D: 0.888 G_GAN: 0.661 G_L1: 1.081 G_sobelL1: 1.774 
+End of epoch 638 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001441
+End of epoch 639 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001437
+(epoch: 640, iters: 20, time: 0.640, data: 0.000) D: 0.194 G_GAN: 1.871 G_L1: 15.260 G_sobelL1: 21.059 
+End of epoch 640 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001433
+(epoch: 641, iters: 43, time: 0.638, data: 0.000) D: 0.170 G_GAN: 0.428 G_L1: 21.479 G_sobelL1: 30.712 
+End of epoch 641 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001429
+(epoch: 642, iters: 66, time: 0.639, data: 0.000) D: 0.239 G_GAN: 2.596 G_L1: 20.282 G_sobelL1: 23.299 
+End of epoch 642 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001425
+End of epoch 643 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001421
+(epoch: 644, iters: 12, time: 0.634, data: 0.000) D: 1.157 G_GAN: 1.425 G_L1: 16.379 G_sobelL1: 19.044 
+End of epoch 644 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001417
+(epoch: 645, iters: 35, time: 0.639, data: 0.000) D: 0.058 G_GAN: 3.408 G_L1: 41.773 G_sobelL1: 31.633 
+End of epoch 645 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001413
+(epoch: 646, iters: 58, time: 0.629, data: 0.000) D: 0.429 G_GAN: 0.245 G_L1: 11.681 G_sobelL1: 13.624 
+End of epoch 646 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001409
+End of epoch 647 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001405
+(epoch: 648, iters: 4, time: 0.632, data: 0.000) D: 0.292 G_GAN: 3.268 G_L1: 19.168 G_sobelL1: 18.519 
+End of epoch 648 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001401
+(epoch: 649, iters: 27, time: 0.633, data: 0.000) D: 0.280 G_GAN: 0.979 G_L1: 13.755 G_sobelL1: 15.686 
+saving the latest model (epoch 649, total_steps 50000)
+End of epoch 649 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001397
+(epoch: 650, iters: 50, time: 0.636, data: 0.000) D: 0.354 G_GAN: 2.221 G_L1: 16.758 G_sobelL1: 23.018 
+End of epoch 650 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001393
+(epoch: 651, iters: 73, time: 0.640, data: 0.000) D: 0.697 G_GAN: 1.576 G_L1: 23.260 G_sobelL1: 28.571 
+End of epoch 651 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001389
+End of epoch 652 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001385
+(epoch: 653, iters: 19, time: 0.631, data: 0.000) D: 0.198 G_GAN: 1.154 G_L1: 35.611 G_sobelL1: 39.516 
+End of epoch 653 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001381
+(epoch: 654, iters: 42, time: 0.640, data: 0.000) D: 0.542 G_GAN: 0.553 G_L1: 9.591 G_sobelL1: 9.962 
+End of epoch 654 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001377
+(epoch: 655, iters: 65, time: 0.640, data: 0.000) D: 0.083 G_GAN: 1.294 G_L1: 12.365 G_sobelL1: 13.126 
+End of epoch 655 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001373
+End of epoch 656 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001369
+(epoch: 657, iters: 11, time: 0.636, data: 0.000) D: 0.104 G_GAN: 2.100 G_L1: 21.860 G_sobelL1: 29.565 
+End of epoch 657 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001365
+(epoch: 658, iters: 34, time: 0.640, data: 0.000) D: 0.065 G_GAN: 1.694 G_L1: 21.296 G_sobelL1: 22.816 
+End of epoch 658 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001361
+(epoch: 659, iters: 57, time: 0.638, data: 0.000) D: 0.265 G_GAN: 3.253 G_L1: 28.719 G_sobelL1: 33.764 
+End of epoch 659 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001357
+End of epoch 660 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001353
+(epoch: 661, iters: 3, time: 0.629, data: 0.000) D: 0.357 G_GAN: 1.714 G_L1: 18.356 G_sobelL1: 21.571 
+End of epoch 661 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001349
+(epoch: 662, iters: 26, time: 0.633, data: 0.000) D: 0.098 G_GAN: 2.077 G_L1: 28.686 G_sobelL1: 33.365 
+saving the latest model (epoch 662, total_steps 51000)
+End of epoch 662 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001345
+(epoch: 663, iters: 49, time: 0.639, data: 0.000) D: 1.521 G_GAN: 2.759 G_L1: 23.050 G_sobelL1: 27.188 
+End of epoch 663 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001341
+(epoch: 664, iters: 72, time: 0.640, data: 0.000) D: 1.039 G_GAN: 0.186 G_L1: 19.221 G_sobelL1: 25.028 
+End of epoch 664 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001337
+End of epoch 665 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001333
+(epoch: 666, iters: 18, time: 0.639, data: 0.000) D: 0.064 G_GAN: 2.548 G_L1: 24.694 G_sobelL1: 23.862 
+End of epoch 666 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001329
+(epoch: 667, iters: 41, time: 0.640, data: 0.000) D: 0.253 G_GAN: 1.636 G_L1: 18.399 G_sobelL1: 21.320 
+End of epoch 667 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001325
+(epoch: 668, iters: 64, time: 0.643, data: 0.000) D: 0.317 G_GAN: 1.728 G_L1: 0.522 G_sobelL1: 0.943 
+End of epoch 668 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001321
+End of epoch 669 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001317
+(epoch: 670, iters: 10, time: 0.629, data: 0.000) D: 0.244 G_GAN: 1.207 G_L1: 24.238 G_sobelL1: 28.962 
+End of epoch 670 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001313
+(epoch: 671, iters: 33, time: 0.640, data: 0.000) D: 0.229 G_GAN: 3.724 G_L1: 23.603 G_sobelL1: 31.181 
+End of epoch 671 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001309
+(epoch: 672, iters: 56, time: 0.641, data: 0.000) D: 0.386 G_GAN: 3.118 G_L1: 24.594 G_sobelL1: 28.958 
+End of epoch 672 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001305
+End of epoch 673 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001301
+(epoch: 674, iters: 2, time: 0.617, data: 0.000) D: 0.153 G_GAN: 1.024 G_L1: 17.981 G_sobelL1: 25.373 
+End of epoch 674 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001297
+(epoch: 675, iters: 25, time: 0.625, data: 0.001) D: 0.315 G_GAN: 3.654 G_L1: 27.519 G_sobelL1: 25.874 
+saving the latest model (epoch 675, total_steps 52000)
+End of epoch 675 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001293
+(epoch: 676, iters: 48, time: 0.642, data: 0.000) D: 0.673 G_GAN: 1.923 G_L1: 4.508 G_sobelL1: 4.796 
+End of epoch 676 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001289
+(epoch: 677, iters: 71, time: 0.640, data: 0.000) D: 0.708 G_GAN: 1.497 G_L1: 29.874 G_sobelL1: 30.241 
+End of epoch 677 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001285
+End of epoch 678 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001281
+(epoch: 679, iters: 17, time: 0.633, data: 0.000) D: 0.089 G_GAN: 3.537 G_L1: 29.551 G_sobelL1: 27.966 
+End of epoch 679 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001277
+(epoch: 680, iters: 40, time: 0.640, data: 0.000) D: 0.565 G_GAN: 1.003 G_L1: 14.563 G_sobelL1: 19.795 
+End of epoch 680 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001273
+(epoch: 681, iters: 63, time: 0.633, data: 0.000) D: 0.545 G_GAN: 3.168 G_L1: 23.386 G_sobelL1: 26.284 
+End of epoch 681 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001269
+End of epoch 682 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001265
+(epoch: 683, iters: 9, time: 0.638, data: 0.000) D: 0.315 G_GAN: 2.441 G_L1: 23.122 G_sobelL1: 25.134 
+End of epoch 683 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001261
+(epoch: 684, iters: 32, time: 0.641, data: 0.000) D: 0.546 G_GAN: 0.639 G_L1: 1.915 G_sobelL1: 2.727 
+End of epoch 684 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001257
+(epoch: 685, iters: 55, time: 0.641, data: 0.000) D: 0.517 G_GAN: 0.670 G_L1: 2.266 G_sobelL1: 2.857 
+End of epoch 685 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001253
+End of epoch 686 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001250
+(epoch: 687, iters: 1, time: 0.410, data: 0.000) D: 0.878 G_GAN: 1.333 G_L1: 15.610 G_sobelL1: 19.331 
+End of epoch 687 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001246
+(epoch: 688, iters: 24, time: 0.639, data: 0.000) D: 0.438 G_GAN: 1.224 G_L1: 3.420 G_sobelL1: 6.090 
+saving the latest model (epoch 688, total_steps 53000)
+End of epoch 688 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001242
+(epoch: 689, iters: 47, time: 0.638, data: 0.000) D: 0.056 G_GAN: 3.402 G_L1: 33.518 G_sobelL1: 35.531 
+End of epoch 689 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001238
+(epoch: 690, iters: 70, time: 0.641, data: 0.000) D: 0.486 G_GAN: 0.922 G_L1: 18.321 G_sobelL1: 23.405 
+End of epoch 690 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001234
+End of epoch 691 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001230
+(epoch: 692, iters: 16, time: 0.639, data: 0.000) D: 0.103 G_GAN: 1.721 G_L1: 15.417 G_sobelL1: 21.158 
+End of epoch 692 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001226
+(epoch: 693, iters: 39, time: 0.640, data: 0.000) D: 1.549 G_GAN: 2.342 G_L1: 17.240 G_sobelL1: 20.282 
+End of epoch 693 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001222
+(epoch: 694, iters: 62, time: 0.635, data: 0.000) D: 0.185 G_GAN: 1.118 G_L1: 17.936 G_sobelL1: 21.311 
+End of epoch 694 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001218
+End of epoch 695 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001214
+(epoch: 696, iters: 8, time: 0.619, data: 0.000) D: 0.620 G_GAN: 1.272 G_L1: 1.738 G_sobelL1: 2.668 
+End of epoch 696 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001210
+(epoch: 697, iters: 31, time: 0.641, data: 0.000) D: 0.446 G_GAN: 2.300 G_L1: 21.137 G_sobelL1: 21.183 
+End of epoch 697 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001206
+(epoch: 698, iters: 54, time: 0.642, data: 0.000) D: 0.644 G_GAN: 2.712 G_L1: 23.014 G_sobelL1: 29.647 
+End of epoch 698 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001202
+(epoch: 699, iters: 77, time: 0.639, data: 0.000) D: 0.210 G_GAN: 1.648 G_L1: 16.806 G_sobelL1: 17.478 
+End of epoch 699 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001198
+End of epoch 700 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001194
+(epoch: 701, iters: 23, time: 0.643, data: 2.263) D: 0.207 G_GAN: 1.220 G_L1: 16.887 G_sobelL1: 21.475 
+saving the latest model (epoch 701, total_steps 54000)
+End of epoch 701 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001190
+(epoch: 702, iters: 46, time: 0.636, data: 0.000) D: 0.204 G_GAN: 0.237 G_L1: 17.604 G_sobelL1: 23.292 
+End of epoch 702 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001186
+(epoch: 703, iters: 69, time: 0.640, data: 0.000) D: 0.559 G_GAN: 3.050 G_L1: 25.324 G_sobelL1: 24.638 
+End of epoch 703 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001182
+End of epoch 704 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001178
+(epoch: 705, iters: 15, time: 0.636, data: 0.000) D: 0.363 G_GAN: 0.827 G_L1: 29.732 G_sobelL1: 29.891 
+End of epoch 705 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001174
+(epoch: 706, iters: 38, time: 0.641, data: 0.000) D: 0.223 G_GAN: 0.553 G_L1: 17.711 G_sobelL1: 22.886 
+End of epoch 706 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001170
+(epoch: 707, iters: 61, time: 0.639, data: 0.000) D: 0.724 G_GAN: 0.503 G_L1: 18.159 G_sobelL1: 20.306 
+End of epoch 707 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001166
+End of epoch 708 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001162
+(epoch: 709, iters: 7, time: 0.638, data: 0.000) D: 0.213 G_GAN: 5.554 G_L1: 30.868 G_sobelL1: 34.370 
+End of epoch 709 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001158
+(epoch: 710, iters: 30, time: 0.641, data: 0.000) D: 1.064 G_GAN: 4.299 G_L1: 20.579 G_sobelL1: 24.833 
+End of epoch 710 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001154
+(epoch: 711, iters: 53, time: 0.640, data: 0.000) D: 0.348 G_GAN: 3.071 G_L1: 25.448 G_sobelL1: 29.762 
+End of epoch 711 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001150
+(epoch: 712, iters: 76, time: 0.640, data: 0.000) D: 0.590 G_GAN: 1.642 G_L1: 18.078 G_sobelL1: 24.468 
+End of epoch 712 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001146
+End of epoch 713 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001142
+(epoch: 714, iters: 22, time: 0.638, data: 0.000) D: 0.396 G_GAN: 1.366 G_L1: 20.373 G_sobelL1: 23.386 
+saving the latest model (epoch 714, total_steps 55000)
+End of epoch 714 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001138
+(epoch: 715, iters: 45, time: 0.640, data: 0.000) D: 0.116 G_GAN: 2.188 G_L1: 27.138 G_sobelL1: 30.789 
+End of epoch 715 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001134
+(epoch: 716, iters: 68, time: 0.641, data: 0.000) D: 0.234 G_GAN: 1.785 G_L1: 23.465 G_sobelL1: 25.379 
+End of epoch 716 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001130
+End of epoch 717 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001126
+(epoch: 718, iters: 14, time: 0.639, data: 0.000) D: 0.436 G_GAN: 3.710 G_L1: 16.846 G_sobelL1: 21.715 
+End of epoch 718 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001122
+(epoch: 719, iters: 37, time: 0.640, data: 0.000) D: 0.098 G_GAN: 2.219 G_L1: 23.739 G_sobelL1: 27.106 
+End of epoch 719 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001118
+(epoch: 720, iters: 60, time: 0.640, data: 0.000) D: 0.076 G_GAN: 2.111 G_L1: 25.256 G_sobelL1: 22.561 
+End of epoch 720 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001114
+End of epoch 721 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001110
+(epoch: 722, iters: 6, time: 0.636, data: 0.000) D: 1.705 G_GAN: 1.694 G_L1: 19.244 G_sobelL1: 25.058 
+End of epoch 722 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001106
+(epoch: 723, iters: 29, time: 0.640, data: 0.000) D: 0.249 G_GAN: 1.678 G_L1: 16.407 G_sobelL1: 20.874 
+End of epoch 723 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001102
+(epoch: 724, iters: 52, time: 0.642, data: 0.000) D: 0.203 G_GAN: 1.979 G_L1: 26.680 G_sobelL1: 31.571 
+End of epoch 724 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001098
+(epoch: 725, iters: 75, time: 0.639, data: 0.000) D: 0.060 G_GAN: 2.609 G_L1: 21.821 G_sobelL1: 28.028 
+End of epoch 725 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001094
+End of epoch 726 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001090
+(epoch: 727, iters: 21, time: 0.640, data: 0.000) D: 0.356 G_GAN: 0.920 G_L1: 2.586 G_sobelL1: 3.419 
+saving the latest model (epoch 727, total_steps 56000)
+End of epoch 727 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001086
+(epoch: 728, iters: 44, time: 0.638, data: 0.000) D: 0.127 G_GAN: 1.646 G_L1: 20.976 G_sobelL1: 21.230 
+End of epoch 728 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001082
+(epoch: 729, iters: 67, time: 0.640, data: 0.000) D: 0.707 G_GAN: 1.083 G_L1: 5.922 G_sobelL1: 7.037 
+End of epoch 729 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001078
+End of epoch 730 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001074
+(epoch: 731, iters: 13, time: 0.642, data: 0.000) D: 0.058 G_GAN: 4.051 G_L1: 22.586 G_sobelL1: 26.374 
+End of epoch 731 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001070
+(epoch: 732, iters: 36, time: 0.634, data: 0.000) D: 0.368 G_GAN: 2.001 G_L1: 18.887 G_sobelL1: 21.183 
+End of epoch 732 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001066
+(epoch: 733, iters: 59, time: 0.641, data: 0.000) D: 0.262 G_GAN: 2.418 G_L1: 22.025 G_sobelL1: 20.170 
+End of epoch 733 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001062
+End of epoch 734 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001058
+(epoch: 735, iters: 5, time: 0.638, data: 0.000) D: 0.825 G_GAN: 0.277 G_L1: 20.819 G_sobelL1: 22.635 
+End of epoch 735 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001054
+(epoch: 736, iters: 28, time: 0.637, data: 0.000) D: 0.985 G_GAN: 1.837 G_L1: 0.513 G_sobelL1: 0.522 
+End of epoch 736 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001050
+(epoch: 737, iters: 51, time: 0.634, data: 0.000) D: 0.227 G_GAN: 0.308 G_L1: 4.207 G_sobelL1: 6.799 
+End of epoch 737 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001046
+(epoch: 738, iters: 74, time: 0.641, data: 0.000) D: 0.445 G_GAN: 0.868 G_L1: 17.116 G_sobelL1: 25.256 
+End of epoch 738 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001042
+End of epoch 739 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001038
+(epoch: 740, iters: 20, time: 0.642, data: 0.000) D: 0.065 G_GAN: 2.745 G_L1: 31.068 G_sobelL1: 35.695 
+saving the latest model (epoch 740, total_steps 57000)
+End of epoch 740 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001034
+(epoch: 741, iters: 43, time: 0.640, data: 0.000) D: 0.278 G_GAN: 0.955 G_L1: 28.422 G_sobelL1: 33.788 
+End of epoch 741 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001030
+(epoch: 742, iters: 66, time: 0.640, data: 0.000) D: 0.427 G_GAN: 1.468 G_L1: 24.070 G_sobelL1: 26.149 
+End of epoch 742 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001026
+End of epoch 743 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001022
+(epoch: 744, iters: 12, time: 0.630, data: 0.000) D: 0.218 G_GAN: 1.355 G_L1: 19.640 G_sobelL1: 23.475 
+End of epoch 744 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0001018
+(epoch: 745, iters: 35, time: 0.640, data: 0.000) D: 0.198 G_GAN: 2.411 G_L1: 25.664 G_sobelL1: 24.748 
+End of epoch 745 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0001014
+(epoch: 746, iters: 58, time: 0.634, data: 0.000) D: 0.489 G_GAN: 1.554 G_L1: 15.330 G_sobelL1: 21.100 
+End of epoch 746 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001010
+End of epoch 747 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0001006
+(epoch: 748, iters: 4, time: 0.640, data: 0.000) D: 0.525 G_GAN: 0.784 G_L1: 14.658 G_sobelL1: 20.097 
+End of epoch 748 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0001002
+(epoch: 749, iters: 27, time: 0.635, data: 0.000) D: 0.407 G_GAN: 0.901 G_L1: 7.799 G_sobelL1: 8.780 
+End of epoch 749 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000998
+(epoch: 750, iters: 50, time: 0.641, data: 0.000) D: 0.315 G_GAN: 2.471 G_L1: 26.008 G_sobelL1: 32.034 
+End of epoch 750 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000994
+(epoch: 751, iters: 73, time: 0.639, data: 0.000) D: 0.688 G_GAN: 0.807 G_L1: 0.356 G_sobelL1: 0.508 
+End of epoch 751 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000990
+End of epoch 752 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000986
+(epoch: 753, iters: 19, time: 0.641, data: 0.000) D: 0.982 G_GAN: 1.377 G_L1: 1.752 G_sobelL1: 1.554 
+saving the latest model (epoch 753, total_steps 58000)
+End of epoch 753 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000982
+(epoch: 754, iters: 42, time: 0.642, data: 0.000) D: 0.700 G_GAN: 1.562 G_L1: 6.735 G_sobelL1: 4.568 
+End of epoch 754 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000978
+(epoch: 755, iters: 65, time: 0.638, data: 0.000) D: 0.504 G_GAN: 0.459 G_L1: 27.014 G_sobelL1: 33.202 
+End of epoch 755 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000974
+End of epoch 756 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000970
+(epoch: 757, iters: 11, time: 0.635, data: 0.000) D: 0.059 G_GAN: 3.084 G_L1: 26.580 G_sobelL1: 23.004 
+End of epoch 757 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000966
+(epoch: 758, iters: 34, time: 0.640, data: 0.000) D: 0.563 G_GAN: 1.412 G_L1: 15.204 G_sobelL1: 17.724 
+End of epoch 758 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000962
+(epoch: 759, iters: 57, time: 0.641, data: 0.000) D: 0.240 G_GAN: 2.325 G_L1: 21.616 G_sobelL1: 27.701 
+End of epoch 759 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000958
+End of epoch 760 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000954
+(epoch: 761, iters: 3, time: 0.634, data: 0.000) D: 0.164 G_GAN: 1.506 G_L1: 33.204 G_sobelL1: 31.845 
+End of epoch 761 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000950
+(epoch: 762, iters: 26, time: 0.641, data: 0.000) D: 0.613 G_GAN: 0.568 G_L1: 14.316 G_sobelL1: 19.926 
+End of epoch 762 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000946
+(epoch: 763, iters: 49, time: 0.642, data: 0.000) D: 1.235 G_GAN: 2.655 G_L1: 19.957 G_sobelL1: 20.341 
+End of epoch 763 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000942
+(epoch: 764, iters: 72, time: 0.641, data: 0.000) D: 0.869 G_GAN: 1.354 G_L1: 18.719 G_sobelL1: 23.829 
+End of epoch 764 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000938
+End of epoch 765 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000934
+(epoch: 766, iters: 18, time: 0.641, data: 0.000) D: 0.106 G_GAN: 2.876 G_L1: 23.690 G_sobelL1: 32.139 
+saving the latest model (epoch 766, total_steps 59000)
+End of epoch 766 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000930
+(epoch: 767, iters: 41, time: 0.641, data: 0.000) D: 0.467 G_GAN: 1.760 G_L1: 4.883 G_sobelL1: 6.041 
+End of epoch 767 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000926
+(epoch: 768, iters: 64, time: 0.641, data: 0.000) D: 0.700 G_GAN: 1.457 G_L1: 2.666 G_sobelL1: 2.988 
+End of epoch 768 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000922
+End of epoch 769 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000918
+(epoch: 770, iters: 10, time: 0.638, data: 0.000) D: 0.304 G_GAN: 1.034 G_L1: 22.770 G_sobelL1: 28.763 
+End of epoch 770 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000914
+(epoch: 771, iters: 33, time: 0.638, data: 0.000) D: 0.278 G_GAN: 1.906 G_L1: 23.761 G_sobelL1: 27.412 
+End of epoch 771 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000910
+(epoch: 772, iters: 56, time: 0.641, data: 0.000) D: 0.622 G_GAN: 2.236 G_L1: 17.298 G_sobelL1: 19.124 
+End of epoch 772 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000906
+End of epoch 773 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000902
+(epoch: 774, iters: 2, time: 0.629, data: 0.000) D: 0.178 G_GAN: 1.447 G_L1: 19.237 G_sobelL1: 21.338 
+End of epoch 774 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000898
+(epoch: 775, iters: 25, time: 0.639, data: 0.000) D: 0.411 G_GAN: 4.536 G_L1: 29.039 G_sobelL1: 27.286 
+End of epoch 775 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000894
+(epoch: 776, iters: 48, time: 0.641, data: 0.000) D: 0.669 G_GAN: 1.722 G_L1: 3.185 G_sobelL1: 3.051 
+End of epoch 776 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000890
+(epoch: 777, iters: 71, time: 0.641, data: 0.000) D: 0.285 G_GAN: 1.628 G_L1: 23.478 G_sobelL1: 26.867 
+End of epoch 777 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000886
+End of epoch 778 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000882
+(epoch: 779, iters: 17, time: 0.641, data: 0.000) D: 0.137 G_GAN: 1.286 G_L1: 23.610 G_sobelL1: 30.317 
+saving the latest model (epoch 779, total_steps 60000)
+End of epoch 779 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000878
+(epoch: 780, iters: 40, time: 0.640, data: 0.000) D: 0.194 G_GAN: 1.659 G_L1: 19.694 G_sobelL1: 27.237 
+End of epoch 780 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000874
+(epoch: 781, iters: 63, time: 0.639, data: 0.000) D: 0.363 G_GAN: 1.306 G_L1: 1.431 G_sobelL1: 2.047 
+End of epoch 781 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000870
+End of epoch 782 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000866
+(epoch: 783, iters: 9, time: 0.636, data: 0.000) D: 0.180 G_GAN: 1.104 G_L1: 13.698 G_sobelL1: 15.519 
+End of epoch 783 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0000862
+(epoch: 784, iters: 32, time: 0.639, data: 0.000) D: 0.226 G_GAN: 3.172 G_L1: 11.207 G_sobelL1: 14.366 
+End of epoch 784 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000858
+(epoch: 785, iters: 55, time: 0.635, data: 0.000) D: 0.712 G_GAN: 1.032 G_L1: 0.694 G_sobelL1: 1.113 
+End of epoch 785 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000854
+End of epoch 786 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000850
+(epoch: 787, iters: 1, time: 0.410, data: 0.000) D: 0.672 G_GAN: 0.397 G_L1: 22.461 G_sobelL1: 30.601 
+End of epoch 787 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000846
+(epoch: 788, iters: 24, time: 0.638, data: 0.002) D: 0.569 G_GAN: 1.642 G_L1: 21.091 G_sobelL1: 25.203 
+End of epoch 788 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000842
+(epoch: 789, iters: 47, time: 0.640, data: 0.000) D: 0.430 G_GAN: 0.763 G_L1: 0.347 G_sobelL1: 0.664 
+End of epoch 789 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000838
+(epoch: 790, iters: 70, time: 0.638, data: 0.000) D: 0.413 G_GAN: 2.173 G_L1: 28.952 G_sobelL1: 23.129 
+End of epoch 790 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0000834
+End of epoch 791 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000830
+(epoch: 792, iters: 16, time: 0.641, data: 0.000) D: 0.829 G_GAN: 1.766 G_L1: 18.725 G_sobelL1: 20.316 
+saving the latest model (epoch 792, total_steps 61000)
+End of epoch 792 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000826
+(epoch: 793, iters: 39, time: 0.640, data: 0.000) D: 0.220 G_GAN: 2.629 G_L1: 21.048 G_sobelL1: 22.363 
+End of epoch 793 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000822
+(epoch: 794, iters: 62, time: 0.641, data: 0.000) D: 0.238 G_GAN: 0.758 G_L1: 16.687 G_sobelL1: 19.190 
+End of epoch 794 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000818
+End of epoch 795 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000814
+(epoch: 796, iters: 8, time: 0.641, data: 0.000) D: 0.183 G_GAN: 1.434 G_L1: 21.754 G_sobelL1: 18.917 
+End of epoch 796 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000810
+(epoch: 797, iters: 31, time: 0.642, data: 0.000) D: 1.075 G_GAN: 2.360 G_L1: 18.805 G_sobelL1: 24.800 
+End of epoch 797 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000806
+(epoch: 798, iters: 54, time: 0.641, data: 0.000) D: 0.347 G_GAN: 1.804 G_L1: 24.403 G_sobelL1: 26.834 
+End of epoch 798 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000802
+(epoch: 799, iters: 77, time: 0.639, data: 0.000) D: 0.254 G_GAN: 1.674 G_L1: 33.710 G_sobelL1: 33.259 
+End of epoch 799 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000798
+saving the model at the end of epoch 800, iters 61677
+End of epoch 800 / 1000 	 Time Taken: 34 sec
+learning rate = 0.0000794
+(epoch: 801, iters: 23, time: 0.637, data: 2.570) D: 0.472 G_GAN: 0.589 G_L1: 28.928 G_sobelL1: 31.722 
+End of epoch 801 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000790
+(epoch: 802, iters: 46, time: 0.641, data: 0.000) D: 0.501 G_GAN: 0.930 G_L1: 6.017 G_sobelL1: 6.029 
+End of epoch 802 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000786
+(epoch: 803, iters: 69, time: 0.640, data: 0.000) D: 0.522 G_GAN: 2.030 G_L1: 14.871 G_sobelL1: 18.600 
+End of epoch 803 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000782
+End of epoch 804 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000778
+(epoch: 805, iters: 15, time: 0.641, data: 0.000) D: 0.607 G_GAN: 0.546 G_L1: 18.493 G_sobelL1: 22.554 
+saving the latest model (epoch 805, total_steps 62000)
+End of epoch 805 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000774
+(epoch: 806, iters: 38, time: 0.635, data: 0.000) D: 0.209 G_GAN: 0.378 G_L1: 0.211 G_sobelL1: 0.321 
+End of epoch 806 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000770
+(epoch: 807, iters: 61, time: 0.635, data: 0.000) D: 1.226 G_GAN: 0.872 G_L1: 0.434 G_sobelL1: 0.764 
+End of epoch 807 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000766
+End of epoch 808 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000762
+(epoch: 809, iters: 7, time: 0.630, data: 0.000) D: 0.515 G_GAN: 1.039 G_L1: 21.390 G_sobelL1: 27.138 
+End of epoch 809 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000758
+(epoch: 810, iters: 30, time: 0.619, data: 0.000) D: 0.724 G_GAN: 1.478 G_L1: 2.745 G_sobelL1: 3.260 
+End of epoch 810 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000754
+(epoch: 811, iters: 53, time: 0.639, data: 0.000) D: 0.476 G_GAN: 1.696 G_L1: 14.030 G_sobelL1: 17.169 
+End of epoch 811 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000750
+(epoch: 812, iters: 76, time: 0.640, data: 0.000) D: 0.087 G_GAN: 2.238 G_L1: 21.667 G_sobelL1: 27.031 
+End of epoch 812 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000747
+End of epoch 813 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000743
+(epoch: 814, iters: 22, time: 0.639, data: 0.000) D: 0.581 G_GAN: 1.047 G_L1: 0.430 G_sobelL1: 0.685 
+End of epoch 814 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000739
+(epoch: 815, iters: 45, time: 0.637, data: 0.000) D: 0.418 G_GAN: 0.795 G_L1: 13.727 G_sobelL1: 20.159 
+End of epoch 815 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000735
+(epoch: 816, iters: 68, time: 0.640, data: 0.000) D: 0.089 G_GAN: 0.926 G_L1: 27.872 G_sobelL1: 33.678 
+End of epoch 816 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0000731
+End of epoch 817 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000727
+(epoch: 818, iters: 14, time: 0.633, data: 0.000) D: 0.466 G_GAN: 0.693 G_L1: 34.974 G_sobelL1: 15.642 
+saving the latest model (epoch 818, total_steps 63000)
+End of epoch 818 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000723
+(epoch: 819, iters: 37, time: 0.618, data: 0.000) D: 0.074 G_GAN: 2.429 G_L1: 23.198 G_sobelL1: 28.892 
+End of epoch 819 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000719
+(epoch: 820, iters: 60, time: 0.640, data: 0.000) D: 0.772 G_GAN: 0.492 G_L1: 2.087 G_sobelL1: 2.694 
+End of epoch 820 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000715
+End of epoch 821 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000711
+(epoch: 822, iters: 6, time: 0.638, data: 0.000) D: 0.686 G_GAN: 1.327 G_L1: 0.625 G_sobelL1: 1.035 
+End of epoch 822 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000707
+(epoch: 823, iters: 29, time: 0.640, data: 0.000) D: 0.091 G_GAN: 2.029 G_L1: 25.598 G_sobelL1: 30.922 
+End of epoch 823 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000703
+(epoch: 824, iters: 52, time: 0.636, data: 0.000) D: 0.501 G_GAN: 1.284 G_L1: 11.223 G_sobelL1: 10.900 
+End of epoch 824 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000699
+(epoch: 825, iters: 75, time: 0.640, data: 0.000) D: 0.545 G_GAN: 1.301 G_L1: 1.412 G_sobelL1: 1.133 
+End of epoch 825 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000695
+End of epoch 826 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000691
+(epoch: 827, iters: 21, time: 0.634, data: 0.000) D: 0.723 G_GAN: 1.154 G_L1: 22.026 G_sobelL1: 27.847 
+End of epoch 827 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000687
+(epoch: 828, iters: 44, time: 0.625, data: 0.000) D: 0.209 G_GAN: 2.031 G_L1: 25.454 G_sobelL1: 28.459 
+End of epoch 828 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000683
+(epoch: 829, iters: 67, time: 0.640, data: 0.000) D: 0.116 G_GAN: 1.953 G_L1: 29.191 G_sobelL1: 27.202 
+End of epoch 829 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000679
+End of epoch 830 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000675
+(epoch: 831, iters: 13, time: 0.639, data: 0.000) D: 0.406 G_GAN: 0.324 G_L1: 29.917 G_sobelL1: 30.602 
+saving the latest model (epoch 831, total_steps 64000)
+End of epoch 831 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000671
+(epoch: 832, iters: 36, time: 0.641, data: 0.000) D: 0.262 G_GAN: 1.011 G_L1: 29.533 G_sobelL1: 25.554 
+End of epoch 832 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000667
+(epoch: 833, iters: 59, time: 0.621, data: 0.000) D: 0.400 G_GAN: 0.987 G_L1: 0.897 G_sobelL1: 1.091 
+End of epoch 833 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000663
+End of epoch 834 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000659
+(epoch: 835, iters: 5, time: 0.638, data: 0.000) D: 0.477 G_GAN: 0.628 G_L1: 16.055 G_sobelL1: 21.449 
+End of epoch 835 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000655
+(epoch: 836, iters: 28, time: 0.642, data: 0.000) D: 1.046 G_GAN: 0.951 G_L1: 18.105 G_sobelL1: 22.771 
+End of epoch 836 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000651
+(epoch: 837, iters: 51, time: 0.634, data: 0.000) D: 0.271 G_GAN: 1.999 G_L1: 12.902 G_sobelL1: 18.002 
+End of epoch 837 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000647
+(epoch: 838, iters: 74, time: 0.638, data: 0.000) D: 0.784 G_GAN: 2.533 G_L1: 22.613 G_sobelL1: 25.723 
+End of epoch 838 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000643
+End of epoch 839 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000639
+(epoch: 840, iters: 20, time: 0.640, data: 0.000) D: 0.204 G_GAN: 1.344 G_L1: 23.786 G_sobelL1: 22.761 
+End of epoch 840 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000635
+(epoch: 841, iters: 43, time: 0.641, data: 0.000) D: 0.409 G_GAN: 2.691 G_L1: 22.575 G_sobelL1: 30.805 
+End of epoch 841 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000631
+(epoch: 842, iters: 66, time: 0.640, data: 0.000) D: 0.641 G_GAN: 1.238 G_L1: 0.350 G_sobelL1: 0.544 
+End of epoch 842 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000627
+End of epoch 843 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000623
+(epoch: 844, iters: 12, time: 0.641, data: 0.000) D: 0.193 G_GAN: 1.375 G_L1: 19.468 G_sobelL1: 22.852 
+saving the latest model (epoch 844, total_steps 65000)
+End of epoch 844 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000619
+(epoch: 845, iters: 35, time: 0.640, data: 0.000) D: 0.061 G_GAN: 0.704 G_L1: 28.695 G_sobelL1: 34.840 
+End of epoch 845 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000615
+(epoch: 846, iters: 58, time: 0.641, data: 0.000) D: 0.858 G_GAN: 0.744 G_L1: 20.715 G_sobelL1: 25.895 
+End of epoch 846 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000611
+End of epoch 847 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000607
+(epoch: 848, iters: 4, time: 0.637, data: 0.000) D: 0.590 G_GAN: 0.680 G_L1: 0.427 G_sobelL1: 0.686 
+End of epoch 848 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000603
+(epoch: 849, iters: 27, time: 0.641, data: 0.000) D: 0.480 G_GAN: 2.603 G_L1: 27.485 G_sobelL1: 32.977 
+End of epoch 849 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000599
+(epoch: 850, iters: 50, time: 0.640, data: 0.000) D: 0.296 G_GAN: 0.899 G_L1: 8.968 G_sobelL1: 11.000 
+End of epoch 850 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000595
+(epoch: 851, iters: 73, time: 0.642, data: 0.000) D: 0.143 G_GAN: 2.668 G_L1: 29.878 G_sobelL1: 32.199 
+End of epoch 851 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000591
+End of epoch 852 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000587
+(epoch: 853, iters: 19, time: 0.641, data: 0.000) D: 0.568 G_GAN: 0.616 G_L1: 26.232 G_sobelL1: 24.378 
+End of epoch 853 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000583
+(epoch: 854, iters: 42, time: 0.643, data: 0.000) D: 0.135 G_GAN: 1.625 G_L1: 38.863 G_sobelL1: 28.649 
+End of epoch 854 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000579
+(epoch: 855, iters: 65, time: 0.641, data: 0.006) D: 0.421 G_GAN: 1.489 G_L1: 16.924 G_sobelL1: 19.727 
+End of epoch 855 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000575
+End of epoch 856 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000571
+(epoch: 857, iters: 11, time: 0.640, data: 0.000) D: 0.565 G_GAN: 0.985 G_L1: 14.947 G_sobelL1: 19.252 
+saving the latest model (epoch 857, total_steps 66000)
+End of epoch 857 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000567
+(epoch: 858, iters: 34, time: 0.639, data: 0.000) D: 0.759 G_GAN: 1.126 G_L1: 0.428 G_sobelL1: 0.809 
+End of epoch 858 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000563
+(epoch: 859, iters: 57, time: 0.641, data: 0.000) D: 0.062 G_GAN: 3.135 G_L1: 28.423 G_sobelL1: 32.556 
+End of epoch 859 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000559
+End of epoch 860 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000555
+(epoch: 861, iters: 3, time: 0.619, data: 0.000) D: 1.234 G_GAN: 1.857 G_L1: 14.658 G_sobelL1: 18.481 
+End of epoch 861 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000551
+(epoch: 862, iters: 26, time: 0.641, data: 0.000) D: 0.070 G_GAN: 2.339 G_L1: 26.249 G_sobelL1: 31.584 
+End of epoch 862 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000547
+(epoch: 863, iters: 49, time: 0.641, data: 0.000) D: 1.030 G_GAN: 2.041 G_L1: 4.152 G_sobelL1: 4.969 
+End of epoch 863 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000543
+(epoch: 864, iters: 72, time: 0.642, data: 0.000) D: 0.193 G_GAN: 1.881 G_L1: 13.213 G_sobelL1: 16.974 
+End of epoch 864 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000539
+End of epoch 865 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000535
+(epoch: 866, iters: 18, time: 0.640, data: 0.000) D: 0.267 G_GAN: 0.877 G_L1: 26.105 G_sobelL1: 30.064 
+End of epoch 866 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000531
+(epoch: 867, iters: 41, time: 0.641, data: 0.000) D: 1.321 G_GAN: 1.319 G_L1: 0.578 G_sobelL1: 1.039 
+End of epoch 867 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000527
+(epoch: 868, iters: 64, time: 0.640, data: 0.000) D: 0.724 G_GAN: 3.418 G_L1: 26.779 G_sobelL1: 28.243 
+End of epoch 868 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000523
+End of epoch 869 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000519
+(epoch: 870, iters: 10, time: 0.637, data: 0.000) D: 0.615 G_GAN: 1.057 G_L1: 0.738 G_sobelL1: 1.252 
+saving the latest model (epoch 870, total_steps 67000)
+End of epoch 870 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000515
+(epoch: 871, iters: 33, time: 0.639, data: 0.000) D: 0.593 G_GAN: 1.586 G_L1: 16.297 G_sobelL1: 23.278 
+End of epoch 871 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000511
+(epoch: 872, iters: 56, time: 0.641, data: 0.000) D: 0.127 G_GAN: 1.713 G_L1: 32.162 G_sobelL1: 33.838 
+End of epoch 872 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000507
+End of epoch 873 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000503
+(epoch: 874, iters: 2, time: 0.582, data: 0.000) D: 0.397 G_GAN: 0.752 G_L1: 20.845 G_sobelL1: 24.985 
+End of epoch 874 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000499
+(epoch: 875, iters: 25, time: 0.639, data: 0.000) D: 0.095 G_GAN: 1.893 G_L1: 39.803 G_sobelL1: 28.380 
+End of epoch 875 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000495
+(epoch: 876, iters: 48, time: 0.641, data: 0.000) D: 0.637 G_GAN: 0.819 G_L1: 9.446 G_sobelL1: 12.654 
+End of epoch 876 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000491
+(epoch: 877, iters: 71, time: 0.642, data: 0.000) D: 0.521 G_GAN: 3.237 G_L1: 18.607 G_sobelL1: 25.754 
+End of epoch 877 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000487
+End of epoch 878 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000483
+(epoch: 879, iters: 17, time: 0.641, data: 0.000) D: 0.289 G_GAN: 0.979 G_L1: 23.774 G_sobelL1: 25.149 
+End of epoch 879 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000479
+(epoch: 880, iters: 40, time: 0.639, data: 0.000) D: 0.774 G_GAN: 1.454 G_L1: 21.191 G_sobelL1: 23.267 
+End of epoch 880 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000475
+(epoch: 881, iters: 63, time: 0.639, data: 0.000) D: 0.113 G_GAN: 1.951 G_L1: 25.051 G_sobelL1: 25.230 
+End of epoch 881 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000471
+End of epoch 882 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000467
+(epoch: 883, iters: 9, time: 0.629, data: 0.000) D: 0.637 G_GAN: 1.291 G_L1: 23.522 G_sobelL1: 25.931 
+saving the latest model (epoch 883, total_steps 68000)
+End of epoch 883 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000463
+(epoch: 884, iters: 32, time: 0.640, data: 0.000) D: 0.769 G_GAN: 0.696 G_L1: 2.727 G_sobelL1: 3.021 
+End of epoch 884 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000459
+(epoch: 885, iters: 55, time: 0.636, data: 0.000) D: 0.170 G_GAN: 1.591 G_L1: 31.310 G_sobelL1: 32.243 
+End of epoch 885 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000455
+End of epoch 886 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000451
+(epoch: 887, iters: 1, time: 0.397, data: 0.000) D: 0.200 G_GAN: 1.949 G_L1: 17.210 G_sobelL1: 18.100 
+End of epoch 887 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000447
+(epoch: 888, iters: 24, time: 0.640, data: 0.001) D: 0.722 G_GAN: 1.037 G_L1: 0.473 G_sobelL1: 0.677 
+End of epoch 888 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000443
+(epoch: 889, iters: 47, time: 0.640, data: 0.000) D: 0.284 G_GAN: 1.515 G_L1: 25.434 G_sobelL1: 29.821 
+End of epoch 889 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000439
+(epoch: 890, iters: 70, time: 0.640, data: 0.000) D: 0.342 G_GAN: 0.782 G_L1: 22.498 G_sobelL1: 23.389 
+End of epoch 890 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000435
+End of epoch 891 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000431
+(epoch: 892, iters: 16, time: 0.638, data: 0.000) D: 0.052 G_GAN: 2.834 G_L1: 34.164 G_sobelL1: 28.812 
+End of epoch 892 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000427
+(epoch: 893, iters: 39, time: 0.634, data: 0.000) D: 0.362 G_GAN: 0.780 G_L1: 19.150 G_sobelL1: 25.153 
+End of epoch 893 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000423
+(epoch: 894, iters: 62, time: 0.640, data: 0.000) D: 0.244 G_GAN: 1.042 G_L1: 38.270 G_sobelL1: 6.765 
+End of epoch 894 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000419
+End of epoch 895 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000415
+(epoch: 896, iters: 8, time: 0.636, data: 0.000) D: 0.076 G_GAN: 2.591 G_L1: 18.195 G_sobelL1: 19.371 
+saving the latest model (epoch 896, total_steps 69000)
+End of epoch 896 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000411
+(epoch: 897, iters: 31, time: 0.639, data: 0.000) D: 0.652 G_GAN: 1.462 G_L1: 16.879 G_sobelL1: 23.622 
+End of epoch 897 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000407
+(epoch: 898, iters: 54, time: 0.640, data: 0.000) D: 0.443 G_GAN: 0.844 G_L1: 5.567 G_sobelL1: 6.278 
+End of epoch 898 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000403
+(epoch: 899, iters: 77, time: 0.641, data: 0.000) D: 0.109 G_GAN: 1.866 G_L1: 19.779 G_sobelL1: 27.185 
+End of epoch 899 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000399
+End of epoch 900 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000395
+(epoch: 901, iters: 23, time: 0.630, data: 2.070) D: 0.290 G_GAN: 2.998 G_L1: 24.668 G_sobelL1: 31.316 
+End of epoch 901 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000391
+(epoch: 902, iters: 46, time: 0.639, data: 0.000) D: 0.220 G_GAN: 1.501 G_L1: 18.764 G_sobelL1: 27.000 
+End of epoch 902 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000387
+(epoch: 903, iters: 69, time: 0.641, data: 0.000) D: 0.198 G_GAN: 1.436 G_L1: 27.581 G_sobelL1: 20.310 
+End of epoch 903 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000383
+End of epoch 904 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000379
+(epoch: 905, iters: 15, time: 0.629, data: 0.000) D: 0.262 G_GAN: 0.209 G_L1: 19.975 G_sobelL1: 24.265 
+End of epoch 905 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000375
+(epoch: 906, iters: 38, time: 0.635, data: 0.000) D: 2.279 G_GAN: 3.535 G_L1: 20.089 G_sobelL1: 24.817 
+End of epoch 906 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000371
+(epoch: 907, iters: 61, time: 0.635, data: 0.000) D: 0.148 G_GAN: 1.740 G_L1: 20.967 G_sobelL1: 25.439 
+End of epoch 907 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000367
+End of epoch 908 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000363
+(epoch: 909, iters: 7, time: 0.638, data: 0.000) D: 0.083 G_GAN: 2.478 G_L1: 21.476 G_sobelL1: 29.388 
+saving the latest model (epoch 909, total_steps 70000)
+End of epoch 909 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000359
+(epoch: 910, iters: 30, time: 0.639, data: 0.000) D: 0.656 G_GAN: 0.983 G_L1: 0.308 G_sobelL1: 0.507 
+End of epoch 910 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000355
+(epoch: 911, iters: 53, time: 0.634, data: 0.000) D: 0.667 G_GAN: 1.217 G_L1: 12.120 G_sobelL1: 14.797 
+End of epoch 911 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000351
+(epoch: 912, iters: 76, time: 0.641, data: 0.000) D: 0.118 G_GAN: 1.510 G_L1: 25.600 G_sobelL1: 32.539 
+End of epoch 912 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000347
+End of epoch 913 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000343
+(epoch: 914, iters: 22, time: 0.642, data: 0.000) D: 0.350 G_GAN: 1.322 G_L1: 3.274 G_sobelL1: 5.498 
+End of epoch 914 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000339
+(epoch: 915, iters: 45, time: 0.646, data: 0.000) D: 0.979 G_GAN: 2.153 G_L1: 25.927 G_sobelL1: 30.791 
+End of epoch 915 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000335
+(epoch: 916, iters: 68, time: 0.640, data: 0.000) D: 0.209 G_GAN: 2.663 G_L1: 23.478 G_sobelL1: 25.539 
+End of epoch 916 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000331
+End of epoch 917 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000327
+(epoch: 918, iters: 14, time: 0.642, data: 0.000) D: 0.371 G_GAN: 0.627 G_L1: 10.511 G_sobelL1: 14.201 
+End of epoch 918 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000323
+(epoch: 919, iters: 37, time: 0.652, data: 0.000) D: 0.298 G_GAN: 1.415 G_L1: 12.373 G_sobelL1: 14.103 
+End of epoch 919 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000319
+(epoch: 920, iters: 60, time: 0.642, data: 0.000) D: 0.701 G_GAN: 1.318 G_L1: 0.423 G_sobelL1: 0.678 
+End of epoch 920 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000315
+End of epoch 921 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000311
+(epoch: 922, iters: 6, time: 0.640, data: 0.000) D: 1.169 G_GAN: 3.880 G_L1: 22.545 G_sobelL1: 25.940 
+saving the latest model (epoch 922, total_steps 71000)
+End of epoch 922 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000307
+(epoch: 923, iters: 29, time: 0.635, data: 0.000) D: 0.148 G_GAN: 2.399 G_L1: 23.552 G_sobelL1: 31.276 
+End of epoch 923 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000303
+(epoch: 924, iters: 52, time: 0.639, data: 0.000) D: 0.436 G_GAN: 1.155 G_L1: 0.536 G_sobelL1: 0.653 
+End of epoch 924 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000299
+(epoch: 925, iters: 75, time: 0.639, data: 0.000) D: 1.336 G_GAN: 1.303 G_L1: 12.952 G_sobelL1: 18.356 
+End of epoch 925 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000295
+End of epoch 926 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000291
+(epoch: 927, iters: 21, time: 0.631, data: 0.000) D: 0.756 G_GAN: 1.388 G_L1: 18.248 G_sobelL1: 23.058 
+End of epoch 927 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000287
+(epoch: 928, iters: 44, time: 0.637, data: 0.000) D: 0.233 G_GAN: 1.399 G_L1: 19.993 G_sobelL1: 27.473 
+End of epoch 928 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000283
+(epoch: 929, iters: 67, time: 0.641, data: 0.000) D: 0.257 G_GAN: 1.085 G_L1: 16.979 G_sobelL1: 24.122 
+End of epoch 929 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000279
+End of epoch 930 / 1000 	 Time Taken: 33 sec
+learning rate = 0.0000275
+(epoch: 931, iters: 13, time: 0.642, data: 0.000) D: 0.178 G_GAN: 1.017 G_L1: 12.990 G_sobelL1: 19.028 
+End of epoch 931 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000271
+(epoch: 932, iters: 36, time: 0.638, data: 0.000) D: 0.085 G_GAN: 2.942 G_L1: 23.133 G_sobelL1: 29.108 
+End of epoch 932 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000267
+(epoch: 933, iters: 59, time: 0.642, data: 0.000) D: 0.168 G_GAN: 2.130 G_L1: 24.889 G_sobelL1: 31.684 
+End of epoch 933 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000263
+End of epoch 934 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000259
+(epoch: 935, iters: 5, time: 0.626, data: 0.000) D: 0.293 G_GAN: 0.906 G_L1: 11.694 G_sobelL1: 16.592 
+saving the latest model (epoch 935, total_steps 72000)
+End of epoch 935 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000255
+(epoch: 936, iters: 28, time: 0.640, data: 0.000) D: 0.744 G_GAN: 1.072 G_L1: 0.964 G_sobelL1: 1.377 
+End of epoch 936 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000251
+(epoch: 937, iters: 51, time: 0.640, data: 0.000) D: 0.316 G_GAN: 1.154 G_L1: 20.789 G_sobelL1: 23.060 
+End of epoch 937 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000248
+(epoch: 938, iters: 74, time: 0.642, data: 0.000) D: 0.687 G_GAN: 1.444 G_L1: 18.254 G_sobelL1: 20.634 
+End of epoch 938 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000244
+End of epoch 939 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000240
+(epoch: 940, iters: 20, time: 0.638, data: 0.000) D: 0.331 G_GAN: 1.404 G_L1: 39.618 G_sobelL1: 24.067 
+End of epoch 940 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000236
+(epoch: 941, iters: 43, time: 0.642, data: 0.000) D: 0.601 G_GAN: 1.536 G_L1: 9.696 G_sobelL1: 10.587 
+End of epoch 941 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000232
+(epoch: 942, iters: 66, time: 0.644, data: 0.000) D: 0.226 G_GAN: 1.582 G_L1: 8.153 G_sobelL1: 11.889 
+End of epoch 942 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000228
+End of epoch 943 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000224
+(epoch: 944, iters: 12, time: 0.637, data: 0.000) D: 0.504 G_GAN: 2.128 G_L1: 30.234 G_sobelL1: 33.333 
+End of epoch 944 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000220
+(epoch: 945, iters: 35, time: 0.639, data: 0.000) D: 0.493 G_GAN: 0.828 G_L1: 5.575 G_sobelL1: 5.248 
+End of epoch 945 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000216
+(epoch: 946, iters: 58, time: 0.639, data: 0.000) D: 0.251 G_GAN: 2.176 G_L1: 15.158 G_sobelL1: 18.449 
+End of epoch 946 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000212
+End of epoch 947 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000208
+(epoch: 948, iters: 4, time: 0.623, data: 0.000) D: 0.204 G_GAN: 3.159 G_L1: 14.805 G_sobelL1: 20.729 
+saving the latest model (epoch 948, total_steps 73000)
+End of epoch 948 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000204
+(epoch: 949, iters: 27, time: 0.640, data: 0.000) D: 0.602 G_GAN: 1.787 G_L1: 0.270 G_sobelL1: 0.511 
+End of epoch 949 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000200
+(epoch: 950, iters: 50, time: 0.636, data: 0.000) D: 0.168 G_GAN: 1.583 G_L1: 23.599 G_sobelL1: 32.266 
+End of epoch 950 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000196
+(epoch: 951, iters: 73, time: 0.642, data: 0.000) D: 0.252 G_GAN: 0.991 G_L1: 32.816 G_sobelL1: 23.527 
+End of epoch 951 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000192
+End of epoch 952 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000188
+(epoch: 953, iters: 19, time: 0.643, data: 0.000) D: 1.123 G_GAN: 2.686 G_L1: 25.352 G_sobelL1: 30.975 
+End of epoch 953 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000184
+(epoch: 954, iters: 42, time: 0.640, data: 0.000) D: 0.380 G_GAN: 0.676 G_L1: 0.664 G_sobelL1: 0.670 
+End of epoch 954 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000180
+(epoch: 955, iters: 65, time: 0.638, data: 0.000) D: 0.469 G_GAN: 0.857 G_L1: 12.819 G_sobelL1: 15.878 
+End of epoch 955 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000176
+End of epoch 956 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000172
+(epoch: 957, iters: 11, time: 0.640, data: 0.000) D: 0.525 G_GAN: 1.004 G_L1: 6.892 G_sobelL1: 6.818 
+End of epoch 957 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000168
+(epoch: 958, iters: 34, time: 0.639, data: 0.000) D: 0.262 G_GAN: 1.243 G_L1: 2.097 G_sobelL1: 3.273 
+End of epoch 958 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000164
+(epoch: 959, iters: 57, time: 0.641, data: 0.000) D: 0.565 G_GAN: 1.463 G_L1: 1.691 G_sobelL1: 1.849 
+End of epoch 959 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000160
+End of epoch 960 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000156
+(epoch: 961, iters: 3, time: 0.713, data: 0.000) D: 0.092 G_GAN: 2.199 G_L1: 19.346 G_sobelL1: 24.231 
+saving the latest model (epoch 961, total_steps 74000)
+End of epoch 961 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000152
+(epoch: 962, iters: 26, time: 0.640, data: 0.011) D: 0.292 G_GAN: 0.747 G_L1: 9.092 G_sobelL1: 9.402 
+End of epoch 962 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000148
+(epoch: 963, iters: 49, time: 0.641, data: 0.000) D: 0.330 G_GAN: 1.585 G_L1: 1.785 G_sobelL1: 2.684 
+End of epoch 963 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000144
+(epoch: 964, iters: 72, time: 0.643, data: 0.000) D: 0.731 G_GAN: 0.375 G_L1: 18.640 G_sobelL1: 24.048 
+End of epoch 964 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000140
+End of epoch 965 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000136
+(epoch: 966, iters: 18, time: 0.639, data: 0.000) D: 0.646 G_GAN: 1.047 G_L1: 25.049 G_sobelL1: 29.028 
+End of epoch 966 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000132
+(epoch: 967, iters: 41, time: 0.640, data: 0.000) D: 1.015 G_GAN: 1.128 G_L1: 0.373 G_sobelL1: 0.583 
+End of epoch 967 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000128
+(epoch: 968, iters: 64, time: 0.641, data: 0.000) D: 0.628 G_GAN: 0.855 G_L1: 1.224 G_sobelL1: 1.809 
+End of epoch 968 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000124
+End of epoch 969 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000120
+(epoch: 970, iters: 10, time: 0.634, data: 0.000) D: 1.033 G_GAN: 0.935 G_L1: 9.053 G_sobelL1: 11.471 
+End of epoch 970 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000116
+(epoch: 971, iters: 33, time: 0.637, data: 0.000) D: 1.183 G_GAN: 1.916 G_L1: 14.863 G_sobelL1: 21.501 
+End of epoch 971 / 1000 	 Time Taken: 30 sec
+learning rate = 0.0000112
+(epoch: 972, iters: 56, time: 0.642, data: 0.000) D: 0.429 G_GAN: 1.263 G_L1: 8.227 G_sobelL1: 7.691 
+End of epoch 972 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000108
+End of epoch 973 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000104
+(epoch: 974, iters: 2, time: 0.637, data: 0.000) D: 0.547 G_GAN: 0.663 G_L1: 5.432 G_sobelL1: 5.851 
+saving the latest model (epoch 974, total_steps 75000)
+End of epoch 974 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000100
+(epoch: 975, iters: 25, time: 0.642, data: 0.000) D: 0.208 G_GAN: 1.603 G_L1: 19.836 G_sobelL1: 27.542 
+End of epoch 975 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000096
+(epoch: 976, iters: 48, time: 0.633, data: 0.000) D: 0.531 G_GAN: 1.052 G_L1: 0.698 G_sobelL1: 1.106 
+End of epoch 976 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000092
+(epoch: 977, iters: 71, time: 0.640, data: 0.000) D: 0.174 G_GAN: 1.635 G_L1: 24.709 G_sobelL1: 27.562 
+End of epoch 977 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000088
+End of epoch 978 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000084
+(epoch: 979, iters: 17, time: 0.640, data: 0.000) D: 0.406 G_GAN: 1.061 G_L1: 0.634 G_sobelL1: 0.982 
+End of epoch 979 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000080
+(epoch: 980, iters: 40, time: 0.641, data: 0.000) D: 0.572 G_GAN: 1.108 G_L1: 1.179 G_sobelL1: 1.663 
+End of epoch 980 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000076
+(epoch: 981, iters: 63, time: 0.640, data: 0.000) D: 0.351 G_GAN: 1.502 G_L1: 6.643 G_sobelL1: 3.491 
+End of epoch 981 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000072
+End of epoch 982 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000068
+(epoch: 983, iters: 9, time: 0.636, data: 0.000) D: 0.839 G_GAN: 1.333 G_L1: 19.963 G_sobelL1: 24.291 
+End of epoch 983 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000064
+(epoch: 984, iters: 32, time: 0.633, data: 0.000) D: 0.839 G_GAN: 1.809 G_L1: 19.809 G_sobelL1: 25.021 
+End of epoch 984 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000060
+(epoch: 985, iters: 55, time: 0.642, data: 0.000) D: 0.586 G_GAN: 1.309 G_L1: 17.618 G_sobelL1: 19.411 
+End of epoch 985 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000056
+End of epoch 986 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000052
+(epoch: 987, iters: 1, time: 0.404, data: 0.000) D: 0.926 G_GAN: 1.721 G_L1: 9.428 G_sobelL1: 11.825 
+saving the latest model (epoch 987, total_steps 76000)
+End of epoch 987 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000048
+(epoch: 988, iters: 24, time: 0.639, data: 0.000) D: 0.142 G_GAN: 1.675 G_L1: 23.728 G_sobelL1: 30.939 
+End of epoch 988 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000044
+(epoch: 989, iters: 47, time: 0.638, data: 0.000) D: 0.269 G_GAN: 1.695 G_L1: 19.979 G_sobelL1: 19.968 
+End of epoch 989 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000040
+(epoch: 990, iters: 70, time: 0.642, data: 0.000) D: 0.168 G_GAN: 1.731 G_L1: 19.365 G_sobelL1: 21.797 
+End of epoch 990 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000036
+End of epoch 991 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000032
+(epoch: 992, iters: 16, time: 0.642, data: 0.000) D: 0.332 G_GAN: 1.200 G_L1: 6.729 G_sobelL1: 7.078 
+End of epoch 992 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000028
+(epoch: 993, iters: 39, time: 0.641, data: 0.000) D: 0.347 G_GAN: 1.640 G_L1: 17.086 G_sobelL1: 18.747 
+End of epoch 993 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000024
+(epoch: 994, iters: 62, time: 0.639, data: 0.000) D: 0.313 G_GAN: 0.946 G_L1: 26.024 G_sobelL1: 29.899 
+End of epoch 994 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000020
+End of epoch 995 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000016
+(epoch: 996, iters: 8, time: 0.628, data: 0.000) D: 0.261 G_GAN: 0.880 G_L1: 1.084 G_sobelL1: 1.775 
+End of epoch 996 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000012
+(epoch: 997, iters: 31, time: 0.641, data: 0.000) D: 1.086 G_GAN: 1.594 G_L1: 8.122 G_sobelL1: 10.263 
+End of epoch 997 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000008
+(epoch: 998, iters: 54, time: 0.640, data: 0.000) D: 0.260 G_GAN: 1.508 G_L1: 9.623 G_sobelL1: 12.543 
+End of epoch 998 / 1000 	 Time Taken: 31 sec
+learning rate = 0.0000004
+(epoch: 999, iters: 77, time: 0.643, data: 0.000) D: 0.549 G_GAN: 2.160 G_L1: 15.853 G_sobelL1: 20.693 
+saving the latest model (epoch 999, total_steps 77000)
+End of epoch 999 / 1000 	 Time Taken: 32 sec
+learning rate = 0.0000000
+saving the model at the end of epoch 1000, iters 77077
+End of epoch 1000 / 1000 	 Time Taken: 33 sec
+learning rate = -0.0000004

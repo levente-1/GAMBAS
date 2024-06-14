@@ -8,6 +8,7 @@ import scipy.ndimage.interpolation as interpolation
 import scipy
 import torch
 import torch.utils.data
+from itertools import product
 
 
 # ------- Swithes -------
@@ -487,6 +488,133 @@ class NiftiDataSet(torch.utils.data.Dataset):
             label.SetSpacing(image.GetSpacing())
 
         sample = {'image': image, 'label': label}
+
+        if self.transforms:  # apply the transforms to image and label (normalization, resampling, patches)
+            for transform in self.transforms:
+                sample = transform(sample)
+
+        # convert sample to tf tensors
+        image_np = abs(sitk.GetArrayFromImage(sample['image']))
+        label_np = abs(sitk.GetArrayFromImage(sample['label']))
+
+        if Segmentation is True:
+            label_np = abs(np.around(label_np))
+
+        # to unify matrix dimension order between SimpleITK([x,y,z]) and numpy([z,y,x])  (actually it´s the contrary)
+        image_np = np.transpose(image_np, (2, 1, 0))
+        label_np = np.transpose(label_np, (2, 1, 0))
+
+        label_np = (label_np - 127.5) / 127.5
+        image_np = (image_np - 127.5) / 127.5
+
+        image_np = image_np[np.newaxis, :, :, :]
+        label_np = label_np[np.newaxis, :, :, :]
+        
+        # OutputIndices flag added for ATME model, which requires image and label indices
+        if self.outputIndices:
+            return torch.from_numpy(image_np), torch.from_numpy(label_np), index
+        else:
+            return torch.from_numpy(image_np), torch.from_numpy(label_np)  # this is the final output to feed the network
+
+    def __len__(self):
+        return len(self.images_list)
+
+class NiftiDataSet_atme(torch.utils.data.Dataset):
+
+    def __init__(self, data_path,
+                 which_direction='AtoB',
+                 transforms=None,
+                 shuffle_labels=False,
+                 train=False,
+                 test=False,
+                 outputIndices=False,
+                 repeats=4):
+
+        # Init membership variables
+        self.data_path = data_path
+        images_list = lstFiles(os.path.join(data_path, 'images'))
+        labels_list = lstFiles(os.path.join(data_path, 'labels'))
+        images_list_repeat = []
+        labels_list_repeat = []
+        self.repeats = repeats
+        for i in images_list:
+            images_list_repeat.extend([i]*self.repeats)
+        for i in labels_list:
+            labels_list_repeat.extend([i]*self.repeats)
+        self.images_list = images_list_repeat
+        self.labels_list = labels_list_repeat
+        self.images_size = len(self.images_list)
+        self.labels_size = len(self.labels_list)
+
+        self.which_direction = which_direction
+        self.transforms = transforms
+
+        self.shuffle_labels = shuffle_labels
+        self.train = train
+        self.test = test
+
+        self.bit = sitk.sitkFloat32
+        self.outputIndices = outputIndices
+
+    def read_image(self, path):
+        reader = sitk.ImageFileReader()
+        reader.SetFileName(path)
+        image = reader.Execute()
+        return image
+
+    def __getitem__(self, index):
+        data_path = self.images_list[index]
+
+        if self.shuffle_labels is True:
+            index_B = random.randint(0, self.labels_size - 1)
+            label_path = self.labels_list[index_B]
+
+        else:
+            label_path = self.labels_list[index]
+
+        if self.which_direction == 'AtoB':
+            data_path = data_path
+            label_path = label_path
+
+        elif self.which_direction == 'BtoA':
+            data_path_copy = data_path
+            label_path_copy = label_path
+
+            label_path = data_path_copy
+            data_path = label_path_copy
+
+        # read image and label
+        # print(index)
+        # print(data_path)
+        image = self.read_image(data_path)
+
+        image = Normalization(image)  # set intensity 0-255
+
+        # cast image and label
+        castImageFilter = sitk.CastImageFilter()
+        castImageFilter.SetOutputPixelType(self.bit)
+        image = castImageFilter.Execute(image)
+
+        if self.train:
+            label = self.read_image(label_path)
+            if Segmentation is False:
+                label = Normalization(label)  # set intensity 0-255
+            castImageFilter.SetOutputPixelType(self.bit)
+            label = castImageFilter.Execute(label)
+
+        elif self.test:
+            label = self.read_image(label_path)
+            if Segmentation is False:
+                label = Normalization(label)  # set intensity 0-255
+            castImageFilter.SetOutputPixelType(self.bit)
+            label = castImageFilter.Execute(label)
+
+        else:
+            label = sitk.Image(image.GetSize(), self.bit)
+            label.SetOrigin(image.GetOrigin())
+            label.SetSpacing(image.GetSpacing())
+
+        sample = {'image': image, 'label': label, 'index': index}
 
         if self.transforms:  # apply the transforms to image and label (normalization, resampling, patches)
             for transform in self.transforms:
@@ -1088,7 +1216,6 @@ class RandomCrop(object):
                 start_k = 0
             else:
                 start_k = np.random.randint(0, size_old[2] - size_new[2])
-
             roiFilter.SetIndex([start_i, start_j, start_k])
 
             if Segmentation is False:
@@ -1123,6 +1250,74 @@ class RandomCrop(object):
 
     def drop(self, probability):
         return random.random() <= probability
+
+class DeterministicCrop(object):
+    def __init__(self, output_size, dataset_length, repeats):
+        self.name = 'Deterministic Crop'
+
+        assert isinstance(output_size, (int, tuple))
+        if isinstance(output_size, int):
+            self.output_size = (output_size, output_size, output_size)
+        else:
+            assert len(output_size) == 3
+            self.output_size = output_size
+
+        self.dataset_length = dataset_length
+        self.repeats = repeats
+        # Code assumes images at this stage (as SimpleITK.image) are of shape (144, 256, 256)
+
+        def generate_patch_indices(patch_shape, i_range, j_range, k_range):
+            i_start = np.arange(i_range[0], i_range[1] + 1, patch_shape[0])
+            j_start = np.arange(j_range[0], j_range[1] + 1, patch_shape[1])
+            k_start = np.arange(k_range[0], k_range[1] + 1, patch_shape[2])
+            indices = list(product(i_start, j_start, k_start))
+            
+            return indices
+
+        # Ranges for starting indices
+        i_range = (8, 72)  # (8, 72)
+        j_range = (0, 192)  # (0, 192)
+        k_range = (0, 192)  # (0, 192)
+
+        patch_indices = generate_patch_indices(self.output_size, i_range, j_range, k_range)
+
+        patches_dict = {}
+
+        key_counter = 0
+        for i in range(0, self.dataset_length):
+            sampled_indices = random.sample(patch_indices, self.repeats)
+            for idx in sampled_indices:
+                patches_dict[key_counter] = idx
+                key_counter += 1
+        
+        self.patches_dict = patches_dict
+        
+
+    def __call__(self, sample):
+        image, label, index = sample['image'], sample['label'], sample['index']
+        size_new = self.output_size
+
+        roiFilter = sitk.RegionOfInterestImageFilter()
+        roiFilter.SetSize([size_new[0], size_new[1], size_new[2]])
+
+        # statFilter = sitk.StatisticsImageFilter()     # not useful
+        # statFilter.Execute(label)
+        # print(statFilter.GetMaximum(), statFilter.GetSum())
+
+        
+        # get the start crop coordinate in ijk
+        # change code below to select ijk from a prespecified list of 32 unique combos
+        start_i, start_j, start_k = self.patches_dict[index]
+        start_i = int(start_i)
+        start_j = int(start_j)
+        start_k = int(start_k)
+
+        roiFilter.SetIndex([start_i, start_j, start_k])
+
+        label_crop = roiFilter.Execute(label)
+        image_crop = roiFilter.Execute(image)
+
+        return {'image': image_crop, 'label': label_crop, 'index': index}
 
 
 class Augmentation(object):

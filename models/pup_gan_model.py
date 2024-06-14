@@ -140,7 +140,7 @@ class PUPGANModel(BaseModel):
         fake_A = self.fake_A_pool.query(self.fake_A)
         self.loss_D_B = self.backward_D_basic(self.netD_B, self.real_A, fake_A)
     
-    def backward_D_C(self, opt):
+    def backward_D_C(self, opt): 
         if opt.super_train == 1:
             self.loss_D_C = self.backward_D_basic(self.netD_C, torch.cat((self.real_A, self.real_B), 1), torch.cat((self.fake_A, self.real_B), 1))
         else:
@@ -192,7 +192,7 @@ class PUPGANModel(BaseModel):
         self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B + self.loss_G_dual_A + self.loss_G_dual_B
         self.loss_G.backward()
 
-    def optimize_parameters(self, opt):
+    def optimize_parameters(self, opt): 
         # forward
         self.forward()
         # G_A and G_B
