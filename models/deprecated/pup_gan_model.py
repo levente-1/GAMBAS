@@ -1,8 +1,8 @@
 import torch
 import itertools
 import random
-from .base_model import BaseModel
-from . import networks3D
+from ..base_model import BaseModel
+from .. import networks3D
 
 
 class ImagePool():
@@ -144,13 +144,13 @@ class PUPGANModel(BaseModel):
         if opt.super_train == 1:
             self.loss_D_C = self.backward_D_basic(self.netD_C, torch.cat((self.real_A, self.real_B), 1), torch.cat((self.fake_A, self.real_B), 1))
         else:
-            self.loss_D_C = self.backward_D_basic(self.netD_C, torch.cat((self.real_A, self.fake_B), 1), torch.cat((self.rec_A, self.fake_B), 1))
+            self.loss_D_C = self.backward_D_basic(self.netD_C, torch.cat((self.real_A, self.fake_B.detach()), 1), torch.cat((self.rec_A, self.fake_B), 1))
     
     def backward_D_D(self, opt):
         if opt.super_train == 1:
             self.loss_D_D = self.backward_D_basic(self.netD_D, torch.cat((self.real_B, self.real_A), 1), torch.cat((self.fake_B, self.real_A), 1))
         else:
-            self.loss_D_D = self.backward_D_basic(self.netD_D, torch.cat((self.real_B, self.fake_A), 1), torch.cat((self.rec_B, self.fake_A), 1))
+            self.loss_D_D = self.backward_D_basic(self.netD_D, torch.cat((self.real_B, self.fake_A.detach()), 1), torch.cat((self.rec_B, self.fake_A), 1))
 
     def backward_G(self, opt):
         lambda_1 = self.opt.lambda_1

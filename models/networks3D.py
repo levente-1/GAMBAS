@@ -8,7 +8,8 @@ import random
 import functools
 from torch.optim import lr_scheduler
 import monai
-from .ddpm_3D import Unet3D, WBlock
+from .deprecated.ddpm_3D import Unet3D, WBlock
+from . import residual_transformers3D
 
 ###############################################################################
 # Helper Functions
@@ -105,8 +106,43 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
             init_dim = kwargs['init_dim'],
             resnet_groups = kwargs['resnet_groups']
         )
+    elif netG == 'res_cnn':
+        vit_name = kwargs['vit_name']
+        img_size = kwargs['img_size']
+        net = residual_transformers3D.Res_CNN(residual_transformers3D.CONFIGS[vit_name], input_dim= input_nc, img_size=img_size, output_dim=1, vis=False)
+    elif netG == 'resvit':
+        vit_name = kwargs['vit_name']
+        img_size = kwargs['img_size']
+        pre_trained_resnet = kwargs['pre_trained_resnet']
+        pre_trained_path = kwargs['pre_trained_path']
+        pre_trained_trans = kwargs['pre_trained_transformer']
+        print('ViT name: ', vit_name)
+        net = residual_transformers3D.ResViT(residual_transformers3D.CONFIGS[vit_name],input_dim = input_nc,img_size=img_size, output_dim=1, vis=False)
+        config_vit = residual_transformers3D.CONFIGS[vit_name]
+        if pre_trained_resnet:
+            pre_trained_model = residual_transformers3D.Res_CNN(residual_transformers3D.CONFIGS[vit_name], input_dim= input_nc, img_size=img_size, output_dim=1, vis=False)
+            save_path = pre_trained_path
+            print("pre_trained_path: ", save_path)
+            pre_trained_model.load_state_dict(torch.load(save_path))
+
+            pretrained_dict = pre_trained_model.state_dict()
+            model_dict = net.state_dict()
+
+            # 1. filter out unnecessary keys
+            pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+            # 2. overwrite entries in the existing state dict
+            model_dict.update(pretrained_dict)
+            # 3. load the new state dict
+            net.load_state_dict(model_dict)
+
+            print("Residual CNN loaded")
+
+        if pre_trained_trans:
+            print(config_vit.pretrained_path)
+            net.load_from(weights=np.load(config_vit.pretrained_path))
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % netG)
+    
     return init_net(net, init_type, init_gain, gpu_ids)
 
 
@@ -159,43 +195,6 @@ class GANLoss(nn.Module):
     def __call__(self, input, target_is_real):
         target_tensor = self.get_target_tensor(input, target_is_real)
         return self.loss(input, target_tensor)
-
-# Modified from Ea-GAN code
-class GANLoss_smooth(nn.Module):
-    def __init__(self, use_lsgan=True, target_real_label=1.0, target_fake_label=0.0,
-                 tensor=torch.FloatTensor):
-        super(GANLoss_smooth, self).__init__()
-        self.register_buffer('real_label', torch.tensor(target_real_label))
-        self.register_buffer('fake_label', torch.tensor(target_fake_label))
-        if use_lsgan:
-            self.loss = nn.MSELoss()
-        else:
-            self.loss = nn.BCELoss()
-
-    def get_target_tensor(self, input, target_is_real, smooth):
-        if target_is_real:
-            target_tensor = self.real_label + smooth*0.5-0.3
-            # create_label = ((self.real_label_var is None) or
-            #                 (self.real_label_var.numel() != input.numel()))
-            # if create_label:
-            #     real_tensor = self.Tensor(input.size()).fill_(self.real_label + smooth*0.5-0.3)
-            #     self.real_label_var = Variable(real_tensor, requires_grad=False)
-            # target_tensor = self.real_label_var
-        else:
-            target_tensor = self.fake_label + smooth*0.3
-            # create_label = ((self.fake_label_var is None) or
-            #                 (self.fake_label_var.numel() != input.numel()))
-            # if create_label:
-            #     fake_tensor = self.Tensor(input.size()).fill_(self.fake_label + smooth*0.3)
-            #     self.fake_label_var = Variable(fake_tensor, requires_grad=False)
-            # target_tensor = self.fake_label_var
-        return target_tensor.expand_as(input)
-
-    def __call__(self, input, target_is_real):
-        a=random.uniform(0,1)
-        target_tensor = self.get_target_tensor(input, target_is_real, a)
-        return self.loss(input, target_tensor)
-
 
 '''
 define the correlation coefficient loss

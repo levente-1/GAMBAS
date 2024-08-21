@@ -1,41 +1,41 @@
-from models import networks3D
-import torch
-import torch.nn as nn
-from torch.nn import init
-from utils.NiftiDataset import *
-import utils.NiftiDataset as NiftiDataset
-from torch.utils.data import DataLoader
+import numpy as np
+import os
+import os.path as op
+import glob
+import shutil
+import pandas as pd
+import re
 
-netW = networks3D.define_W('normal', 0.02, [0])
-netG = networks3D.define_G(1, 1, 64, 'unet_256_ddm', 'instance',
-                                      True, 'normal', 0.02, [0], 
-                                      **{'dim': 64, 
-                                         'dim_mults': (1,2,4,8), 
-                                         'init_dim': 64, 
-                                         'resnet_groups': 8})
+def numericalSort(value):
+    numbers = re.compile(r'(\d+)')
+    parts = numbers.split(value)
+    parts[1::2] = map(int, parts[1::2])
+    return parts
 
-min_pixel = int(0.1 * ((128 * 128 * 64) / 100))
-trainTransforms = [
-                NiftiDataset.Resample((0.45, 0.45, 0.45), False),
-                NiftiDataset.Augmentation(),
-                NiftiDataset.Padding((128, 128, 64)),
-                NiftiDataset.RandomCrop((128, 128, 64), 0, min_pixel)
-                ]
-# train_set = NiftiDataSet('/media/hdd/levibaljer/ExperimentingKhula', which_direction='AtoB', transforms=trainTransforms, shuffle_labels=False, train=True, outputIndices=True)
 
-# testImage = train_set.__getitem__(0)[0].unsqueeze(0).to('cuda:0')
-testImage = torch.randn((1, 1, 64, 64, 64), dtype=torch.float32).to('cuda:0')
+dolphin_folder = '/media/hdd/levibaljer/Dolphin_new/Workstation'
+dolphin_subs = os.listdir(dolphin_folder)
+for i in dolphin_subs:
+    if 'DS' in i:
+        dolphin_subs.remove(i)
+dolphin_subs = sorted(dolphin_subs, key=numericalSort)
 
-disc_out = 0.5 + 0.001 * torch.randn((1, 1, 6, 6, 6), dtype=torch.float32)
-outW = netW(disc_out)
+print(dolphin_subs)
 
-print(outW.shape)
+current_num = 41
+new_folder = '/media/hdd/levibaljer/spm_Dolphin/test'
+for i in dolphin_subs[40:]:
+    sub_folder = op.join(dolphin_folder, i)
+    label = op.join(sub_folder, 'GT_ss.nii')
+    image = op.join(sub_folder, 'AXI_ss.nii')
 
-noisy_Input = testImage * (1 + outW)
-print(noisy_Input.shape)
+    label_folder = op.join(new_folder, 'labels')
+    image_folder = op.join(new_folder, 'images')
 
-# print('hi')
+    shutil.copy2(label, op.join(label_folder, str(current_num) + '.nii'))
+    shutil.copy2(image, op.join(image_folder, str(current_num) + '.nii'))
 
-outG = netG(noisy_Input, outW)
+    current_num += 1
 
-print(outG.shape)
+# a = '/media/hdd/levibaljer/spm_Dolphin'
+

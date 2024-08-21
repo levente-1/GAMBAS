@@ -56,7 +56,7 @@ class EaGANModel(BaseModel):
     def initialize(self, opt):
         BaseModel.initialize(self, opt)
 
-         # specify the training losses you want to print out. The program will call base_model.get_current_losses
+        # specify the training losses you want to print out. The program will call base_model.get_current_losses
         self.loss_names = ['D', 'G_GAN', 'G_L1', 'G_sobelL1']
         # specify the images you want to save/display. The program will call base_model.get_current_visuals
         visual_names = ['real_A', 'fake_B', 'real_B']
@@ -83,7 +83,7 @@ class EaGANModel(BaseModel):
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
         if self.isTrain:
             self.D_channel = opt.input_nc + opt.output_nc + 1
-            use_sigmoid = opt.no_lsgan
+            use_sigmoid = True 
             self.netD = networks3D.define_D(self.D_channel, opt.ndf, opt.netD,
                                             opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, opt.init_gain, self.gpu_ids)
                 
@@ -98,10 +98,7 @@ class EaGANModel(BaseModel):
             self.fake_AB_pool = ImagePool(opt.pool_size)
             self.old_lr = opt.lr
             # define loss functions
-            if self.opt.labelSmooth > 0:
-                self.criterionGAN = networks3D.GANLoss_smooth(use_lsgan=not opt.no_lsgan).to(self.device)
-            else:
-                self.criterionGAN = networks3D.GANLoss(use_lsgan=not opt.no_lsgan).to(self.device)
+            self.criterionGAN = networks3D.GANLoss(use_lsgan=False).to(self.device)
             self.criterionL1 = torch.nn.L1Loss()
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(self.netG.parameters(),

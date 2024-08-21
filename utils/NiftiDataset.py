@@ -1202,10 +1202,13 @@ class RandomCrop(object):
 
         while not contain_label:
             # get the start crop coordinate in ijk
+            # print("i AXIS: " + str(size_old[0]) + ","  +str(size_new[0]))
+            # print("j AXIS: " + str(size_old[1]) + ","  +str(size_new[1]))
+            # print("k AXIS: " + str(size_old[2]) + ","  +str(size_new[2]))
             if size_old[0] <= size_new[0]:
                 start_i = 0
             else:
-                start_i = np.random.randint(0, size_old[0] - size_new[0])
+                start_i = np.random.randint(10, size_old[0] - size_new[0]) # 10 is added to avoid non-brain region
 
             if size_old[1] <= size_new[1]:
                 start_j = 0
