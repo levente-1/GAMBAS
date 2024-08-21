@@ -23,7 +23,6 @@ class TrainOptions(BaseOptions):
 
         parser.add_argument('--super_train', type=int, default=1, help='start with supervised training (0 if we go straight to unsupervised)')
         parser.add_argument('--super_epoch', type=int, default=0, help='number of epochs for supervised training ')
-        parser.add_argument('--labelSmooth', type=int, default=1, help='indicate to use label smoothing (0 if no label smoothing)')
 
         self.isTrain = True
         return parser

@@ -53,7 +53,6 @@ class Pix2PixModel(BaseModel):
 
         # specify the training losses you want to print out. The program will call base_model.get_current_losses
         self.loss_names = ['D', 'G_GAN', 'G_L1']
-        # self.loss_names = ['D_A', 'G_A', 'cycle_A', 'cor_coe_GA', 'D_B', 'G_B', 'cycle_B', 'cor_coe_GB']
         # specify the images you want to save/display. The program will call base_model.get_current_visuals
         visual_names = ['real_A', 'fake_B', 'real_B']
 

@@ -73,7 +73,7 @@ def inference(model, image_path, result_path, resample, resolution, patch_size_x
     # keeping track on how much padding will be performed before the inference
     image_array = sitk.GetArrayFromImage(sample['image'])
     pad_x = patch_size_x - (patch_size_x - image_array.shape[2])
-    pad_y = patch_size_y - (patch_size_y - image_array.shape[1])
+    pad_y = patch_size_x - (patch_size_y - image_array.shape[1])
     pad_z = patch_size_z - (patch_size_z - image_array.shape[0])
 
     image_pre_pad = sample['image']

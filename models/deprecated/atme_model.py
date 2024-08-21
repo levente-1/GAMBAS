@@ -1,7 +1,7 @@
 import os
 import torch
-from .base_model import BaseModel
-from . import networks3D
+from ..base_model import BaseModel
+from .. import networks3D
 import random
 from utils.NiftiDataset import *
 # from util.image_pool import DiscPool
@@ -94,7 +94,7 @@ class DiscPool(Dataset):
         """
         self.disc_out[img_idx] = disc_out
 
-class AtmeModel(BaseModel):
+class ATMEModel(BaseModel):
     def name(self):
         return 'atmemodel'
 
@@ -181,7 +181,10 @@ class AtmeModel(BaseModel):
         
         if self.isTrain:
             # define loss functions
-            self.criterionGAN = networks3D.GANLoss(opt.gan_mode).to(self.device)
+            if self.opt.labelSmooth > 0:
+                self.criterionGAN = networks3D.GANLoss_smooth(use_lsgan=True).to(self.device)
+            else:
+                self.criterionGAN = networks3D.GANLoss(opt.gan_mode).to(self.device)
             self.criterionL1 = torch.nn.L1Loss()
             # initialize optimizers; schedulers will be automatically created by function <BaseModel.setup>.
             self.optimizer_G = torch.optim.Adam(chain(self.netW.parameters(), self.netG.parameters()), lr=opt.lr, betas=(opt.beta1, 0.999))
