@@ -7,11 +7,11 @@ Before training the model, set data_dir in "Base_options.py" and run "run prepro
 	├── Training_data                   
 	|   ├── images               
 	|   |   ├── 0.nii 
-  |   |   ├── 1.nii 
+  	|   |   ├── 1.nii 
 	|   |   └── 2.nii                   
 	|   ├── labels                       
 	|   |   ├── 0.nii 
-  |   |   ├── 1.nii 
+  	|   |   ├── 1.nii 
 	|   |   └── 2.nii 
 
  ### Training
