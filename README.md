@@ -2,7 +2,7 @@
 
 ### Preprocessing
 
-Before training the model, set data_dir in "Base_options.py" and run "run preproc.py" to convert data into h5 file format (required format for the dataloader). Files should be arranged in the following format prior to running the preprocessing script:
+Before training the model, register input images to corresponding target images and ensure files are arranged in the following format:
 
 	├── Training_data                   
 	|   ├── images               
