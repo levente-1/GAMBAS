@@ -140,9 +140,20 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
         if pre_trained_trans:
             print(config_vit.pretrained_path)
             net.load_from(weights=np.load(config_vit.pretrained_path))
+    elif netG == "i2i_mamba":
+        vit_name = kwargs['vit_name']
+        img_size = kwargs['img_size']
+        print(vit_name)
+        net = residual_transformers3D.I2IMamba(
+            residual_transformers3D.CONFIGS[vit_name],
+            input_dim=input_nc,
+            img_size=img_size,
+            output_dim=1,
+            vis=False
+        )
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % netG)
-    
+
     return init_net(net, init_type, init_gain, gpu_ids)
 
 
