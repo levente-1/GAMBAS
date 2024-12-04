@@ -17,6 +17,9 @@ from torch.nn.modules.utils import _pair
 import torch.nn.functional as F
 from scipy import ndimage
 from . import transformer_configs as configs
+from .path_generate import generate_slicewise_spiral_indices
+
+from mamba_ssm import Mamba
 
 
 logger = logging.getLogger(__name__)
@@ -342,6 +345,140 @@ class ART_block(nn.Module):
         x = self.residual_cnn(x)
         return x
 
+# Mamba version
+class BottleneckCNN(nn.Module):
+    def __init__(self, config):
+        super(BottleneckCNN, self).__init__()
+        self.config = config
+        use_bias = False
+        norm_layer = nn.InstanceNorm3d
+        padding_type = "reflect"
+        
+        # Residual CNN
+        model = [ResnetBlock(256, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False,
+                             use_bias=use_bias)]
+        setattr(self, "residual_cnn", nn.Sequential(*model))
+
+    def forward(self, x):
+        x = self.residual_cnn(x)
+        return x
+
+class MambaLayer(nn.Module):
+    """ Mamba layer for state-space sequence modeling
+
+    Args:
+        dim (int): Model dimension.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+    
+    """
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2):
+        super().__init__()
+        self.dim = dim
+        self.norm = nn.LayerNorm(dim)
+        # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+
+        self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
+        self.spiral_indices = generate_slicewise_spiral_indices(64, 64, 8).expand(-1, dim, -1).permute(0, 2, 1)
+        self.despiral_indices = torch.argsort(self.spiral_indices)
+        self.spiral_r_indices = torch.flip(self.spiral_indices, dims=[2])
+        self.despiral_r_indices = torch.argsort(self.spiral_r_indices)
+    
+    def forward(self, x):
+        B, C, D, H, W = x.shape
+
+        # Check model dimension
+        assert C == self.dim
+        
+        # # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
+        # x = x.float().view(B, C, -1).permute(0, 2, 1)
+
+        # Bidirectional mamba
+        x1 = x.view(B, C, -1).permute(0, 2, 1)
+        device = 'cuda:0'
+        # x1 = x1.to(device)
+        self.spiral_indices = self.spiral_indices.to(device)
+        x1 = torch.gather(x1, 1, self.spiral_indices)
+        x2 = torch.flip(x1, dims=[1])
+        
+        # # Normalize and pass through Mamba layer
+        # norm_out = self.norm(x)
+        # mamba_out = self.mamba(norm_out)
+
+        # Pass forwad and reverse through mamba
+        norm_out1 = self.norm(x1)
+        mamba_out1 = self.mamba1(norm_out1)
+        norm_out2 = self.norm(x2)
+        mamba_out2 = self.mamba2(norm_out2)
+
+        self.despiral_indices = self.despiral_indices.to(device)
+        self.despiral_r_indices = self.despiral_r_indices.to(device)
+        out1 = torch.gather(mamba_out1, 1, self.despiral_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.despiral_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+
+        # # Convert output from (B, H*W, C) to (B, C, H, W)
+        # out = mamba_out.permute(0, 2, 1).view(B, C, D, H, W)
+
+        concatenated = torch.cat((out1, out2), dim=1)
+        output = self.conv1d(concatenated) 
+        mamba_out = output.view(B, C, D, H, W)
+
+        # return out
+        return mamba_out
+
+class cmMambaWithCNN(nn.Module):
+    """ Channel-mixed Mamba (cmMamba) block with residual CNN block
+
+    Args:
+        config (dict): Model configuration.
+        in_channels (int): Number of input channels.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+        ngf (int): Number of generator filters.
+        norm_layer (nn.Module): Normalization layer.
+        use_dropout (bool): Use dropout.
+        use_bias (bool): Use bias.
+        img_size (int): Image size.
+    
+    """
+    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=False):
+        super().__init__()
+        # Mamba block
+        self.mamba_layer = MambaLayer(
+            dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
+        )
+
+        self.config = config
+        ngf = 64
+        padding_type = "reflect"
+        use_bias = False
+        norm_layer = nn.InstanceNorm3d
+
+        # Channel compression block
+        self.cc = channel_compression(ngf*8, ngf*4)
+
+        # Residual CNN block
+        model = [ResnetBlock(256, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False, 
+                             use_bias=use_bias)]
+        setattr(self, "residual_cnn", nn.Sequential(*model))
+
+    def forward(self, x):
+        # Pass input through Mamba block
+        mamba_out = self.mamba_layer(x)
+        x = torch.cat([x, mamba_out], dim=1)
+
+        # Pass Mamba block output through channel compression
+        x = self.cc(x)
+        
+        # Pass channel compressed output through residual CNN block
+        x = self.residual_cnn(x)
+
+        return x
+
 ########Generator############
 class ResViT(nn.Module):
     def __init__(self,config, input_dim, img_size=224, output_dim=3, vis=False):
@@ -533,6 +670,216 @@ class ResViT(nn.Module):
             for bname, block in self.transformer_encoder.named_children():
                 for uname, unit in block.named_children():
                     unit.load_from(weights, n_block=uname)
+
+
+class I2IMamba(nn.Module):
+    def __init__(self, config, input_dim, img_size=224, output_dim=3, vis=False):
+        super(I2IMamba, self).__init__()
+        # self.transformer_encoder = Encoder(config, vis)
+        self.config = config
+        output_nc = output_dim
+        ngf = 64
+        use_bias = False
+        norm_layer = nn.InstanceNorm3d
+        padding_type = "reflect"
+        mult = 4
+
+        ############################################################################################
+        # Layer1-Encoder1
+        model = [nn.ReflectionPad3d(3),
+                 nn.Conv3d(input_dim, ngf, kernel_size=7, padding=0, 
+                           bias=use_bias),
+                 norm_layer(ngf),
+                 nn.ReLU(True)]
+      
+        setattr(self, "encoder_1", nn.Sequential(*model))
+        ############################################################################################
+        # Layer2-Encoder2
+        n_downsampling = 2
+        model = []
+        i = 0
+        mult = 2**i
+        model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3, 
+                 stride=2, padding=1, bias=use_bias),
+                 norm_layer(ngf * mult * 2),
+                 nn.ReLU(True)]
+
+        setattr(self, "encoder_2", nn.Sequential(*model))
+        ############################################################################################
+        # Layer3-Encoder3
+        model = []
+        i = 1
+        mult = 2**i
+        model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3, 
+                 stride=2, padding=1, bias=use_bias),
+                 norm_layer(ngf * mult * 2),
+                 nn.ReLU(True)]
+        
+        setattr(self, "encoder_3", nn.Sequential(*model))
+        ####################################ART Blocks##############################################
+        mult = 4
+        img_size = 256 
+        input_dim = 256 # Adjust this according to new input dimension
+
+        # Episodic bottleneck
+        # cmMamba block with residual CNN block
+        self.bottleneck_1 = cmMambaWithCNN(self.config, input_dim)
+        # self.bottleneck_1 = BottleneckCNN(self.config)
+        
+        self.bottleneck_2 = BottleneckCNN(self.config)
+        self.bottleneck_3 = BottleneckCNN(self.config)
+        self.bottleneck_4 = BottleneckCNN(self.config)
+
+        # cmMamba block with residual CNN block
+        self.bottleneck_5 = cmMambaWithCNN(self.config, input_dim)
+        # self.bottleneck_5 = BottleneckCNN(self.config)
+        
+        self.bottleneck_6 = BottleneckCNN(self.config)
+        self.bottleneck_7 = BottleneckCNN(self.config)
+        self.bottleneck_8 = BottleneckCNN(self.config)
+
+        # cmMamba block with residual CNN block
+        self.bottleneck_9 = cmMambaWithCNN(self.config, input_dim)
+        # self.bottleneck_9 = BottleneckCNN(self.config)
+
+        ############################################################################################
+        # Layer13-Decoder1 - currently removed the additional in_channels (removed * 2 for first argument), taking away skip connection to here
+        n_downsampling = 2
+        i = 0
+        mult = 2 ** (n_downsampling - i)
+        model = []
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2), 
+                                    kernel_size=3, stride=2, 
+                                    padding=1, output_padding=1, 
+                                    bias=use_bias),
+                norm_layer(int(ngf * mult / 2)),
+                nn.ReLU(True)]
+        setattr(self, "decoder_1", nn.Sequential(*model))
+        ############################################################################################
+        # Layer14-Decoder2
+        i = 1
+        mult = 2 ** (n_downsampling - i)
+        model = []
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
+                                    kernel_size=3, stride=2,
+                                    padding=1, output_padding=1,
+                                    bias=use_bias),
+                 norm_layer(int(ngf * mult / 2)),
+                 nn.ReLU(True)]
+        setattr(self, "decoder_2", nn.Sequential(*model))
+        ############################################################################################
+        # Layer15-Decoder3
+        model = []
+        model = [nn.ReflectionPad3d(3)]
+        model += [nn.Conv3d(ngf, output_dim, kernel_size=7, padding=0)]
+        model += [nn.Tanh()]
+        setattr(self, "decoder_3", nn.Sequential(*model))
+
+    def forward(self, x):
+        # Encoder
+        x1 = self.encoder_1(x)
+        x2 = self.encoder_2(x1)
+        x3 = self.encoder_3(x2)
+
+        # Episodic bottleneck
+        x = self.bottleneck_1(x3)
+        x = self.bottleneck_2(x)
+        x = self.bottleneck_3(x)
+        x = self.bottleneck_4(x)
+        x = self.bottleneck_5(x)
+        x = self.bottleneck_6(x)
+        x = self.bottleneck_7(x)
+        x = self.bottleneck_8(x)
+        x = self.bottleneck_9(x)
+
+        # Decoder
+        # x = self.decoder_1(torch.cat([x, x3], dim=1))
+        # x = self.decoder_2(torch.cat([x, x2], dim=1))
+        # x = self.decoder_3(torch.cat([x, x1], dim=1))
+        x = self.decoder_1(x)
+        x = self.decoder_2(x)
+        x = self.decoder_3(x)
+        return x
+
+    # def load_from(self, weights):
+    #     with torch.no_grad():
+
+    #         if self.config.name == "b16":
+    #             self.bottleneck_1.embeddings.patch_embeddings.weight.copy_(
+    #                 np2th(weights["embedding/kernel"], conv=True)
+    #             )
+    #             self.bottleneck_1.embeddings.patch_embeddings.bias.copy_(
+    #                 np2th(weights["embedding/bias"])
+    #             )
+
+    #             self.bottleneck_6.embeddings.patch_embeddings.weight.copy_(
+    #                 np2th(weights["embedding/kernel"], conv=True)
+    #             )
+    #             self.bottleneck_6.embeddings.patch_embeddings.bias.copy_(
+    #                 np2th(weights["embedding/bias"])
+    #             )
+
+    #         self.transformer_encoder.encoder_norm.weight.copy_(
+    #             np2th(weights["Transformer/encoder_norm/scale"])
+    #         )
+    #         self.transformer_encoder.encoder_norm.bias.copy_(
+    #             np2th(weights["Transformer/encoder_norm/bias"])
+    #         )
+
+    #         posemb = np2th(weights["Transformer/posembed_input/pos_embedding"])
+
+    #         posemb_new = self.bottleneck_1.embeddings.positional_encoding
+    #         if posemb.size() == posemb_new.size():
+    #             self.bottleneck_1.embeddings.positional_encoding.copy_(posemb)
+    #         elif posemb.size()[1] - 1 == posemb_new.size()[1]:
+    #             posemb = posemb[:, 1:]
+    #             self.bottleneck_1.embeddings.positional_encoding1.copy_(posemb)
+    #         else:
+    #             logger.info(
+    #                 "load_pretrained: resized variant: %s to %s"
+    #                 % (posemb.size(), posemb_new.size())
+    #             )
+    #             ntok_new = posemb_new.size(1)
+    #             _, posemb_grid = posemb[:, :1], posemb[0, 1:]
+    #             gs_old = int(np.sqrt(len(posemb_grid)))
+    #             gs_new = int(np.sqrt(ntok_new))
+    #             print("load_pretrained: grid-size from %s to %s" % (gs_old, gs_new))
+    #             posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
+    #             zoom = (gs_new / gs_old, gs_new / gs_old, 1)
+    #             posemb_grid = ndimage.zoom(posemb_grid, zoom, order=1)  # th2np
+    #             posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
+    #             posemb = posemb_grid
+    #             self.bottleneck_1.embeddings.positional_encoding.copy_(np2th(posemb))
+
+    #         posemb = np2th(weights["Transformer/posembed_input/pos_embedding"])
+    #         posemb_new = self.bottleneck_6.embeddings.positional_encoding
+           
+    #         if posemb.size() == posemb_new.size():
+    #             self.bottleneck_6.embeddings.positional_encoding.copy_(posemb)
+    #         elif posemb.size()[1] - 1 == posemb_new.size()[1]:
+    #             posemb = posemb[:, 1:]
+    #             self.bottleneck_6.embeddings.positional_encoding.copy_(posemb)
+    #         else:
+    #             logger.info(
+    #                 "load_pretrained: resized variant: %s to %s"
+    #                 % (posemb.size(), posemb_new.size())
+    #             )
+    #             ntok_new = posemb_new.size(1)
+    #             _, posemb_grid = posemb[:, :1], posemb[0, 1:]
+    #             gs_old = int(np.sqrt(len(posemb_grid)))
+    #             gs_new = int(np.sqrt(ntok_new))
+    #             print("load_pretrained: grid-size from %s to %s" % (gs_old, gs_new))
+    #             posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
+    #             zoom = (gs_new / gs_old, gs_new / gs_old, 1)
+    #             posemb_grid = ndimage.zoom(posemb_grid, zoom, order=1)  # th2np
+    #             posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
+    #             posemb = posemb_grid
+    #             self.bottleneck_6.embeddings.positional_encoding.copy_(np2th(posemb))
+
+    #         # Encoder
+    #         for bname, block in self.transformer_encoder.named_children():
+    #             for uname, unit in block.named_children():
+    #                 unit.load_from(weights, n_block=uname)
 
 
 class Res_CNN(nn.Module):

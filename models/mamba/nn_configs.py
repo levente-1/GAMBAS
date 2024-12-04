@@ -3,7 +3,7 @@ import ml_collections
 def get_b16_config():
     """Returns the ViT-B/16 configuration."""
     config = ml_collections.ConfigDict()
-    config.patches = ml_collections.ConfigDict({'size': (16, 16)}) # Modified to 3D version - 128x128x64 is divisible by 16
+    config.patches = ml_collections.ConfigDict({'size': (16, 16)})
     config.hidden_size = 768
     config.transformer = ml_collections.ConfigDict()
     config.transformer.mlp_dim = 3072
@@ -20,13 +20,13 @@ def get_b16_config():
     return config
 
 
-def get_resvit_b16_config():
+def get_i2i_mamba_b16_config():
     """Returns the residual ViT-B/16 configuration."""
     config = get_b16_config()
     config.patches.grid = (16, 16)
     config.name = 'b16'
 
-    config.pretrained_path = '/media/hdd/levibaljer/ResViT/ViT/imagenet21k_R50+ViT-B_16.npz'
+    config.pretrained_path = './model/vit_checkpoint/imagenet21k/R50+ViT-B_16.npz'
 
     return config
 
@@ -47,7 +47,7 @@ def get_l16_config():
     return config
 
 
-def get_resvit_l16_config():
+def get_i2i_mamba_l16_config():
     """Returns the residual ViT-L/16 configuration. customized """
     config = get_l16_config()
     config.patches.grid = (16, 16)
