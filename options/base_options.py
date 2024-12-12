@@ -10,9 +10,9 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self, parser):
-        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/Khula_GANs/paired/flirt_train', help='Train images path (paired)')
+        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/Khula_GANs/old/paired/flirt_train', help='Train images path (paired)')
         parser.add_argument('--data_path_2', type=str, default='/media/hdd/levibaljer/Khula_GANs/unpaired/train', help='Train images path (unpaired)')
-        parser.add_argument('--val_path', type=str, default='/media/hdd/levibaljer/Khula_GANs/paired/flirt_val', help='Validation images path')
+        parser.add_argument('--val_path', type=str, default='/media/hdd/levibaljer/Khula_GANs/old/paired/flirt_val', help='Validation images path')
         parser.add_argument('--batch_size', type=int, default=1, help='input batch size')
         parser.add_argument('--patch_size', default=[32, 256, 256], help='Size of the patches extracted from the image (default is 128, 128, 64)')
         parser.add_argument('--input_nc', type=int, default=1, help='# of input image channels')
