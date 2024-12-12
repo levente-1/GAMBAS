@@ -377,15 +377,15 @@ class MambaLayer(nn.Module):
         super().__init__()
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
-        # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
-        self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
-        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        # self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        # self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
 
-        self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
-        self.spiral_indices = generate_slicewise_spiral_indices(64, 64, 8).expand(-1, dim, -1).permute(0, 2, 1)
-        self.despiral_indices = torch.argsort(self.spiral_indices)
-        self.spiral_r_indices = torch.flip(self.spiral_indices, dims=[2])
-        self.despiral_r_indices = torch.argsort(self.spiral_r_indices)
+        # self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
+        # self.spiral_indices = generate_slicewise_spiral_indices(64, 64, 8).expand(-1, dim, -1).permute(0, 2, 1)
+        # self.despiral_indices = torch.argsort(self.spiral_indices)
+        # self.spiral_r_indices = torch.flip(self.spiral_indices, dims=[2])
+        # self.despiral_r_indices = torch.argsort(self.spiral_r_indices)
     
     def forward(self, x):
         B, C, D, H, W = x.shape
@@ -393,41 +393,40 @@ class MambaLayer(nn.Module):
         # Check model dimension
         assert C == self.dim
         
-        # # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
-        # x = x.float().view(B, C, -1).permute(0, 2, 1)
+        # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
+        x = x.float().view(B, C, -1).permute(0, 2, 1)
 
-        # Bidirectional mamba
-        x1 = x.view(B, C, -1).permute(0, 2, 1)
-        device = 'cuda:0'
-        # x1 = x1.to(device)
-        self.spiral_indices = self.spiral_indices.to(device)
-        x1 = torch.gather(x1, 1, self.spiral_indices)
-        x2 = torch.flip(x1, dims=[1])
+        # # Bidirectional mamba
+        # x1 = x.view(B, C, -1).permute(0, 2, 1)
+        # device = 'cuda:0'
+        # self.spiral_indices = self.spiral_indices.to(device)
+        # x1 = torch.gather(x1, 1, self.spiral_indices)
+        # x2 = torch.flip(x1, dims=[1])
         
-        # # Normalize and pass through Mamba layer
-        # norm_out = self.norm(x)
-        # mamba_out = self.mamba(norm_out)
+        # Normalize and pass through Mamba layer
+        norm_out = self.norm(x)
+        mamba_out = self.mamba(norm_out)
 
-        # Pass forwad and reverse through mamba
-        norm_out1 = self.norm(x1)
-        mamba_out1 = self.mamba1(norm_out1)
-        norm_out2 = self.norm(x2)
-        mamba_out2 = self.mamba2(norm_out2)
+        # # Pass forwad and reverse through mamba
+        # norm_out1 = self.norm(x1)
+        # mamba_out1 = self.mamba1(norm_out1)
+        # norm_out2 = self.norm(x2)
+        # mamba_out2 = self.mamba2(norm_out2)
 
-        self.despiral_indices = self.despiral_indices.to(device)
-        self.despiral_r_indices = self.despiral_r_indices.to(device)
-        out1 = torch.gather(mamba_out1, 1, self.despiral_indices).permute(0, 2, 1).view(B, C, D, H, W)
-        out2 = torch.gather(mamba_out2, 1, self.despiral_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        # self.despiral_indices = self.despiral_indices.to(device)
+        # self.despiral_r_indices = self.despiral_r_indices.to(device)
+        # out1 = torch.gather(mamba_out1, 1, self.despiral_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = torch.gather(mamba_out2, 1, self.despiral_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
 
-        # # Convert output from (B, H*W, C) to (B, C, H, W)
-        # out = mamba_out.permute(0, 2, 1).view(B, C, D, H, W)
+        # Convert output from (B, H*W, C) to (B, C, H, W)
+        out = mamba_out.permute(0, 2, 1).view(B, C, D, H, W)
 
-        concatenated = torch.cat((out1, out2), dim=1)
-        output = self.conv1d(concatenated) 
-        mamba_out = output.view(B, C, D, H, W)
+        # concatenated = torch.cat((out1, out2), dim=1)
+        # output = self.conv1d(concatenated) 
+        # mamba_out = output.view(B, C, D, H, W)
 
-        # return out
-        return mamba_out
+        return out
+        # return mamba_out
 
 class cmMambaWithCNN(nn.Module):
     """ Channel-mixed Mamba (cmMamba) block with residual CNN block
