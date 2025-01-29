@@ -6,6 +6,7 @@ from .base_model import BaseModel
 from . import networks3D
 from torchvision import models
 import random
+# from generative.losses import PerceptualLoss
 
 class ImagePool():
     def __init__(self, pool_size):
@@ -54,6 +55,7 @@ class I2IMambaOneModel(BaseModel):
             parser.add_argument('--pre_trained_resnet', type=int, default=0,help='Pre-trained residual CNNs or not')
             parser.add_argument('--pre_trained_path', type=str, default='/media/hdd/levibaljer/ResViT/checkpoints/khula_Res_CNN/latest_net_G.pth', help='path to the pre-trained resnet architecture')
             parser.add_argument('--pre_trained_transformer', type=int, default=0,help='Pre-trained ViT or not')
+            parser.add_argument('--lambda_perc', type=float, default=1.0, help='weight for perceptual loss')
             # parser.add_argument('--lambda_L1', type=float, default=300.0, help='weight for L1 loss') # According to paper, this is fixed at 300
             # parser.add_argument('--lambda_sobel', type=float, default=100.0, help='lambda for sobel l1 loss') # Sobel starts at 0, linearly increases in first 15% of epochs, then stays at 100
             # parser.add_argument('--rise_sobelLoss', action='store_true', help='indicate to rise sobel lambda')
@@ -66,6 +68,7 @@ class I2IMambaOneModel(BaseModel):
 
         # specify the training losses you want to print out. The program will call base_model.get_current_losses
         self.loss_names = ['D', 'G_GAN', 'G_L1']
+        # self.loss_names = ['D', 'G_GAN', 'G_L1', 'G_perc']
         # specify the images you want to save/display. The program will call base_model.get_current_visuals
         visual_names = ['real_A', 'fake_B', 'real_B']
 
@@ -103,8 +106,8 @@ class I2IMambaOneModel(BaseModel):
             self.fake_AB_pool = ImagePool(opt.pool_size)
             # define loss functions
             self.criterionGAN = networks3D.GANLoss(use_lsgan=not opt.no_lsgan).to(self.device)
-
             self.criterionL1 = torch.nn.L1Loss()
+            # self.criterionPerc = PerceptualLoss(spatial_dims=3, network_type="alex").to(self.device)
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(self.netG.parameters(),
                                                 lr=opt.lr, betas=(opt.beta1, 0.999))
@@ -128,8 +131,8 @@ class I2IMambaOneModel(BaseModel):
 
     def forward(self):
         self.fake_B = self.netG(self.real_A)
-        self.fake_sobel = networks3D.sobelLayer(self.fake_B)
-        self.real_sobel = networks3D.sobelLayer(self.real_B).detach() 
+        # self.fake_sobel = networks3D.sobelLayer(self.fake_B)
+        # self.real_sobel = networks3D.sobelLayer(self.real_B).detach() 
 
     # get image paths
     def get_image_paths(self):
@@ -150,7 +153,7 @@ class I2IMambaOneModel(BaseModel):
         self.loss_D_real = self.criterionGAN(self.pred_real, True)
 
         # Combined loss
-        self.loss_D = (self.loss_D_fake + self.loss_D_real) * 0.5 * self.opt.lambda_adv
+        self.loss_D = (self.loss_D_fake + self.loss_D_real) * 0.5
         self.loss_D.backward()
 
     def backward_G(self):
@@ -158,14 +161,14 @@ class I2IMambaOneModel(BaseModel):
         fake_AB = torch.cat((self.real_A, self.fake_B), 1)
         # fake_AB = torch.cat((self.real_A, self.fake_B, self.fake_sobel), 1)
         pred_fake = self.netD(fake_AB)
-        self.loss_G_GAN = self.criterionGAN(pred_fake, True)*self.opt.lambda_adv
+        self.loss_G_GAN = self.criterionGAN(pred_fake, True)
         # Second, G(A) = B
         self.loss_G_L1 = self.criterionL1(self.fake_B, self.real_B) * self.opt.lambda_A
-        # Third, sobel(G(A)) = sobel(B)
-        # self.loss_G_sobelL1 = self.criterionL1(self.fake_sobel, self.real_sobel) * self.sobelLambda
+        # Third, perceptual loss: (G(A)) = (B)
+        # self.loss_G_perc = self.criterionPerc(self.fake_B, self.real_B) * self.opt.lambda_perc
 
         self.loss_G = self.loss_G_GAN + self.loss_G_L1
-        # self.loss_G = self.loss_G_GAN + self.loss_G_L1 + self.loss_G_sobelL1
+        # self.loss_G = self.loss_G_GAN + self.loss_G_L1 + self.loss_G_perc
         
         self.loss_G.backward()
 

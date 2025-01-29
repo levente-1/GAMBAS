@@ -150,7 +150,7 @@ def generate_slicewise_hilbert_indices(H, W, D, generator):
             indicesNew = [x+(H*W*(i+1)) for x in indices_slice1]
         indices += indicesNew
 
-    return torch.tensor(indices, dtype=torch.long)
+    return torch.tensor(indices, dtype=torch.long).unsqueeze(0).unsqueeze(0)
 
 
 def gilbert3d(width, height, depth):
@@ -354,7 +354,7 @@ def generate_gilbert_indices_3D(H, W, D, generator):
             currentPos -= H*W
             indices.append(currentPos)
             currentXYZ = i
-    return torch.tensor(indices, dtype=torch.long)
+    return torch.tensor(indices, dtype=torch.long).unsqueeze(0).unsqueeze(0)
 
 
 if __name__ == "__main__":
