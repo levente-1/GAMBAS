@@ -10,5 +10,5 @@ for i in "${subsVal[@]}"; do
 	echo "subject${i}"
 
 	# python test.py --image /media/hdd/levibaljer/Combined_data/Fold1/test/images/${i}.nii.gz --result /media/hdd/levibaljer/Combined_data/Fold1/test/resvit_final/${i}_resvit.nii.gz
-	python test.py --image /media/hdd/levibaljer/Combined_data/Fold1/val/images/${i}.nii.gz --result /media/hdd/levibaljer/Combined_data/Fold1/val/gambas/gambas_1block/${i}_gambas1.nii.gz
+	# python test.py --image /media/hdd/levibaljer/Combined_data/Fold1/val/images/${i}.nii.gz --result /media/hdd/levibaljer/Combined_data/Fold1/val/gambas/gambas_1block/${i}_gambas1.nii.gz
 done
