@@ -10,6 +10,7 @@ from torch.optim import lr_scheduler
 import monai
 from .deprecated.ddpm_3D import Unet3D, WBlock
 from . import residual_transformers3D
+from monai.networks.nets import SwinUNETR
 
 ###############################################################################
 # Helper Functions
@@ -151,6 +152,8 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
             output_dim=1,
             vis=False
         )
+    elif netG == "swin_unetr":
+        net = SwinUNETR(img_size=(128,128,128), in_channels=1, out_channels=1, use_v2=True)
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % netG)
 

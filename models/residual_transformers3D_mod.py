@@ -20,6 +20,7 @@ from . import transformer_configs as configs
 from .path_generate import generate2d, gilbert2d, generate3d, gilbert3d, generate_slicewise_hilbert_indices, generate_gilbert_indices_3D
 
 from mamba_ssm import Mamba
+from mamba_ssm import Mamba2
 
 
 logger = logging.getLogger(__name__)
@@ -288,7 +289,7 @@ class ART_block(nn.Module):
         mult = 4
         use_bias = True
         norm_layer = nn.InstanceNorm3d
-        padding_type = 'replicate'
+        padding_type = 'reflect'
         if self.transformer:
             # Downsample
             model = [nn.Conv3d(ngf * 4, ngf * 8, kernel_size=3,
@@ -352,20 +353,18 @@ class BottleneckCNN(nn.Module):
         self.config = config
         use_bias = True
         norm_layer = nn.InstanceNorm3d
-        padding_type = 'replicate'
+        padding_type = "reflect"
         
         # Residual CNN
         model = [ResnetBlock(256, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False,
                              use_bias=use_bias)]
-        # model = [ResnetBlock(512, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False,
-        #                      use_bias=use_bias)]
         setattr(self, "residual_cnn", nn.Sequential(*model))
 
     def forward(self, x):
         x = self.residual_cnn(x)
         return x
 
-class MambaLayer(nn.Module):
+class MambaLayerBottleneck(nn.Module):
     """ Mamba layer for state-space sequence modeling
 
     Args:
@@ -375,7 +374,7 @@ class MambaLayer(nn.Module):
         expand (int): Block expansion factor.
     
     """
-    def __init__(self, dim, d_state=16, d_conv=4, expand=2): # Before it was d_state=16, d_conv=4, expand=2
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2):
         super().__init__()
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
@@ -384,9 +383,132 @@ class MambaLayer(nn.Module):
         self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
 
         self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
-        # self.conv1d = nn.Conv3d(in_channels=1024, out_channels=512, kernel_size=1)
-        self.generator = gilbert3d(32, 32, 32) # Before it was 64, 64, 8 (better one is 32, 32, 32)
-        self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1) # Before it was 64, 64, 8
+        self.generator = gilbert3d(32, 32, 32)
+        self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
+        self.degilbert_indices = torch.argsort(self.gilbert_indices)
+        self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
+        self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
+    
+    def forward(self, x):
+        B, C, D, H, W = x.shape
+
+        # Check model dimension
+        assert C == self.dim
+        
+        # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
+        x1 = x.float().view(B, C, -1).permute(0, 2, 1)
+        x2 = torch.flip(x1, dims=[1])
+
+        # Bidirectional mamba
+        x1 = x.view(B, C, -1).permute(0, 2, 1)
+        device = 'cuda:0'
+        self.gilbert_indices = self.gilbert_indices.to(device)
+        x1 = torch.gather(x1, 1, self.gilbert_indices)
+        x2 = torch.flip(x1, dims=[1])
+
+        # Pass forwad and reverse through mamba
+        norm_out1 = self.norm(x1)
+        mamba_out1 = self.mamba1(norm_out1)
+        norm_out2 = self.norm(x2)
+        mamba_out2 = self.mamba2(norm_out2)
+
+        self.degilbert_indices = self.degilbert_indices.to(device)
+        self.degilbert_r_indices = self.degilbert_r_indices.to(device)
+        out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+
+        # Convert output from (B, H*W, C) to (B, C, H, W)
+        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+
+        concatenated = torch.cat((out1, out2), dim=1)
+        output = self.conv1d(concatenated)
+       
+        return output
+    
+class MambaLayer1(nn.Module):
+    """ Mamba layer for state-space sequence modeling
+
+    Args:
+        dim (int): Model dimension.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+    
+    """
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2):
+        super().__init__()
+        self.dim = dim
+        self.norm = nn.LayerNorm(dim)
+        # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+
+        self.conv1d = nn.Conv3d(in_channels=128, out_channels=64, kernel_size=1)
+        self.generator = gilbert3d(128, 128, 128)
+        self.gilbert_indices = generate_gilbert_indices_3D(128, 128, 128, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
+        self.degilbert_indices = torch.argsort(self.gilbert_indices)
+        self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
+        self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
+    
+    def forward(self, x):
+        B, C, D, H, W = x.shape
+
+        # Check model dimension
+        assert C == self.dim
+        
+        # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
+        # x1 = x.float().view(B, C, -1).permute(0, 2, 1)
+        # x2 = torch.flip(x1, dims=[1])
+
+        # # Bidirectional mamba
+        x1 = x.view(B, C, -1).permute(0, 2, 1)
+        device = 'cuda:0'
+        self.gilbert_indices = self.gilbert_indices.to(device)
+        x1 = torch.gather(x1, 1, self.gilbert_indices)
+        x2 = torch.flip(x1, dims=[1])
+
+        # Pass forwad and reverse through mamba
+        norm_out1 = self.norm(x1)
+        mamba_out1 = self.mamba1(norm_out1)
+        norm_out2 = self.norm(x2)
+        mamba_out2 = self.mamba2(norm_out2)
+
+        self.degilbert_indices = self.degilbert_indices.to(device)
+        self.degilbert_r_indices = self.degilbert_r_indices.to(device)
+        out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+
+        # # Convert output from (B, H*W, C) to (B, C, H, W)
+        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+
+        concatenated = torch.cat((out1, out2), dim=1)
+        output = self.conv1d(concatenated)
+       
+        return output
+    
+class MambaLayer2(nn.Module):
+    """ Mamba layer for state-space sequence modeling
+
+    Args:
+        dim (int): Model dimension.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+    
+    """
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2):
+        super().__init__()
+        self.dim = dim
+        self.norm = nn.LayerNorm(dim)
+        # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+
+        self.conv1d = nn.Conv3d(in_channels=256, out_channels=128, kernel_size=1)
+        self.generator = gilbert3d(64, 64, 64)
+        self.gilbert_indices = generate_gilbert_indices_3D(64, 64, 64, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
         self.degilbert_indices = torch.argsort(self.gilbert_indices)
         self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
         self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
@@ -420,17 +542,77 @@ class MambaLayer(nn.Module):
         out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
 
         # Convert output from (B, H*W, C) to (B, C, H, W)
-        out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
-        out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
 
         concatenated = torch.cat((out1, out2), dim=1)
         output = self.conv1d(concatenated)
+       
+        return output
+    
+class MambaLayer3(nn.Module):
+    """ Mamba layer for state-space sequence modeling
 
-        # output = torch.mul(out1, out2)
+    Args:
+        dim (int): Model dimension.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+    
+    """
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2):
+        super().__init__()
+        self.dim = dim
+        self.norm = nn.LayerNorm(dim)
+        # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+
+        self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
+        self.generator = gilbert3d(32, 32, 32)
+        self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
+        self.degilbert_indices = torch.argsort(self.gilbert_indices)
+        self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
+        self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
+    
+    def forward(self, x):
+        B, C, D, H, W = x.shape
+
+        # Check model dimension
+        assert C == self.dim
+        
+        # Convert input from (B, C, H, W, D) to (B, H*W*D, C)
+        # x1 = x.float().view(B, C, -1).permute(0, 2, 1)
+        # x2 = torch.flip(x1, dims=[1])
+
+        # # Bidirectional mamba
+        x1 = x.view(B, C, -1).permute(0, 2, 1)
+        device = 'cuda:0'
+        self.gilbert_indices = self.gilbert_indices.to(device)
+        x1 = torch.gather(x1, 1, self.gilbert_indices)
+        x2 = torch.flip(x1, dims=[1])
+
+        # Pass forwad and reverse through mamba
+        norm_out1 = self.norm(x1)
+        mamba_out1 = self.mamba1(norm_out1)
+        norm_out2 = self.norm(x2)
+        mamba_out2 = self.mamba2(norm_out2)
+
+        self.degilbert_indices = self.degilbert_indices.to(device)
+        self.degilbert_r_indices = self.degilbert_r_indices.to(device)
+        out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+
+        # Convert output from (B, H*W, C) to (B, C, H, W)
+        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+
+        concatenated = torch.cat((out1, out2), dim=1)
+        output = self.conv1d(concatenated)
        
         return output
 
-class cmMambaWithCNN(nn.Module):
+class cmMambaWithCNN_Bottleneck(nn.Module):
     """ Channel-mixed Mamba (cmMamba) block with residual CNN block
 
     Args:
@@ -446,17 +628,16 @@ class cmMambaWithCNN(nn.Module):
         img_size (int): Image size.
     
     """
-    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=True):
+    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=False):
         super().__init__()
         # Mamba block
-        self.mamba_layer = MambaLayer(
+        self.mamba_layer = MambaLayerBottleneck(
             dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
         )
 
         self.config = config
         ngf = 64
-        # ngf = 128
-        padding_type = 'replicate'
+        padding_type = "reflect"
         use_bias = True
         norm_layer = nn.InstanceNorm3d
 
@@ -466,8 +647,6 @@ class cmMambaWithCNN(nn.Module):
         # Residual CNN block
         model = [ResnetBlock(256, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False, 
                              use_bias=use_bias)]
-        # model = [ResnetBlock(512, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False, 
-        #                      use_bias=use_bias)]
         setattr(self, "residual_cnn", nn.Sequential(*model))
 
     def forward(self, x):
@@ -483,6 +662,132 @@ class cmMambaWithCNN(nn.Module):
 
         return x
 
+class cmMambaWithCNN_1(nn.Module):
+    """ Channel-mixed Mamba (cmMamba) block with residual CNN block
+
+    Args:
+        config (dict): Model configuration.
+        in_channels (int): Number of input channels.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+        ngf (int): Number of generator filters.
+        norm_layer (nn.Module): Normalization layer.
+        use_dropout (bool): Use dropout.
+        use_bias (bool): Use bias.
+        img_size (int): Image size.
+    
+    """
+    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=False):
+        super().__init__()
+        # Mamba block
+        self.mamba_layer = MambaLayer1(
+            dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
+        )
+
+        self.config = config
+        ngf = 64
+        padding_type = "reflect"
+        use_bias = True
+        norm_layer = nn.InstanceNorm3d
+
+        # Channel compression block
+        self.cc = channel_compression(ngf*2, ngf)
+
+    def forward(self, x):
+        # Pass input through Mamba block
+        mamba_out = self.mamba_layer(x)
+        x = torch.cat([x, mamba_out], dim=1)
+
+        # Pass Mamba block output through channel compression
+        x = self.cc(x)
+        
+        return x
+
+class cmMambaWithCNN_2(nn.Module):
+    """ Channel-mixed Mamba (cmMamba) block with residual CNN block
+
+    Args:
+        config (dict): Model configuration.
+        in_channels (int): Number of input channels.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+        ngf (int): Number of generator filters.
+        norm_layer (nn.Module): Normalization layer.
+        use_dropout (bool): Use dropout.
+        use_bias (bool): Use bias.
+        img_size (int): Image size.
+    
+    """
+    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=False):
+        super().__init__()
+        # Mamba block
+        self.mamba_layer = MambaLayer2(
+            dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
+        )
+
+        self.config = config
+        ngf = 64
+        padding_type = "reflect"
+        use_bias = True
+        norm_layer = nn.InstanceNorm3d
+
+        # Channel compression block
+        self.cc = channel_compression(ngf*4, ngf*2)
+
+    def forward(self, x):
+        # Pass input through Mamba block
+        mamba_out = self.mamba_layer(x)
+        x = torch.cat([x, mamba_out], dim=1)
+
+        # Pass Mamba block output through channel compression
+        x = self.cc(x)
+        
+        return x
+
+class cmMambaWithCNN_3(nn.Module):
+    """ Channel-mixed Mamba (cmMamba) block with residual CNN block
+
+    Args:
+        config (dict): Model configuration.
+        in_channels (int): Number of input channels.
+        d_state (int): SSM state expansion factor.
+        d_conv (int): Local convolution width.
+        expand (int): Block expansion factor.
+        ngf (int): Number of generator filters.
+        norm_layer (nn.Module): Normalization layer.
+        use_dropout (bool): Use dropout.
+        use_bias (bool): Use bias.
+        img_size (int): Image size.
+    
+    """
+    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=False):
+        super().__init__()
+        # Mamba block
+        self.mamba_layer = MambaLayer3(
+            dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
+        )
+
+        self.config = config
+        ngf = 64
+        padding_type = "reflect"
+        use_bias = True
+        norm_layer = nn.InstanceNorm3d
+
+        # Channel compression block
+        self.cc = channel_compression(ngf*8, ngf*4)
+
+    def forward(self, x):
+        # Pass input through Mamba block
+        mamba_out = self.mamba_layer(x)
+        x = torch.cat([x, mamba_out], dim=1)
+
+        # Pass Mamba block output through channel compression
+        x = self.cc(x)
+        
+        return x
+
 ########Generator############
 class ResViT(nn.Module):
     def __init__(self,config, input_dim, img_size=224, output_dim=3, vis=False):
@@ -494,7 +799,7 @@ class ResViT(nn.Module):
         use_bias = True
         # norm_layer = nn.BatchNorm2d # switch to instance or groupNorm in 3D
         norm_layer = nn.InstanceNorm3d
-        padding_type = 'replicate'
+        padding_type = 'reflect'
         mult = 4
 
         ############################################################################################
@@ -574,7 +879,7 @@ class ResViT(nn.Module):
         model += [nn.Tanh()]
         setattr(self, 'decoder_3', nn.Sequential(*model))
 
-    ################################################################################################
+    ############################################################################################
         
     def forward(self, x):
         # Pass input through cnn encoder of ResViT
@@ -683,10 +988,9 @@ class I2IMamba(nn.Module):
         self.config = config
         output_nc = output_dim
         ngf = 64
-        # ngf = 128
         use_bias = True
         norm_layer = nn.InstanceNorm3d
-        padding_type = "replication"
+        padding_type = "reflect"
         mult = 4
 
         ############################################################################################
@@ -725,7 +1029,6 @@ class I2IMamba(nn.Module):
         mult = 4
         img_size = 256 
         input_dim = 256 # Adjust this according to new input dimension
-        # input_dim = 512
 
         # Episodic bottleneck
         # cmMamba block with residual CNN block
@@ -733,22 +1036,16 @@ class I2IMamba(nn.Module):
         self.bottleneck_1 = BottleneckCNN(self.config)
         
         self.bottleneck_2 = BottleneckCNN(self.config)
-        # self.bottleneck_2 = cmMambaWithCNN(self.config, input_dim)
         self.bottleneck_3 = BottleneckCNN(self.config)
-        # self.bottleneck_3 = cmMambaWithCNN(self.config, input_dim)
         self.bottleneck_4 = BottleneckCNN(self.config)
-        # self.bottleneck_4 = cmMambaWithCNN(self.config, input_dim)
 
-        # cmMamba block with residual CNN block
-        self.bottleneck_5 = cmMambaWithCNN(self.config, input_dim)
+        # # cmMamba block with residual CNN block
+        self.bottleneck_5 = cmMambaWithCNN_Bottleneck(self.config, input_dim)
         # self.bottleneck_5 = BottleneckCNN(self.config)
         
         self.bottleneck_6 = BottleneckCNN(self.config)
-        # self.bottleneck_6 = cmMambaWithCNN(self.config, input_dim)
         self.bottleneck_7 = BottleneckCNN(self.config)
-        # self.bottleneck_7 = cmMambaWithCNN(self.config, input_dim)
         self.bottleneck_8 = BottleneckCNN(self.config)
-        # self.bottleneck_8 = cmMambaWithCNN(self.config, input_dim)
 
         # cmMamba block with residual CNN block
         # self.bottleneck_9 = cmMambaWithCNN(self.config, input_dim)
@@ -760,7 +1057,7 @@ class I2IMamba(nn.Module):
         i = 0
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2), 
+        model = [nn.ConvTranspose3d(ngf * mult * 2, int(ngf * mult / 2), 
                                     kernel_size=3, stride=2, 
                                     padding=1, output_padding=1, 
                                     bias=use_bias),
@@ -772,7 +1069,7 @@ class I2IMamba(nn.Module):
         i = 1
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
+        model = [nn.ConvTranspose3d(ngf * mult * 2, int(ngf * mult / 2),
                                     kernel_size=3, stride=2,
                                     padding=1, output_padding=1,
                                     bias=use_bias),
@@ -783,10 +1080,16 @@ class I2IMamba(nn.Module):
         # Layer15-Decoder3
         model = []
         model = [nn.ReplicationPad3d(3)]
-        model += [nn.Conv3d(ngf, output_dim, kernel_size=7, padding=0)]
+        model += [nn.Conv3d(ngf * 2, output_dim, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
         setattr(self, "decoder_3", nn.Sequential(*model))
 
+        ####################################Skip conecctions#########################################
+        self.skip1 = cmMambaWithCNN_1(self.config, 64)
+        self.skip2 = cmMambaWithCNN_2(self.config, 128)
+        self.skip3 = cmMambaWithCNN_3(self.config, 256)
+
+    
     def forward(self, x):
         # Encoder
         x1 = self.encoder_1(x)
@@ -805,12 +1108,16 @@ class I2IMamba(nn.Module):
         x = self.bottleneck_9(x)
 
         # Decoder
-        # x = self.decoder_1(torch.cat([x, x3], dim=1))
-        # x = self.decoder_2(torch.cat([x, x2], dim=1))
-        # x = self.decoder_3(torch.cat([x, x1], dim=1))
-        x = self.decoder_1(x)
-        x = self.decoder_2(x)
-        x = self.decoder_3(x)
+        x_skip1 = self.skip1(x1)
+        x_skip2 = self.skip2(x2)
+        x_skip3 = self.skip3(x3)
+        # x = self.decoder_1(x)
+        # x = self.decoder_2(x)
+        # x = self.decoder_3(x)
+        x = self.decoder_1(torch.cat([x, x_skip3], dim=1))
+        x = self.decoder_2(torch.cat([x, x_skip2], dim=1))
+        x = self.decoder_3(torch.cat([x, x_skip1], dim=1))
+        # x = self.decoder_3(x)
         return x
 
     # def load_from(self, weights):
@@ -902,7 +1209,7 @@ class Res_CNN(nn.Module):
         ngf = 64
         use_bias = True
         norm_layer = nn.InstanceNorm3d
-        padding_type = 'replication'
+        padding_type = 'reflect'
         mult = 4
 
         ############################################################################################
@@ -1015,16 +1322,16 @@ class channel_compression(nn.Module):
 
         if stride != 1 or in_channels != out_channels:
           self.skip = nn.Sequential(
-            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, bias=True),
+            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, bias=False),
             nn.InstanceNorm3d(out_channels))
         else:
           self.skip = None
 
         self.block = nn.Sequential(
-            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=True),
+            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=False),
             nn.InstanceNorm3d(out_channels),
             nn.ReLU(),
-            nn.Conv3d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=True),
+            nn.Conv3d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=False),
             nn.InstanceNorm3d(out_channels))
 
     def forward(self, x):
@@ -1081,48 +1388,3 @@ CONFIGS = {
 }
 
 
-    ################################################################################################
-    ################################################################################################
-    ################################################################################################
-
-class ResnetBlock2(nn.Module):
-    def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias,dim2=None):
-        super(ResnetBlock2, self).__init__()
-        self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias)
-
-    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias):
-        conv_block = []
-        p = 0
-        #use_dropout= use_dropo
-        if padding_type == 'reflect':
-            conv_block += [nn.ReflectionPad3d(1)]
-        elif padding_type == 'replicate':
-            conv_block += [nn.ReplicationPad3d(1)]
-        elif padding_type == 'zero':
-            p = 1
-        else:
-            raise NotImplementedError('padding [%s] is not implemented' % padding_type)
-        conv_block += [norm_layer(dim),
-                       nn.ReLU(True),
-                       nn.Conv3d(dim, dim, kernel_size=3, padding=p, bias=use_bias)]
-        if use_dropout:
-            conv_block += [nn.Dropout(0.5)]
-
-        p = 0
-        if padding_type == 'reflect':
-            conv_block += [nn.ReflectionPad3d(1)]
-        elif padding_type == 'replicate':
-            conv_block += [nn.ReplicationPad3d(1)]
-        elif padding_type == 'zero':
-            p = 1
-        else:
-            raise NotImplementedError('padding [%s] is not implemented' % padding_type)
-        conv_block += [norm_layer(dim), 
-                       nn.ReLU(True),
-                       nn.Conv3d(dim, dim, kernel_size=3, padding=p, bias=use_bias)]
-        
-        return nn.Sequential(*conv_block)
-
-    def forward(self, x):
-        out = x + self.conv_block(x)
-        return out
