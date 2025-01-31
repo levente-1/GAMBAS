@@ -1,4 +1,4 @@
-# MRI-GAN-suite
+# GAMBAS
 
 ### Preprocessing
 
