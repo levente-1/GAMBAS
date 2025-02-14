@@ -8,6 +8,9 @@ import sys
 from flywheel_gear_toolkit import GearToolkitContext
 from utils.parser import parse_config
 
+from options.test_options import TestOptions
+from models import create_model
+from app.main import inference
 
 # Add top-level package directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -24,8 +27,12 @@ def main(context: GearToolkitContext) -> None:
     # """Parses config and runs."""
     subject_label, session_label, input_label = parse_config(context)
     
-    # Run main function
-    test.py(subject_label, session_label, input_label)
+    opt = TestOptions().parse()
+    model = create_model(opt)
+    model.setup(opt)
+
+    inference(model, opt.image, opt.result, opt.resample, opt.new_resolution, opt.patch_size[0],
+              opt.patch_size[1], opt.patch_size[2], opt.stride_inplane, opt.stride_layer, 1)
 
 
 # Only execute if file is run as main, not when imported by another module
