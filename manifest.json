@@ -1,14 +1,34 @@
 {
   "author": "Levente Baljer, Niall Bourke",
-  "cite": "Baljer, L., Zhang, Y., Bourke, N.J., Donald, K.A., Bradford, L.E., Ringshaw, J.E., Williams, S.R., Deoni, S.C.L., Williams, S.C.R., , Váša, F. and Moran, R.J. (2025), Ultra-Low-Field Paediatric MRI in Low- and Middle-Income Countries: Super-Resolution Using a Multi-Orientation U-Net. Hum Brain Mapp, 46: e70112. https://doi.org/10.1002/hbm.70112",
+  "cite": "Baljer, L., Zhang, Y., Bourke, N.J., Donald, K.A., Bradford, L.E., Ringshaw, J.E., Williams, S.R., Deoni, S.C.L., Williams, S.C.R., , V\u00e1\u0161a, F. and Moran, R.J. (2025), Ultra-Low-Field Paediatric MRI in Low- and Middle-Income Countries: Super-Resolution Using a Multi-Orientation U-Net. Hum Brain Mapp, 46: e70112. https://doi.org/10.1002/hbm.70112",
   "command": "bash /flywheel/v0/start.sh",
-  "config": {},
+  "config": {
+    "phase": {
+      "type": "string",
+      "default": "test",
+      "description": "Test phase"
+    },
+    "which_epoch": {
+      "type": "string",
+      "default": "latest",
+      "description": "Which epoch to load"
+    },
+    "stride_inplane": {
+      "type": "integer",
+      "default": 32,
+      "description": "Stride size in 2D plane"
+    },
+    "stride_layer": {
+      "type": "integer",
+      "default": 32,
+      "description": "Stride size in z direction"
+    }
+  },
   "custom": {
     "analysis-level": "participant",
     "flywheel": {
       "classification": {
-        "components": [
-        ],
+        "components": [],
         "keywords": [
           "super-resolution",
           "volume",
@@ -32,8 +52,7 @@
       "anat"
     ],
     "license": {
-      "dependencies": [
-      ],
+      "dependencies": [],
       "main": {
         "name": "",
         "url": ""
@@ -46,7 +65,11 @@
     "FLYWHEEL": "/flywheel/v0",
     "LANG": "C.UTF-8",
     "PWD": "/flywheel/v0",
-    "OS": "Linux"
+    "OS": "Linux",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "PYTHON_SHA256": "2a9920c7a0cd236de33644ed980a13cbbc21058bfdc528febb6081575ed73be3",
+    "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PYTHON_VERSION": "3.11.11"
   },
   "inputs": {
     "api-key": {
@@ -57,26 +80,6 @@
       "base": "file",
       "description": "input file (usually axial or isotropic reconstruction)",
       "optional": false
-    },
-    "phase": {
-      "type": "string",
-      "default": "test",
-      "description": "Test phase"
-    },
-    "which_epoch": {
-      "type": "string",
-      "default": "latest",
-      "description": "Which epoch to load"
-    },
-    "stride_inplane": {
-      "type": "integer",
-      "default": 32,
-      "description": "Stride size in 2D plane"
-    },
-    "stride_layer": {
-      "type": "integer",
-      "default": 32,
-      "description": "Stride size in z direction"
     }
   },
   "label": "GAMBAS:",
