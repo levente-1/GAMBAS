@@ -57,6 +57,26 @@
       "base": "file",
       "description": "input file (usually axial or isotropic reconstruction)",
       "optional": false
+    },
+    "phase": {
+      "type": "string",
+      "default": "test",
+      "description": "Test phase"
+    },
+    "which_epoch": {
+      "type": "string",
+      "default": "latest",
+      "description": "Which epoch to load"
+    },
+    "stride_inplane": {
+      "type": "integer",
+      "default": 32,
+      "description": "Stride size in 2D plane"
+    },
+    "stride_layer": {
+      "type": "integer",
+      "default": 32,
+      "description": "Stride size in z direction"
     }
   },
   "label": "GAMBAS:",

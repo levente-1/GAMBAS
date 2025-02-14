@@ -14,5 +14,6 @@ license.txt
 interactive-run.py
 
 # large project files
-app/templates
+app/latest_net_G.pth
+app/TemplateKhula.nii
 venv/
