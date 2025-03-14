@@ -50,7 +50,7 @@ class ResViTOneModel(BaseModel):
             parser.add_argument('--vit_name', type=str, default='Res-ViT-B_16',help='vit type')
             parser.add_argument('--imageSize', type=int, default=256, help='size of largest axis from input 3D volume (if all equal, then this is the size of all axes)')
             parser.add_argument('--pre_trained_resnet', type=int, default=1,help='Pre-trained residual CNNs or not')
-            parser.add_argument('--pre_trained_path', type=str, default='/media/hdd/levibaljer/ResViT/checkpoints/res_cnn_256/200_net_G.pth', help='path to the pre-trained resnet architecture')
+            parser.add_argument('--pre_trained_path', type=str, default='/media/hdd/levibaljer/ResViT/checkpoints/res_cnn_fold2/700_net_G.pth', help='path to the pre-trained resnet architecture')
             parser.add_argument('--pre_trained_transformer', type=int, default=1,help='Pre-trained ViT or not')
 
         return parser

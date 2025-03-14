@@ -154,14 +154,12 @@ if __name__ == "__main__":
 
     print(list_images)
 
-    #reference_image = list_labels[0]    # setting a reference image to have all data in the same coordinate system
-    # reference_image = '/media/hdd/levibaljer/KhulaTrial/DolphinTemplate.nii'
-    reference_image = '/media/hdd/levibaljer/Hype/mni_icbm152_nlin_sym_09c/mni_icbm152_t2_tal_nlin_sym_09c.nii'
+    #reference_image = list_labels[0]  # setting reference image as the first image in the list
+    reference_image = 'Your reference image path here'  # setting a custom reference image
     reference_image = sitk.ReadImage(reference_image)
     # reference_image = resample_sitk_image(reference_image, spacing=args.resolution, interpolator='linear')
 
-    # data_dir = '/media/hdd/levibaljer/KhulaTrial'
-    data_dir = '/media/hdd/levibaljer/Hype'
+    data_dir = 'Your data directory here' 
 
     if not os.path.isdir(os.path.join(data_dir, 'train')):
         os.mkdir(os.path.join(data_dir, 'train'))
@@ -194,7 +192,6 @@ if __name__ == "__main__":
         image = resample_sitk_image(image, spacing=args.resolution, interpolator='linear')
         label = resample_sitk_image(label, spacing=args.resolution, interpolator='linear')
 
-        # This part is commented out on original script
         # image = Align(image, reference_image)
         # label = Align(label, reference_image)
 

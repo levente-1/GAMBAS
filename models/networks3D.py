@@ -153,7 +153,7 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
             vis=False
         )
     elif netG == "swin_unetr":
-        net = SwinUNETR(img_size=(128,128,128), in_channels=1, out_channels=1, use_v2=True)
+        net = SwinUNETR(img_size=(128,128,128), in_channels=1, out_channels=1, feature_size = 48, use_v2=True)
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % netG)
 
