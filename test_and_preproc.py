@@ -10,6 +10,49 @@ from torch.autograd import Variable
 from tqdm import tqdm
 import datetime
 
+def Registration(image, label):
+
+    image, image_sobel, label, label_sobel,  = image, image, label, label
+
+    Gaus = sitk.GradientMagnitudeRecursiveGaussianImageFilter()
+    image_sobel = Gaus.Execute(image_sobel)
+    label_sobel = Gaus.Execute(label_sobel)
+
+    fixed_image = label_sobel
+    moving_image = image_sobel
+
+    initial_transform = sitk.CenteredTransformInitializer(fixed_image,
+                                                          moving_image,
+                                                          sitk.Euler3DTransform(),
+                                                          sitk.CenteredTransformInitializerFilter.GEOMETRY)
+
+    registration_method = sitk.ImageRegistrationMethod()
+    # Similarity metric settings.
+    registration_method.SetMetricAsMattesMutualInformation(numberOfHistogramBins=50)
+    registration_method.SetMetricSamplingStrategy(registration_method.RANDOM)
+    registration_method.SetMetricSamplingPercentage(0.1)
+    registration_method.SetInterpolator(sitk.sitkLinear)
+    # Optimizer settings.
+    registration_method.SetOptimizerAsGradientDescent(learningRate=1.0, numberOfIterations=100,
+                                                      convergenceMinimumValue=1e-6, convergenceWindowSize=10)
+    registration_method.SetOptimizerScalesFromPhysicalShift()
+
+    # Setup for the multi-resolution framework.
+    registration_method.SetShrinkFactorsPerLevel(shrinkFactors=[4, 2, 1])
+    registration_method.SetSmoothingSigmasPerLevel(smoothingSigmas=[2, 1, 0])
+    registration_method.SmoothingSigmasAreSpecifiedInPhysicalUnitsOn()
+
+    # Don't optimize in-place, we would possibly like to run this cell multiple times.
+    registration_method.SetInitialTransform(initial_transform, inPlace=False)
+
+    final_transform = registration_method.Execute(sitk.Cast(fixed_image, sitk.sitkFloat32),
+                                                  sitk.Cast(moving_image, sitk.sitkFloat32))
+
+    image = sitk.Resample(image, fixed_image, final_transform, sitk.sitkLinear, 0.0,
+                                     moving_image.GetPixelID())
+
+    return image, label
+
 def from_numpy_to_itk(image_np, image_itk):
     image_np = np.transpose(image_np, (2, 1, 0))
     image = sitk.GetImageFromArray(image_np)
@@ -73,7 +116,7 @@ def inference(model, image_path, result_path, resample, resolution, patch_size_x
     # keeping track on how much padding will be performed before the inference
     image_array = sitk.GetArrayFromImage(sample['image'])
     pad_x = patch_size_x - (patch_size_x - image_array.shape[2])
-    pad_y = patch_size_x - (patch_size_y - image_array.shape[1])
+    pad_y = patch_size_y - (patch_size_y - image_array.shape[1])
     pad_z = patch_size_z - (patch_size_z - image_array.shape[0])
 
     image_pre_pad = sample['image']
@@ -209,11 +252,20 @@ def inference(model, image_path, result_path, resample, resolution, patch_size_x
 
 if __name__ == '__main__':
 
+    referencePath = "/media/hdd/levibaljer/KhulaFinal/TemplateKhula.nii"
+    outPath = "/media/hdd/levibaljer/KhulaFinal/output.nii.gz"
+
     opt = TestOptions().parse()
+
+    image = sitk.ReadImage(opt.image)
+    reference = sitk.ReadImage(referencePath)
+
+    image, reference = Registration(image, reference)
+    sitk.WriteImage(image, outPath)
 
     model = create_model(opt)
     model.setup(opt)
 
-    inference(model, opt.image, opt.result, opt.resample, opt.new_resolution, opt.patch_size[0],
+    inference(model, outPath, opt.result, opt.resample, opt.new_resolution, opt.patch_size[0],
               opt.patch_size[1], opt.patch_size[2], opt.stride_inplane, opt.stride_layer, 1)
 

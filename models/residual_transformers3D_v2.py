@@ -121,8 +121,9 @@ class Embeddings(nn.Module):
         grid_size = config.patches["grid"]
         patch_size = (img_size[0] // 16 // grid_size[0], img_size[1] // 16 // grid_size[1])
         patch_size_real = (patch_size[0] * 16, patch_size[1] * 16)
-        n_patches = (img_size[0] // patch_size_real[0]) * (img_size[1] // patch_size_real[1])
-        in_channels = 1024
+        # n_patches = (img_size[0] // patch_size_real[0]) * (img_size[1] // patch_size_real[1])
+        n_patches = 256 * 2 # This is really more of a hyperparameter
+        in_channels = 1024 
         #Learnable patch embeddings
         self.patch_embeddings = Conv2d(in_channels=in_channels,
                                        out_channels=config.hidden_size,
@@ -134,7 +135,8 @@ class Embeddings(nn.Module):
 
 
     def forward(self, x):
-        x = self.patch_embeddings(x)
+        depthEmbedding = DepthDistributed(self.patch_embeddings)
+        x = depthEmbedding(x)
         x = x.flatten(2) # Check if this dimension needs to be altered; currently changes shape from (B, C, H, W) to (B, C, H*W)
         x = x.transpose(-1, -2)
         embeddings = x + self.positional_encoding
@@ -242,14 +244,14 @@ class ResnetBlock(nn.Module):
         p = 0
         #use_dropout= use_dropo
         if padding_type == 'reflect':
-            conv_block += [nn.ReflectionPad2d(1)]
+            conv_block += [nn.ReflectionPad3d(1)]
         elif padding_type == 'replicate':
-            conv_block += [nn.ReplicationPad2d(1)]
+            conv_block += [nn.ReplicationPad3d(1)]
         elif padding_type == 'zero':
             p = 1
         else:
             raise NotImplementedError('padding [%s] is not implemented' % padding_type)
-        conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias),
+        conv_block += [nn.Conv3d(dim, dim, kernel_size=3, padding=p, bias=use_bias),
                        norm_layer(dim),
                        nn.ReLU(True)]
         if use_dropout:
@@ -257,14 +259,14 @@ class ResnetBlock(nn.Module):
 
         p = 0
         if padding_type == 'reflect':
-            conv_block += [nn.ReflectionPad2d(1)]
+            conv_block += [nn.ReflectionPad3d(1)]
         elif padding_type == 'replicate':
-            conv_block += [nn.ReplicationPad2d(1)]
+            conv_block += [nn.ReplicationPad3d(1)]
         elif padding_type == 'zero':
             p = 1
         else:
             raise NotImplementedError('padding [%s] is not implemented' % padding_type)
-        conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias),
+        conv_block += [nn.Conv3d(dim, dim, kernel_size=3, padding=p, bias=use_bias),
                        norm_layer(dim)]
 
         
@@ -281,16 +283,16 @@ class ART_block(nn.Module):
         self.config = config
         ngf = 64
         mult = 4
-        use_bias = False
-        norm_layer = nn.BatchNorm2d
-        padding_type = 'reflect'
+        use_bias = True
+        norm_layer = nn.InstanceNorm3d
+        padding_type = 'replicate'
         if self.transformer:
             # Downsample
-            model = [nn.Conv2d(ngf * 4, ngf * 8, kernel_size=3,
+            model = [nn.Conv3d(ngf * 4, ngf * 8, kernel_size=3,
                                stride=2, padding=1, bias=use_bias),
                      norm_layer(ngf * 8),
                      nn.ReLU(True)]
-            model += [nn.Conv2d(ngf * 8, 1024, kernel_size=3,
+            model += [nn.Conv3d(ngf * 8, 1024, kernel_size=3,
                                 stride=2, padding=1, bias=use_bias),
                       norm_layer(1024),
                       nn.ReLU(True)]
@@ -298,13 +300,13 @@ class ART_block(nn.Module):
             #Patch embedings
             self.embeddings = Embeddings(config, img_size=img_size, input_dim=input_dim)
             # Upsampling block
-            model = [nn.ConvTranspose2d(self.config.hidden_size, ngf * 8,
+            model = [nn.ConvTranspose3d(self.config.hidden_size, ngf * 8,
                                         kernel_size=3, stride=2,
                                         padding=1, output_padding=1,
                                         bias=use_bias),
                      norm_layer(ngf * 8),
                      nn.ReLU(True)]
-            model += [nn.ConvTranspose2d(ngf * 8, ngf * 4,
+            model += [nn.ConvTranspose3d(ngf * 8, ngf * 4,
                                          kernel_size=3, stride=2,
                                          padding=1, output_padding=1,
                                          bias=use_bias),
@@ -314,7 +316,7 @@ class ART_block(nn.Module):
             #Channel compression
             self.cc = channel_compression(ngf * 8, ngf * 4)
         # Residual CNN
-        model = [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=False,
+        model = [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=nn.InstanceNorm3d, use_dropout=False,
                              use_bias=use_bias)]
         setattr(self, 'residual_cnn', nn.Sequential(*model))
 
@@ -327,20 +329,19 @@ class ART_block(nn.Module):
             # feed to transformer
             transformer_out, attn_weights = self.transformer(embedding_output)
             B, n_patch, hidden = transformer_out.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
-            h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
+            h, w = int(np.sqrt(n_patch/2)), int(np.sqrt(n_patch/2))
             transformer_out = transformer_out.permute(0, 2, 1)
-            transformer_out = transformer_out.contiguous().view(B, hidden, h, w)
-            # upsample transformer output
+            transformer_out = transformer_out.contiguous().view(B, hidden, 2, h, w)
+            # upsample output
             transformer_out = self.upsample(transformer_out)
             # concat transformer output and resnet output
             x = torch.cat([transformer_out, x], dim=1)
             # channel compression
-            print(x.shape)
             x = self.cc(x)
-            print(x.shape)
         # residual CNN
         x = self.residual_cnn(x)
         return x
+
 
 ########Generator############
 class ResViT(nn.Module):
@@ -350,21 +351,15 @@ class ResViT(nn.Module):
         self.config = config
         output_nc = output_dim
         ngf = 64
-        use_bias = False
+        use_bias = True
         # norm_layer = nn.BatchNorm2d # switch to instance or groupNorm in 3D
         norm_layer = nn.InstanceNorm3d
-        padding_type = 'reflect'
+        padding_type = 'replicate'
         mult = 4
 
         ############################################################################################
         # Layer1-Encoder1
-        # model = [nn.ReflectionPad2d(3),
-        #          nn.Conv2d(input_dim, ngf, kernel_size=7, padding=0,
-        #                    bias=use_bias),
-        #          norm_layer(ngf),
-        #          nn.ReLU(True)]
-        
-        model = [nn.ReflectionPad3d(3),
+        model = [nn.ReplicationPad3d(3),
                  nn.Conv3d(input_dim, ngf, kernel_size=7, padding=0,
                            bias=use_bias),
                  norm_layer(ngf),
@@ -377,10 +372,6 @@ class ResViT(nn.Module):
         model = []
         i = 0
         mult = 2 ** i
-        # model = [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3,
-        #                    stride=2, padding=1, bias=use_bias),
-        #          norm_layer(ngf * mult * 2),
-        #          nn.ReLU(True)]
         
         model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3,
                            stride=2, padding=1, bias=use_bias),
@@ -393,10 +384,7 @@ class ResViT(nn.Module):
         model = []
         i = 1
         mult = 2 ** i
-        # model = [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3,
-        #                    stride=2, padding=1, bias=use_bias),
-        #          norm_layer(ngf * mult * 2),
-        #          nn.ReLU(True)]
+    
         model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3,
                            stride=2, padding=1, bias=use_bias),
                  norm_layer(ngf * mult * 2),
@@ -419,7 +407,7 @@ class ResViT(nn.Module):
         i = 0
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
                                     kernel_size=3, stride=2,
                                     padding=1, output_padding=1,
                                     bias=use_bias),
@@ -431,7 +419,7 @@ class ResViT(nn.Module):
         i = 1
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
                                     kernel_size=3, stride=2,
                                     padding=1, output_padding=1,
                                     bias=use_bias),
@@ -441,12 +429,12 @@ class ResViT(nn.Module):
         ############################################################################################
         # Layer15-Decoder3
         model = []
-        model = [nn.ReflectionPad2d(3)]
-        model += [nn.Conv2d(ngf, output_dim, kernel_size=7, padding=0)]
+        model = [nn.ReplicationPad3d(3)]
+        model += [nn.Conv3d(ngf, output_dim, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
         setattr(self, 'decoder_3', nn.Sequential(*model))
 
-    ############################################################################################
+    ################################################################################################
         
     def forward(self, x):
         # Pass input through cnn encoder of ResViT
@@ -487,7 +475,7 @@ class ResViT(nn.Module):
             self.transformer_encoder.encoder_norm.bias.copy_(np2th(weights["Transformer/encoder_norm/bias"]))
 
             posemb = np2th(weights["Transformer/posembed_input/pos_embedding"])
-
+            print('PRETRAINED WEIGHTS SIZE: ' + str(posemb.size()))
             posemb_new = self.art_1.embeddings.positional_encoding
             if posemb.size() == posemb_new.size():
                 self.art_1.embeddings.positional_encoding.copy_(posemb)
@@ -499,12 +487,20 @@ class ResViT(nn.Module):
                 ntok_new = posemb_new.size(1)
                 _, posemb_grid = posemb[:, :1], posemb[0, 1:]
                 gs_old = int(np.sqrt(len(posemb_grid)))
-                gs_new = int(np.sqrt(ntok_new))
-                print('load_pretrained: grid-size from %s to %s' % (gs_old, gs_new))
+                # gs_new = int(np.sqrt(ntok_new))
+                if not isinstance(np.sqrt(ntok_new), int):
+                    gs_new_1, gs_new_2 = calc_closest_factors(ntok_new)
+                else:
+                    gs_new_1 = int(np.sqrt(ntok_new))
+                    gs_new_2 = gs_new_1
+                print('load_pretrained: grid-size from (%s,%s) to (%s,%s)' % (gs_old, gs_old, gs_new_1, gs_new_2))
                 posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
-                zoom = (gs_new / gs_old, gs_new / gs_old, 1)
+                zoom = (gs_new_1 / gs_old, gs_new_2 / gs_old, 1)
+                print(zoom)
                 posemb_grid = ndimage.zoom(posemb_grid, zoom, order=1)  # th2np
-                posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
+                print(posemb_grid.shape)
+                posemb_grid = posemb_grid.reshape(1, gs_new_1 * gs_new_2, -1)
+                print(posemb_grid.shape)
                 posemb = posemb_grid
                 self.art_1.embeddings.positional_encoding.copy_(np2th(posemb))
 
@@ -521,12 +517,16 @@ class ResViT(nn.Module):
                 ntok_new = posemb_new.size(1)
                 _, posemb_grid = posemb[:, :1], posemb[0, 1:]
                 gs_old = int(np.sqrt(len(posemb_grid)))
-                gs_new = int(np.sqrt(ntok_new))
-                print('load_pretrained: grid-size from %s to %s' % (gs_old, gs_new))
+                if not isinstance(np.sqrt(ntok_new), int):
+                    gs_new_1, gs_new_2 = calc_closest_factors(ntok_new)
+                else:
+                    gs_new_1 = int(np.sqrt(ntok_new))
+                    gs_new_2 = gs_new_1
+                print('load_pretrained: grid-size from (%s,%s) to (%s,%s)' % (gs_old, gs_old, gs_new_1, gs_new_2))
                 posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
-                zoom = (gs_new / gs_old, gs_new / gs_old, 1)
+                zoom = (gs_new_1 / gs_old, gs_new_2 / gs_old, 1)
                 posemb_grid = ndimage.zoom(posemb_grid, zoom, order=1)  # th2np
-                posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
+                posemb_grid = posemb_grid.reshape(1, gs_new_1 * gs_new_2, -1)
                 posemb = posemb_grid
                 self.art_6.embeddings.positional_encoding.copy_(np2th(posemb))
 
@@ -542,15 +542,15 @@ class Res_CNN(nn.Module):
         self.config = config
         output_nc = output_dim
         ngf = 64
-        use_bias = False
-        norm_layer = nn.BatchNorm2d
-        padding_type = 'reflect'
+        use_bias = True
+        norm_layer = nn.InstanceNorm3d
+        padding_type = 'replication'
         mult = 4
 
         ############################################################################################
         # Layer1-Encoder1
-        model = [nn.ReflectionPad2d(3),
-                 nn.Conv2d(input_dim, ngf, kernel_size=7, padding=0,
+        model = [nn.ReplicationPad3d(3),
+                 nn.Conv3d(input_dim, ngf, kernel_size=7, padding=0,
                            bias=use_bias),
                  norm_layer(ngf),
                  nn.ReLU(True)]
@@ -561,7 +561,7 @@ class Res_CNN(nn.Module):
         model = []
         i = 0
         mult = 2 ** i
-        model = [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3,
+        model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3,
                            stride=2, padding=1, bias=use_bias),
                  norm_layer(ngf * mult * 2),
                  nn.ReLU(True)]
@@ -571,7 +571,7 @@ class Res_CNN(nn.Module):
         model = []
         i = 1
         mult = 2 ** i
-        model = [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3,
+        model = [nn.Conv3d(ngf * mult, ngf * mult * 2, kernel_size=3,
                            stride=2, padding=1, bias=use_bias),
                  norm_layer(ngf * mult * 2),
                  nn.ReLU(True)]
@@ -593,7 +593,7 @@ class Res_CNN(nn.Module):
         i = 0
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
                                     kernel_size=3, stride=2,
                                     padding=1, output_padding=1,
                                     bias=use_bias),
@@ -605,7 +605,7 @@ class Res_CNN(nn.Module):
         i = 1
         mult = 2 ** (n_downsampling - i)
         model = []
-        model = [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+        model = [nn.ConvTranspose3d(ngf * mult, int(ngf * mult / 2),
                                     kernel_size=3, stride=2,
                                     padding=1, output_padding=1,
                                     bias=use_bias),
@@ -615,8 +615,8 @@ class Res_CNN(nn.Module):
         ############################################################################################
         # Layer15-Decoder3
         model = []
-        model = [nn.ReflectionPad2d(3)]
-        model += [nn.Conv2d(ngf, output_dim, kernel_size=7, padding=0)]
+        model = [nn.ReplicationPad3d(3)]
+        model += [nn.Conv3d(ngf, output_dim, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
         setattr(self, 'decoder_3', nn.Sequential(*model))
 
@@ -643,9 +643,6 @@ class Res_CNN(nn.Module):
         x = self.decoder_3(x)
         return x
 
-
-
-
 class channel_compression(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         """
@@ -660,28 +657,67 @@ class channel_compression(nn.Module):
 
         if stride != 1 or in_channels != out_channels:
           self.skip = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, bias=False),
-            nn.BatchNorm2d(out_channels))
+            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, bias=True),
+            nn.InstanceNorm3d(out_channels))
         else:
           self.skip = None
 
         self.block = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=False),
-            nn.BatchNorm2d(out_channels),
+            nn.Conv3d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=True),
+            nn.InstanceNorm3d(out_channels),
             nn.ReLU(),
-            nn.Conv2d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=False),
-            nn.BatchNorm2d(out_channels))
+            nn.Conv3d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, padding=1, stride=1, bias=True),
+            nn.InstanceNorm3d(out_channels))
 
     def forward(self, x):
         out = self.block(x)
         out += (x if self.skip is None else self.skip(x))
         out = F.relu(out)
         return out
+
+class DepthDistributed(nn.Module):
+    def __init__(self, module):        
+        super(DepthDistributed, self).__init__()
+        self.module = module
+ 
+    def forward(self, x):
+ 
+        batch_size, channels, depth, H, W = x.size()
+        output = torch.tensor([]).to('cuda:0')
+        for i in range(depth):
+          output_t = self.module(x[:, :, i, :, :])
+          output_t  = output_t.unsqueeze(2)
+          output = torch.cat((output, output_t ), 2)
+
+        return output
+
+# Function below is used to load weights for position embeddings
+def calc_closest_factors(c: int):
+    """Calculate the closest two factors of c.
+    
+    Returns:
+      [int, int]: The two factors of c that are closest; in other words, the
+        closest two integers for which a*b=c. If c is a perfect square, the
+        result will be [sqrt(c), sqrt(c)]; if c is a prime number, the result
+        will be [1, c]. The first number will always be the smallest, if they
+        are not equal.
+
+    """    
+    if c//1 != c:
+        raise TypeError("c must be an integer.")
+
+    a, b, i = 1, c, 0
+    while a < b:
+        i += 1
+        if c % i == 0:
+            a = i
+            b = c//a
+    
+    return [b, a]
+
 CONFIGS = {
     'ViT-B_16': configs.get_b16_config(),
     'ViT-L_16': configs.get_l16_config(),
     'Res-ViT-B_16': configs.get_resvit_b16_config(), # This one is used by the authors
     'Res-ViT-L_16': configs.get_resvit_l16_config(),
 }
-
-

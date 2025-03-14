@@ -379,20 +379,32 @@ class MambaLayer(nn.Module):
         super().__init__()
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
+        # self.norm2 = nn.LayerNorm(dim*2)
         # self.mamba = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
         self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
         self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
 
+        # self.downsample = nn.Sequential(nn.Conv3d(64 * 4, 64 * 8, kernel_size=3, stride=2, padding=1, bias=True), 
+        #                                 nn.InstanceNorm3d(64 * 8), nn.ReLU(True))
+
+        # self.upsample = nn.Sequential(nn.ConvTranspose3d(64 * 8, 64 * 4, kernel_size=3, stride=2, padding=1, output_padding=1, bias=True), 
+        #                                 nn.InstanceNorm3d(64 * 4), nn.ReLU(True))
+
         self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
-        # self.conv1d = nn.Conv3d(in_channels=1024, out_channels=512, kernel_size=1)
         self.generator = gilbert3d(32, 32, 32) # Before it was 64, 64, 8 (better one is 32, 32, 32)
         self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1) # Before it was 64, 64, 8
         self.degilbert_indices = torch.argsort(self.gilbert_indices)
         self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
         self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
+
+        # self.generator_downsampled = gilbert3d(16, 16, 16)
+        # self.gilbert_indices_downsampled = generate_gilbert_indices_3D(16, 16, 16, self.generator_downsampled).expand(-1, dim*2, -1).permute(0, 2, 1)
+        # self.gilbert_r_indices = torch.flip(self.gilbert_indices_downsampled, dims=[2])
+        # self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
     
     def forward(self, x):
         B, C, D, H, W = x.shape
+        # C_2, D_2, H_2, W_2 = int(C*2), int(D/2), int(H/2), int(W/2)
 
         # Check model dimension
         assert C == self.dim
@@ -401,7 +413,7 @@ class MambaLayer(nn.Module):
         # x1 = x.float().view(B, C, -1).permute(0, 2, 1)
         # x2 = torch.flip(x1, dims=[1])
 
-        # # Bidirectional mamba
+        # Bidirectional mamba
         x1 = x.view(B, C, -1).permute(0, 2, 1)
         device = 'cuda:0'
         self.gilbert_indices = self.gilbert_indices.to(device)
@@ -420,14 +432,35 @@ class MambaLayer(nn.Module):
         out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
 
         # Convert output from (B, H*W, C) to (B, C, H, W)
-        out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
-        out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
 
         concatenated = torch.cat((out1, out2), dim=1)
         output = self.conv1d(concatenated)
 
-        # output = torch.mul(out1, out2)
-       
+        # x1 = x.float().view(B, C, -1).permute(0, 2, 1)
+        # x2 = self.downsample(x)
+        # x2 = x2.float().view(B, C_2, -1).permute(0, 2, 1)
+        # device = 'cuda:0'
+        # self.gilbert_indices = self.gilbert_indices.to(device)
+        # self.gilbert_r_indices = self.gilbert_r_indices.to(device)
+        # x1 = torch.gather(x1, 1, self.gilbert_indices)
+        # x2 = torch.gather(x2, 1, self.gilbert_r_indices)
+
+        # norm_out1 = self.norm(x1)
+        # mamba_out1 = self.mamba1(norm_out1)
+        # norm_out2 = self.norm2(x2)
+        # mamba_out2 = self.mamba2(norm_out2)
+
+        # self.degilbert_indices = self.degilbert_indices.to(device)
+        # self.degilbert_r_indices = self.degilbert_r_indices.to(device)
+        # out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        # out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C_2, D_2, H_2, W_2)
+        # out2 = self.upsample(out2)
+
+        # concatenated = torch.cat((out1, out2), dim=1)
+        # output = self.conv1d(concatenated)
+
         return output
 
 class cmMambaWithCNN(nn.Module):
@@ -729,8 +762,8 @@ class I2IMamba(nn.Module):
 
         # Episodic bottleneck
         # cmMamba block with residual CNN block
-        # self.bottleneck_1 = cmMambaWithCNN(self.config, input_dim)
-        self.bottleneck_1 = BottleneckCNN(self.config)
+        self.bottleneck_1 = cmMambaWithCNN(self.config, input_dim)
+        # self.bottleneck_1 = BottleneckCNN(self.config)
         
         self.bottleneck_2 = BottleneckCNN(self.config)
         # self.bottleneck_2 = cmMambaWithCNN(self.config, input_dim)
@@ -751,8 +784,8 @@ class I2IMamba(nn.Module):
         # self.bottleneck_8 = cmMambaWithCNN(self.config, input_dim)
 
         # cmMamba block with residual CNN block
-        # self.bottleneck_9 = cmMambaWithCNN(self.config, input_dim)
-        self.bottleneck_9 = BottleneckCNN(self.config)
+        self.bottleneck_9 = cmMambaWithCNN(self.config, input_dim)
+        # self.bottleneck_9 = BottleneckCNN(self.config)
 
         ############################################################################################
         # Layer13-Decoder1 - currently removed the additional in_channels (removed * 2 for first argument), taking away skip connection to here

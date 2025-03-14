@@ -10,9 +10,8 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self, parser):
-        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/Combined_data/Fold1/train', help='Train images path (paired)')
-        parser.add_argument('--data_path_2', type=str, default='/media/hdd/levibaljer/Khula_GANs/unpaired/train', help='Train images path (unpaired)')
-        parser.add_argument('--val_path', type=str, default='/media/hdd/levibaljer/Combined_data/Fold1/val', help='Validation images path')
+        parser.add_argument('--data_path', type=str, default='/media/hdd/levibaljer/Combined_data/FullData/train', help='Train images path (paired)')
+        parser.add_argument('--val_path', type=str, default='/media/hdd/levibaljer/Combined_data/FullData/val', help='Validation images path')
         parser.add_argument('--batch_size', type=int, default=1, help='input batch size')
         parser.add_argument('--patch_size', default=[128, 128, 128], help='Size of the patches extracted from the image (default is 32, 256, 256)')
         parser.add_argument('--input_nc', type=int, default=1, help='# of input image channels')
@@ -29,7 +28,7 @@ class BaseOptions():
         parser.add_argument('--netG', type=str, default='i2i_mamba', help='selects model to use for netG. Look on Networks3D to see the whole list (default is resnet_9blocks, i2i_mamba is being tested and res_cnn is benchmarked)')
 
         parser.add_argument('--gpu_ids', default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
-        parser.add_argument('--name', type=str, default='gambas_1block', help='name of the experiment. It decides where to store samples and models')
+        parser.add_argument('--name', type=str, default='gambas_full', help='name of the experiment. It decides where to store samples and models')
         parser.add_argument('--model', type=str, default='i2i_mamba_one', help='chooses which model to use: cycle_gan|pix2pix|ea_gan|resvit_one|i2i_mamba_one')
 
         parser.add_argument('--which_direction', type=str, default='AtoB', help='AtoB or BtoA (keep it AtoB)')
