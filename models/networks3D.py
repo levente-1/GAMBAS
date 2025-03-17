@@ -8,7 +8,6 @@ import random
 import functools
 from torch.optim import lr_scheduler
 import monai
-from .deprecated.ddpm_3D import Unet3D, WBlock
 from . import residual_transformers3D
 from monai.networks.nets import SwinUNETR
 
