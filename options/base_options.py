@@ -25,14 +25,14 @@ class BaseOptions():
         parser.add_argument('--ndf', type=int, default=64, help='# of discrim filters in first conv layer')
         parser.add_argument('--netD', type=str, default='n_layers', help='selects model to use for netD')
         parser.add_argument('--n_layers_D', type=int, default=3, help='only used if netD==n_layers')
-        parser.add_argument('--netG', type=str, default='i2i_mamba', help='selects model to use for netG. Look on Networks3D to see the whole list (default is resnet_9blocks, i2i_mamba is being tested and res_cnn is benchmarked)')
+        parser.add_argument('--netG', type=str, default='res_cnn', help='selects model to use for netG. Look on Networks3D to see the whole list (default is gambas)')
 
         parser.add_argument('--gpu_ids', default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
-        parser.add_argument('--name', type=str, default='gambas_full', help='name of the experiment. It decides where to store samples and models')
-        parser.add_argument('--model', type=str, default='i2i_mamba_one', help='chooses which model to use: cycle_gan|pix2pix|ea_gan|resvit_one|i2i_mamba_one')
+        parser.add_argument('--name', type=str, default='res_cnn_testing', help='name of the experiment. It decides where to store samples and models')
+        parser.add_argument('--model', type=str, default='gambas', help='chooses which model to use: cycle_gan|pix2pix|ea_gan|resvit|gambas')
 
         parser.add_argument('--which_direction', type=str, default='AtoB', help='AtoB or BtoA (keep it AtoB)')
-        parser.add_argument('--checkpoints_dir', type=str, default='/media/hdd/levibaljer/I2I_mamba/checkpoints', help='models are saved here')
+        parser.add_argument('--checkpoints_dir', type=str, default='/media/hdd/levibaljer/GAMBAS/checkpoints', help='models are saved here')
         parser.add_argument('--workers', default=8, type=int, help='number of data loading workers')
         parser.add_argument('--norm', type=str, default='instance', help='instance normalization or batch normalization')
 

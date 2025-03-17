@@ -21,7 +21,6 @@ from mamba_ssm import Mamba
 
 logger = logging.getLogger(__name__)
 
-# Define a resnet block
 class ResnetBlock(nn.Module):
     def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias,dim2=None):
         super(ResnetBlock, self).__init__()
@@ -64,11 +63,9 @@ class ResnetBlock(nn.Module):
         out = x + self.conv_block(x)
         return out
 
-# Mamba version
 class BottleneckCNN(nn.Module):
-    def __init__(self, config):
+    def __init__(self):
         super(BottleneckCNN, self).__init__()
-        self.config = config
         use_bias = True
         norm_layer = nn.InstanceNorm3d
         padding_type = 'replicate'
@@ -135,8 +132,8 @@ class MambaLayer(nn.Module):
 
         return output
 
-class cmMambaWithCNN(nn.Module):
-    """ Channel-mixed Mamba (cmMamba) block with residual CNN block
+class ccMambaWithCNN(nn.Module):
+    """ Channel-compressed Mamba (ccMamba) block with residual CNN block
 
     Args:
         config (dict): Model configuration.
@@ -151,14 +148,13 @@ class cmMambaWithCNN(nn.Module):
         img_size (int): Image size.
     
     """
-    def __init__(self, config, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=True):
+    def __init__(self, in_channels, d_state=16, d_conv=4, expand=2, ngf=64, norm_layer=nn.BatchNorm2d, use_bias=True):
         super().__init__()
         # Mamba block
         self.mamba_layer = MambaLayer(
             dim=in_channels, d_state=d_state, d_conv=d_conv, expand=expand
         )
 
-        self.config = config
         ngf = 64
         padding_type = 'replicate'
         use_bias = True
@@ -187,9 +183,9 @@ class cmMambaWithCNN(nn.Module):
 
 ########Generator############
 class GAMBAS(nn.Module):
-    def __init__(self, config, input_dim, img_size=224, output_dim=3, vis=False):
-        super(I2IMamba, self).__init__()
-        self.config = config
+    def __init__(self, input_dim, img_size=224, output_dim=3):
+        super(GAMBAS, self).__init__()
+        # self.config = config
         output_nc = output_dim
         ngf = 64
         use_bias = True
@@ -235,22 +231,22 @@ class GAMBAS(nn.Module):
         img_size = 256 
         input_dim = 256 # Adjust this according to new input dimension
 
-        # cmMamba block with residual CNN block
-        self.bottleneck_1 = cmMambaWithCNN(self.config, input_dim)
+        # ccMamba block with residual CNN block
+        self.bottleneck_1 = ccMambaWithCNN(input_dim)
         
-        self.bottleneck_2 = BottleneckCNN(self.config)
-        self.bottleneck_3 = BottleneckCNN(self.config)
-        self.bottleneck_4 = BottleneckCNN(self.config)
+        self.bottleneck_2 = BottleneckCNN()
+        self.bottleneck_3 = BottleneckCNN()
+        self.bottleneck_4 = BottleneckCNN()
 
-        # cmMamba block with residual CNN block
-        self.bottleneck_5 = cmMambaWithCNN(self.config, input_dim)
+        # ccMamba block with residual CNN block
+        self.bottleneck_5 = ccMambaWithCNN(input_dim)
         
-        self.bottleneck_6 = BottleneckCNN(self.config)
-        self.bottleneck_7 = BottleneckCNN(self.config)
-        self.bottleneck_8 = BottleneckCNN(self.config)
+        self.bottleneck_6 = BottleneckCNN()
+        self.bottleneck_7 = BottleneckCNN()
+        self.bottleneck_8 = BottleneckCNN()
 
-        # cmMamba block with residual CNN block
-        self.bottleneck_9 = cmMambaWithCNN(self.config, input_dim)
+        # ccMamba block with residual CNN block
+        self.bottleneck_9 = ccMambaWithCNN(input_dim)
 
         ############################################################################################
         # Layer13-Decoder1

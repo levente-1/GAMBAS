@@ -38,9 +38,9 @@ class ImagePool():
         return return_images
 
 
-class I2IMambaOneModel(BaseModel):
+class GambasModel(BaseModel):
     def name(self):
-        return "I2IMambaOneModel"
+        return "GambasModel"
 
     @staticmethod
     def modify_commandline_options(parser, is_train=True):
@@ -52,13 +52,7 @@ class I2IMambaOneModel(BaseModel):
             parser.add_argument('--lambda_adv', type=float, default=1.0, help='weight for adversarial loss')
             parser.add_argument('--vit_name', type=str, default='Res-ViT-B_16',help='vit type')
             parser.add_argument('--imageSize', type=int, default=256, help='size of largest axis from input 3D volume (if all equal, then this is the size of all axes)')
-            parser.add_argument('--pre_trained_resnet', type=int, default=0,help='Pre-trained residual CNNs or not')
-            parser.add_argument('--pre_trained_path', type=str, default='/media/hdd/levibaljer/ResViT/checkpoints/khula_Res_CNN/latest_net_G.pth', help='path to the pre-trained resnet architecture')
-            parser.add_argument('--pre_trained_transformer', type=int, default=0,help='Pre-trained ViT or not')
             parser.add_argument('--lambda_perc', type=float, default=1.0, help='weight for perceptual loss')
-            # parser.add_argument('--lambda_L1', type=float, default=300.0, help='weight for L1 loss') # According to paper, this is fixed at 300
-            # parser.add_argument('--lambda_sobel', type=float, default=100.0, help='lambda for sobel l1 loss') # Sobel starts at 0, linearly increases in first 15% of epochs, then stays at 100
-            # parser.add_argument('--rise_sobelLoss', action='store_true', help='indicate to rise sobel lambda')
 
         return parser
 
@@ -81,13 +75,19 @@ class I2IMambaOneModel(BaseModel):
 
 
         # load/define networks
+        # self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm, 
+        #                                 not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids,
+        #                               **{'vit_name': opt.vit_name, 
+        #                                  'img_size': (opt.imageSize, opt.imageSize), 
+        #                                  'pre_trained_resnet': opt.pre_trained_resnet, 
+        #                                  'pre_trained_path': opt.pre_trained_path,
+        #                                  'pre_trained_transformer': opt.pre_trained_transformer
+        #                                  }
+        #                               )
+        
         self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm, 
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids,
-                                      **{'vit_name': opt.vit_name, 
-                                         'img_size': (opt.imageSize, opt.imageSize), 
-                                         'pre_trained_resnet': opt.pre_trained_resnet, 
-                                         'pre_trained_path': opt.pre_trained_path,
-                                         'pre_trained_transformer': opt.pre_trained_transformer
+                                      **{'img_size': (opt.imageSize, opt.imageSize), 
                                          }
                                       )
 
