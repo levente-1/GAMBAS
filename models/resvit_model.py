@@ -35,9 +35,9 @@ class ImagePool():
         return_images = torch.cat(return_images, 0)
         return return_images
 
-class ResViTOneModel(BaseModel):
+class ResViTModel(BaseModel):
     def name(self):
-        return 'ResViTOneModel'
+        return 'ResViTModel'
     
     @staticmethod
     def modify_commandline_options(parser, is_train=True):

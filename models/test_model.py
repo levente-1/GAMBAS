@@ -3,9 +3,9 @@ from . import networks3D
 from .cycle_gan_model import CycleGANModel
 from .pix2pix_model import Pix2PixModel
 from .ea_gan_model import EaGANModel
-from .deprecated.pup_gan_model import PUPGANModel
-from .deprecated.atme_model import ATMEModel
-from .resvit_one_model import ResViTOneModel
+from .resvit_model import ResViTModel
+# from .i2i_mamba_model import I2IMambaModel
+from .i2i_mamba_one_model import I2IMambaOneModel
 import torch
 
 
@@ -17,7 +17,7 @@ class TestModel(BaseModel):
     def modify_commandline_options(parser, is_train=True):
         assert not is_train, 'TestModel cannot be used in train mode'
         # parser = EaGANModel.modify_commandline_options(parser, is_train=False)
-        parser = ResViTOneModel.modify_commandline_options(parser, is_train=False)
+        parser = I2IMambaOneModel.modify_commandline_options(parser, is_train=False)
         parser.set_defaults(dataset_mode='single')
 
         parser.add_argument('--model_suffix', type=str, default='',
