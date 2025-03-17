@@ -1,0 +1,18 @@
+# Python stuff
+__pycache__
+
+# Mac stuff
+.DS_Store
+
+# Editor specific stuff
+.vscode
+.idea/
+
+# Confidential
+config.json
+license.txt
+interactive-run.py
+
+# large project files
+app/templates
+venv/
