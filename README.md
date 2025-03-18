@@ -16,7 +16,7 @@ Before training the model, register input images to corresponding target images 
 
  ### Training
 
-Modify "BaseOptions.py" to set directory for preprocessed training data (--data path) and validation data (--val_path). Select model that will be used for training by modifying --model (e.g. gambas, cycle_gan, pix2pix) and make sure correct patch size is specified via --patch size. Finally, set checkpoint directory (--checkpoints_dir) and project name (--name).
+Modify "BaseOptions.py" to set directory for preprocessed training data (--data path) and validation data (--val_path). Select model that will be used for training by modifying --model (e.g. gambas, cycle_gan, ea_gan) and make sure correct patch size is specified via --patch size. Finally, set checkpoint directory (--checkpoints_dir) and project name (--name).
 
 For standard training script use train.py, however to make sure TensorBoard log is created, use train_TB.py
     
