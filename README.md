@@ -31,6 +31,6 @@ Modify "TestOptions.py" to specify input image and output name, then run "test.p
 
 ### Pre-trained model
 
-Download pretrained weights [here] (https://github.com/levente-1/GAMBAS/releases/tag/v1.0/latest_net_G.pth)
+Download pretrained weights here: https://github.com/levente-1/GAMBAS/releases/tag/v1.0/latest_net_G.pth
 
     
