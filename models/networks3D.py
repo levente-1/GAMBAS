@@ -46,6 +46,13 @@ def get_scheduler(optimizer, opt):
         scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.2, threshold=0.01, patience=5)
     elif opt.lr_policy == 'cosine':
         scheduler = lr_scheduler.CosineAnnealingLR(optimizer, T_max=opt.niter, eta_min=0)
+    elif opt.lr_policy == 'plateau_cosine':
+        def identity_rule(epoch):
+            lr_l = 1.0
+            return lr_l
+        scheduler1 = lr_scheduler.LambdaLR(optimizer, lr_lambda=identity_rule)
+        scheduler2 = lr_scheduler.CosineAnnealingLR(optimizer, T_max=opt.niter_decay, eta_min=0)
+        scheduler = lr_scheduler.SequentialLR(optimizer, [scheduler1, scheduler2], milestones=[opt.niter])
     else:
         return NotImplementedError('learning rate policy [%s] is not implemented', opt.lr_policy)
     return scheduler
@@ -100,13 +107,7 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
         net = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout)
     elif netG == 'Dynet':
         net = Dynet()
-    elif netG == 'unet_256_ddm':
-        net = Unet3D(
-            dim = kwargs['dim'], 
-            dim_mults = kwargs['dim_mults'],
-            init_dim = kwargs['init_dim'],
-            resnet_groups = kwargs['resnet_groups']
-        )
+
     elif netG == 'res_cnn':
         vit_name = kwargs['vit_name']
         img_size = kwargs['img_size']
@@ -174,10 +175,6 @@ def define_D(input_nc, ndf, netD,
     else:
         raise NotImplementedError('Discriminator model name [%s] is not recognized' % net)
     return init_net(net, init_type, init_gain, gpu_ids)
-
-
-def define_W(init_type='normal', init_gain=0.02, gpu_ids=[]):
-    return init_net(WBlock(), init_type, init_gain, gpu_ids)
 
 
 ##############################################################################

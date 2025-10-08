@@ -144,6 +144,8 @@ def inference(model, image_path, result_path, resample, resolution, patch_size_x
 
                 patch_total += 1
 
+    # print("PATCH INDICES: ", ijk_patch_indices)
+    # print("PATCH TOTAL: ", patch_total)
     batches = prepare_batch(image_np, ijk_patch_indices)
 
     for i in tqdm(range(len(batches))):
