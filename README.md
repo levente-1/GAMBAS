@@ -34,7 +34,7 @@ For standard training use train.py, or to integrate TensorBoard logging use trai
 
 ### Prediction
 
-Modify "TestOptions.py" to specify input image and output name, then run "test.py" to obtain prediction. If using our-pretrained model (see below), make sure to rigidly register input image to the template provide (Template.nii.gz). This will ensure the input image has the same size and resolution as our training data.
+Modify "TestOptions.py" to specify input image and output name, then run "test.py" to obtain prediction. If using our-pretrained model (see below), make sure to rigidly register yout input image to the template provided (Template.nii.gz). This will ensure the input image has the same size and resolution as our training data.
 
 ### Pre-trained model
 
