@@ -1,4 +1,9 @@
-# GAMBAS
+<hr>
+<h1 align="center">
+  GAMBAS <br>
+  <sub>Generalised-Hilbert Mamba for Super-resolution of Paediatric Ultra-Low-Field MRI</sub>
+</h1>
+
 
 <h3 align="center">[<a href="https://arxiv.org/abs/2504.04523">arXiv</a>]</h3>
 
