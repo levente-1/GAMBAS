@@ -1,5 +1,7 @@
 # GAMBAS
 
+<h3 align="center">[<a href="https://arxiv.org/abs/2504.04523">arXiv</a>]</h3>
+
 Official PyTorch implementation of **GAMBAS**, a Mamba infused adversarial model, leveraging a generalised-Hilbert scan to process 3D medical imaging data with state-space models (SSMs).
 
 <img src="GAMBAS_architecture.jpg" width="800px"/>
