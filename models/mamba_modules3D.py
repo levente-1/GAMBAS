@@ -94,14 +94,14 @@ class MambaLayer(nn.Module):
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
         self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
-        # self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
 
-        # self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
+        self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
         self.generator = gilbert3d(32, 32, 32)
         self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
         self.degilbert_indices = torch.argsort(self.gilbert_indices)
-        # self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
-        # self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
+        self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
+        self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
     
     def forward(self, x):
         B, C, D, H, W = x.shape
@@ -114,26 +114,24 @@ class MambaLayer(nn.Module):
         device = 'cuda:0'
         self.gilbert_indices = self.gilbert_indices.to(device)
         x1 = torch.gather(x1, 1, self.gilbert_indices)
-        # x2 = torch.flip(x1, dims=[1])
+        x2 = torch.flip(x1, dims=[1])
 
         # Pass forwad and reverse through mamba
         norm_out1 = self.norm(x1)
         mamba_out1 = self.mamba1(norm_out1)
-        # norm_out2 = self.norm(x2)
-        # mamba_out2 = self.mamba2(norm_out2)
+        norm_out2 = self.norm(x2)
+        mamba_out2 = self.mamba2(norm_out2)
 
         self.degilbert_indices = self.degilbert_indices.to(device)
-        # self.degilbert_r_indices = self.degilbert_r_indices.to(device)
+        self.degilbert_r_indices = self.degilbert_r_indices.to(device)
         out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
-        # out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
 
         # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
         # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
 
-        # concatenated = torch.cat((out1, out2), dim=1)
-        # output = self.conv1d(concatenated)
-
-        output = out1
+        concatenated = torch.cat((out1, out2), dim=1)
+        output = self.conv1d(concatenated)
 
         return output
 
@@ -237,24 +235,24 @@ class GAMBAS(nn.Module):
         input_dim = 256 # Adjust this according to new input dimension
 
         # ccMamba block with residual CNN block
-        # self.bottleneck_1 = ccMambaWithCNN(input_dim)
-        self.bottleneck_1 = BottleneckCNN()
+        self.bottleneck_1 = ccMambaWithCNN(input_dim)
+        # self.bottleneck_1 = BottleneckCNN()
         
         self.bottleneck_2 = BottleneckCNN()
         self.bottleneck_3 = BottleneckCNN()
         self.bottleneck_4 = BottleneckCNN()
 
         # ccMamba block with residual CNN block
-        # self.bottleneck_5 = ccMambaWithCNN(input_dim)
-        self.bottleneck_5 = BottleneckCNN()
+        self.bottleneck_5 = ccMambaWithCNN(input_dim)
+        # self.bottleneck_5 = BottleneckCNN()
         
         self.bottleneck_6 = BottleneckCNN()
         self.bottleneck_7 = BottleneckCNN()
         self.bottleneck_8 = BottleneckCNN()
 
         # ccMamba block with residual CNN block
-        self.bottleneck_9 = BottleneckCNN()
-        # self.bottleneck_9 = ccMambaWithCNN(input_dim)
+        # self.bottleneck_9 = BottleneckCNN()
+        self.bottleneck_9 = ccMambaWithCNN(input_dim)
 
         ############################################################################################
         # Layer13-Decoder1
