@@ -368,37 +368,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     H, W, D = args.height, args.width, args.depth
 
-    # # Spiral version
-    # spiral_indices = generate_slicewise_spiral_indices(H, W, D)
-    # column_vector = np.arange(H*W*D)
-    # matrix = np.zeros((H*H*D, H*H*D), dtype=int)
-    # matrix[column_vector, spiral_indices] = 1
-
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/spiral_eye.npy', matrix)
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/despiral_eye.npy', np.transpose(matrix))
-
-    # spiral_indices_r = spiral_indices.flip(0)
-    # matrix = np.zeros((H*H*D, H*H*D), dtype=int)
-    # matrix[column_vector, spiral_indices_r] = 1
-
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/despiral_r_eye.npy', np.transpose(matrix))
-
-    # # Hilbert/Gilbert 2D version
-    # generator = gilbert2d(H, W)
-    # hilbert_indices = generate_slicewise_hilbert_indices(H, W, D, generator)
-    # column_vector = np.arange(H*W*D)
-    # matrix = np.zeros((H*H*D, H*H*D), dtype=int)
-    # matrix[column_vector, hilbert_indices] = 1
-
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/hilbert_eye.npy', matrix)
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/dehilbert_eye.npy', np.transpose(matrix))
-
-    # hilbert_indices_r = hilbert_indices.flip(0)
-    # matrix = np.zeros((H*H*D, H*H*D), dtype=int)
-    # matrix[column_vector, hilbert_indices_r] = 1
-
-    # np.save('/media/hdd/levibaljer/I2I_Mamba/indices/dehilbert_r_eye.npy', np.transpose(matrix))
-
     # Gilbert 3D version
     generator = gilbert3d(H, W, D)
     gilbert_indices = generate_gilbert_indices_3D(H, W, D, generator)

@@ -50,9 +50,8 @@ class GambasModel(BaseModel):
             parser.add_argument('--lambda_f', type=float, default=0.9, help='momentum term for f')
             parser.add_argument('--lambda_A', type=float, default=100.0, help='lambda for sobel l1 loss')
             parser.add_argument('--lambda_adv', type=float, default=1.0, help='weight for adversarial loss')
-            parser.add_argument('--vit_name', type=str, default='Res-ViT-B_16',help='vit type')
             parser.add_argument('--imageSize', type=int, default=256, help='size of largest axis from input 3D volume (if all equal, then this is the size of all axes)')
-            parser.add_argument('--lambda_perc', type=float, default=1.0, help='weight for perceptual loss')
+            # parser.add_argument('--lambda_perc', type=float, default=1.0, help='weight for perceptual loss')
 
         return parser
 
@@ -75,22 +74,12 @@ class GambasModel(BaseModel):
 
 
         # load/define networks
-        # self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm, 
-        #                                 not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids,
-        #                               **{'vit_name': opt.vit_name, 
-        #                                  'img_size': (opt.imageSize, opt.imageSize), 
-        #                                  'pre_trained_resnet': opt.pre_trained_resnet, 
-        #                                  'pre_trained_path': opt.pre_trained_path,
-        #                                  'pre_trained_transformer': opt.pre_trained_transformer
-        #                                  }
-        #                               )
         
         self.netG = networks3D.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm, 
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids,
                                       **{'img_size': (opt.imageSize, opt.imageSize), 
                                          }
                                       )
-
         if self.isTrain:
             self.lambda_f = opt.lambda_f
             use_sigmoid = opt.no_lsgan
