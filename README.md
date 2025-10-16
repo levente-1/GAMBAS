@@ -52,4 +52,12 @@ docker run --rm \
 ghcr.io/levente-1/gambas:latest
 ```
 
+Here is a command to run:
+
+```bash
+echo "This is a test code block."
+```
+
+This text comes after the code block.
+
 Make sure your input folder contains all your input ultra-low-field images rigidly registered to our template, and saves as .nii or .nii.gz files.
