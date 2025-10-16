@@ -44,10 +44,12 @@ If using our-pretrained model, make sure to rigidly register yout input image to
 
 To run our Docker container, use the following command:
 
+```bash
 docker run --rm \
 --gpus "device=0" \
 -v "your/input/folder:/workspace/input/Testing_data" \
 -v "your/output/folder:/workspace/output/Predictions" \
 ghcr.io/levente-1/gambas:latest
+```
 
 Make sure your input folder contains all your input ultra-low-field images rigidly registered to our template, and saves as .nii or .nii.gz files.
