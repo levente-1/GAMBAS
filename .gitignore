@@ -1,5 +1,5 @@
 # Python stuff
-__pycache__
+__pycache__/
 
 # Mac stuff
 .DS_Store
