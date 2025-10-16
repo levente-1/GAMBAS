@@ -38,7 +38,7 @@ Once the model is trained, modify "TestOptions.py" to specify input image (via -
 
 ### Pre-trained model
 
-If using our-pretrained model, make sure to rigidly register yout input image to the template provided (Template.nii.gz). This will ensure the input image has the same size and resolution as our training data. To run locally, download pretrained weights (https://github.com/levente-1/GAMBAS/releases/tag/v1.0/latest_net_G.pth) and save them in your desired folder. Next, set --checkpoints_dir in base_options.py to the directory that contains the model's folder, not the model folder itself or the file within it (e.g. if the file is in '/path/to/your/checkpoints/t2_model/latest_net_G.pth', set this to '/path/to/your/checkpoints'). Finally, set --name in base_options.py to the model folder (this is where the script will look for 'latest_net_G.pth'), and run "test.py" as above.
+If using our-pretrained model, make sure to rigidly register yout input image to the template provided (Template.nii.gz). This will ensure the input image has the same size and resolution as our training data. To run locally, download pretrained weights (https://github.com/levente-1/GAMBAS/releases/tag/v1.0/latest_net_G.pth) and save them in your desired folder. Next, set --checkpoints_dir in base_options.py to the parent of the model folder, not the model folder itself or the file within it (e.g. if the file is in '/path/to/your/checkpoints/t2_model/latest_net_G.pth', set this to '/path/to/your/checkpoints'). Finally, set --name in base_options.py to the model folder (this is where the script will look for 'latest_net_G.pth'), and run "test.py" as above.
 
 ### Docker
 
