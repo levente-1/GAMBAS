@@ -28,11 +28,11 @@ class BaseOptions():
         parser.add_argument('--netG', type=str, default='gambas', help='selects model to use for netG. Look on Networks3D to see the whole list (default is gambas)')
 
         parser.add_argument('--gpu_ids', default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
-        parser.add_argument('--name', type=str, default='your_experiment_name', help='name of the experiment. It decides where to store samples and models')
+        parser.add_argument('--name', type=str, default='T2_axi_model', help='name of the experiment. It decides where to store samples and models')
         parser.add_argument('--model', type=str, default='gambas', help='chooses which model to use: cycle_gan|pix2pix|ea_gan|resvit|gambas')
 
         parser.add_argument('--which_direction', type=str, default='AtoB', help='AtoB or BtoA (keep it AtoB)')
-        parser.add_argument('--checkpoints_dir', type=str, default='path/to/checkpoints/directory', help='models are saved here')
+        parser.add_argument('--checkpoints_dir', type=str, default='/workspace/checkpoints', help='models are saved here')
         parser.add_argument('--workers', default=8, type=int, help='number of data loading workers')
         parser.add_argument('--norm', type=str, default='instance', help='instance normalization or batch normalization')
 
