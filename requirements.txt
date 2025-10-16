@@ -7,3 +7,5 @@ ml-collections
 tqdm==4.30.0
 mamba_ssm==2.2.2
 lpips
+torch==2.2.2
+torchvision==0.17.2
