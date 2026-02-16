@@ -15,7 +15,8 @@ RUN mkdir -p $WORKDIR/output
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel packaging 
 
 # Install PyTorch separately before requirements.txt
-RUN pip install --no-cache-dir torch==2.2.2 torchvision==0.17.2
+RUN pip install --no-cache-dir torch==2.2.2 
+RUN pip install --no-cache-dir torchvision==0.17.2
 
 # Copy and install dependencies
 COPY requirements.txt .
