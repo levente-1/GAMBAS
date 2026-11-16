@@ -5,6 +5,9 @@ from torch.utils.data import DataLoader
 from options.train_options import TrainOptions
 # from logger import *
 import time
+import random
+import numpy as np
+import torch
 from models import create_model
 from utils.visualizer import Visualizer
 # from test import inference
@@ -54,7 +57,8 @@ if __name__ == '__main__':
     print('length val set:', len(val_set))
     print((train_set[0][1].shape))
     train_loader = DataLoader(train_set, batch_size=opt.batch_size, shuffle=True, num_workers=opt.workers, pin_memory=True)  # Here are then fed to the network with a defined batch size
-    val_loader = DataLoader(val_set, batch_size=opt.batch_size, shuffle=True, num_workers=opt.workers, pin_memory=True)
+    # Validation: fixed order and (below) a fixed seed, so every validation uses the same crops
+    val_loader = DataLoader(val_set, batch_size=opt.batch_size, shuffle=False, num_workers=opt.workers, pin_memory=True)
 
     # -----------------------------------------------------
     model = create_model(opt)  # creation of the model
@@ -116,19 +120,28 @@ if __name__ == '__main__':
 
         TBLogger(phase='train', step=epoch, loss=train_losses[-1])
 
-        # model.eval()
-        val_losses.append(0)
         print("----------------- RUNNING VALIDATION -----------------")
-        for i, data in enumerate(val_loader):
-            model.set_input(data)
-            model.test()
-
-            total_losses = 0
-            for loss_name in loss_names:
-                total_losses += model.get_current_losses()[loss_name]
-            val_losses[-1] += total_losses
-
-        TBLogger(phase='val', step=epoch, loss=val_losses[-1])
+        # FIXED: the old loop logged get_current_losses() after model.test(), but test() only runs forward() and the
+        # losses are computed in backward(), so it re-logged the last TRAINING losses. Now: mean L1 between the
+        # generator output and the target on the validation crops (fixed seed -> the same crops every time).
+        val_l1, n_val = 0.0, 0
+        cuda_devices = list(range(torch.cuda.device_count())) if torch.cuda.is_available() else []
+        with torch.random.fork_rng(devices=cuda_devices):
+            torch.manual_seed(1234)
+            np_state, py_state = np.random.get_state(), random.getstate()
+            np.random.seed(1234); random.seed(1234)
+            for i, data in enumerate(val_loader):
+                model.set_input(data)
+                model.test()
+                if hasattr(model, 'fake_B') and hasattr(model, 'real_B'):
+                    val_l1 += float((model.fake_B - model.real_B).abs().mean()) * model.real_B.shape[0]
+                    n_val += model.real_B.shape[0]
+            np.random.set_state(np_state); random.setstate(py_state)
+        if n_val:
+            val_losses.append(val_l1 / n_val)
+            print('Validation L1 (generator vs target, [-1, 1] units): %.4f' % val_losses[-1])
+            TBLogger(phase='val', step=epoch, L1=val_losses[-1])
+        TBLogger.writer.flush()
             
 
 

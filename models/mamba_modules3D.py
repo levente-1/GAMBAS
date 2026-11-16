@@ -89,46 +89,46 @@ class MambaLayer(nn.Module):
         expand (int): Block expansion factor.
     
     """
-    def __init__(self, dim, d_state=16, d_conv=4, expand=2): # Before it was d_state=16, d_conv=4, expand=2
+    def __init__(self, dim, d_state=16, d_conv=4, expand=2, size=(32, 32, 32)):
         super().__init__()
         self.dim = dim
+        self.size = tuple(size)
         self.norm = nn.LayerNorm(dim)
         self.mamba1 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
         self.mamba2 = Mamba(d_model=dim, d_state=d_state, d_conv=d_conv, expand=expand)
 
-        self.conv1d = nn.Conv3d(in_channels=512, out_channels=256, kernel_size=1)
-        self.generator = gilbert3d(32, 32, 32)
-        self.gilbert_indices = generate_gilbert_indices_3D(32, 32, 32, self.generator).expand(-1, dim, -1).permute(0, 2, 1)
-        self.degilbert_indices = torch.argsort(self.gilbert_indices)
-        self.gilbert_r_indices = torch.flip(self.gilbert_indices, dims=[2])
-        self.degilbert_r_indices = torch.argsort(self.gilbert_r_indices)
-    
+        self.conv1d = nn.Conv3d(in_channels=2 * dim, out_channels=dim, kernel_size=1)
+
+        # FIXED: the index arrays are [1, positions, channels] after the permute, so the inverse (argsort) and the
+        # reversal (flip) must act on dim=1 (positions). The previous version used argsort's default last dim and
+        # flip(dims=[2]) - both act on CHANNELS - so the scan was never undone. Registered as non-persistent buffers:
+        # they follow .to()/.cuda() (no hard-coded device) and are not saved in checkpoints (same keys as before).
+        S1, S2, S3 = self.size
+        idx = generate_gilbert_indices_3D(S1, S2, S3, gilbert3d(S1, S2, S3)).expand(-1, dim, -1).permute(0, 2, 1).contiguous()
+        idx_r = torch.flip(idx, dims=[1])
+        self.register_buffer('gilbert_indices', idx, persistent=False)
+        self.register_buffer('degilbert_indices', torch.argsort(idx, dim=1), persistent=False)
+        self.register_buffer('gilbert_r_indices', idx_r, persistent=False)
+        self.register_buffer('degilbert_r_indices', torch.argsort(idx_r, dim=1), persistent=False)
+
     def forward(self, x):
         B, C, D, H, W = x.shape
 
         # Check model dimension
         assert C == self.dim
+        assert (D, H, W) == self.size, f'MambaLayer built for {self.size} latents, got {(D, H, W)}'
 
-        # Bidirectional mamba
-        x1 = x.view(B, C, -1).permute(0, 2, 1)
-        device = 'cuda:0'
-        self.gilbert_indices = self.gilbert_indices.to(device)
-        x1 = torch.gather(x1, 1, self.gilbert_indices)
+        # Bidirectional mamba (indices expanded over the batch, so batch size > 1 also works)
+        x1 = x.reshape(B, C, -1).permute(0, 2, 1)
+        x1 = torch.gather(x1, 1, self.gilbert_indices.expand(B, -1, -1))
         x2 = torch.flip(x1, dims=[1])
 
         # Pass forwad and reverse through mamba
-        norm_out1 = self.norm(x1)
-        mamba_out1 = self.mamba1(norm_out1)
-        norm_out2 = self.norm(x2)
-        mamba_out2 = self.mamba2(norm_out2)
+        mamba_out1 = self.mamba1(self.norm(x1))
+        mamba_out2 = self.mamba2(self.norm(x2))
 
-        self.degilbert_indices = self.degilbert_indices.to(device)
-        self.degilbert_r_indices = self.degilbert_r_indices.to(device)
-        out1 = torch.gather(mamba_out1, 1, self.degilbert_indices).permute(0, 2, 1).view(B, C, D, H, W)
-        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices).permute(0, 2, 1).view(B, C, D, H, W)
-
-        # out1 = mamba_out1.permute(0, 2, 1).view(B, C, D, H, W)
-        # out2 = mamba_out2.permute(0, 2, 1).view(B, C, D, H, W)
+        out1 = torch.gather(mamba_out1, 1, self.degilbert_indices.expand(B, -1, -1)).permute(0, 2, 1).reshape(B, C, D, H, W)
+        out2 = torch.gather(mamba_out2, 1, self.degilbert_r_indices.expand(B, -1, -1)).permute(0, 2, 1).reshape(B, C, D, H, W)
 
         concatenated = torch.cat((out1, out2), dim=1)
         output = self.conv1d(concatenated)

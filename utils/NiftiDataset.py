@@ -302,7 +302,7 @@ def flipit(image, axes):
     img.SetOrigin(origin)
     img.SetSpacing(spacing)
 
-    return image
+    return img          # FIXED: previously returned the input `image`, so flips never happened
 
 
 def brightness(image):
@@ -380,7 +380,11 @@ def translateit(image, offset, isseg=False):
     return img
 
 
-def imadjust(image,gamma=np.random.uniform(1, 2)):
+def imadjust(image, gamma=None):
+    # FIXED: the default `gamma=np.random.uniform(1, 2)` was evaluated once at import, so every call used the
+    # same gamma. Draw a new one per call instead.
+    if gamma is None:
+        gamma = np.random.uniform(1, 2)
 
     array = np.transpose(sitk.GetArrayFromImage(image), axes=(2, 1, 0))
     spacing = image.GetSpacing()
